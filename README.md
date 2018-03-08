@@ -1,7 +1,10 @@
 # jie_blog
 
-> A Vue.js project
-
+> A Vue.js project for my first blog.
+In this blog we will use node + express to build our Web server and use Vue + element-ui to build our Web page.
+Last I choice MYSQL as my blog's database. This project is help me to learn more how to use vue and contact nodejs.
+I'am surely this is my first time to touch and learn nodejs.I hope I can finish in this Match,2018.
+ 
 ## Build Setup
 
 ``` bash
