@@ -1,14 +1,23 @@
 <template>
   <div id="app">
-    <div class="top_wrapper_full"></div>
-    <div class="left_wrapper_full"></div>
-    <div class="right_wrapper_full"><img src="./assets/logo.png"><router-view/></div>
+    <div class="top_wrapper_full">
+      <topbar></topbar>
+    </div>
+    <div class="left_wrapper_full">
+      <menuleft></menuleft>
+    </div>
+    <div class="right_wrapper_full"><router-view/></div>
   </div>
 </template>
 
 <script>
+import menuleft from './components/menu/MenuLeft'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    menuleft
+  }
 }
 </script>
 
@@ -26,6 +35,8 @@ export default {
     top: 0;
     left: 0;
     right: 0;
+    overflow-y: hidden;
+    z-index: 100;
   }
   .left_wrapper_full{
     position: fixed;
@@ -34,6 +45,8 @@ export default {
     bottom: 0;
     width: 250px;
     transition: all .5s ease-out;
+    overflow-x: hidden;
+    z-index: 100;
   }
   .right_wrapper_full{
     position: fixed;
@@ -42,6 +55,8 @@ export default {
     left: 250px;
     bottom: 0;
     transition: all .5s ease-out;
+    overflow-x: hidden;
+    z-index: 100;
   }
 }
 </style>
