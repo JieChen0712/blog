@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <div class="top_wrapper_full">
-      <topbar></topbar>
-    </div>
     <div class="left_wrapper_full">
       <menuleft></menuleft>
     </div>
@@ -29,18 +26,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  .top_wrapper_full{
-    position: fixed;
-    height: 60px;
-    top: 0;
-    left: 0;
-    right: 0;
-    overflow-y: hidden;
-    z-index: 100;
-  }
   .left_wrapper_full{
     position: fixed;
-    top: 60px;
+    top: 0;
     left: 0;
     bottom: 0;
     width: 250px;
