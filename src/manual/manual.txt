@@ -1,0 +1,23 @@
+1.后台管理框架最高的z-index为：100
+
+2.菜单列的数据格式：
+                list = [
+                    {
+                        name: 'xxxx',                        // 菜单列的名字
+                        menuid: 1,                           // 菜单列的id
+                        link: 'www.baidu.com',               // 菜单链接地址
+                        icon: '../icon.png',                // icon的图片链接，或者css样式
+                        status: 1,                          // 开启状态
+                        sub_menu: [                         // 二级菜单的信息
+                            {
+                                name: 'xxxx',
+                                menuid: 1,
+                                link: 'www.baidu.com',
+                                icon: '../icon.png',
+                            },
+                            ...                             // 如此类推
+                            ......
+                            .........
+                        ]
+                    }
+                ]
