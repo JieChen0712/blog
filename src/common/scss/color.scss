@@ -1,0 +1,38 @@
+/**
+ * 菜单栏的主色调   
+ */
+@mixin menu-bg-color(){
+    background-color: #1c232f;
+}
+
+@mixin menu-logo-color(){
+    color: #fff;
+}
+
+@mixin menu-text-color(){
+    color: #b9b9b9;
+}
+
+/*
+ * 徽章的颜色组
+ */
+@mixin span-color-success(){
+    color: #fff;
+    background-color: #67C23A;
+}
+@mixin span-color-danger(){
+    color: #fff;
+    background-color: #F56C6C;
+}
+@mixin span-color-warning(){
+    color: #fff;
+    background-color: #E6A23C;
+}
+@mixin span-color-grey(){
+    color: #fff;
+    background-color: #909399;
+}
+@mixin span-color(){
+    color: #fff;
+    background-color: #409EFF;
+}

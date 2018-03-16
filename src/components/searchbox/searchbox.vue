@@ -1,26 +1,17 @@
 <template>
-  <div class="">
+  <div class="searchbox">
     	
   </div>
 </template>
 
 <script type="text/ecmascript">
 export default {
-  data() {
-    return {
-        
-    }
+  data () {
+    return {}
   },
-  created() {
-      
-  },
-  mounted() {
-      
-  },
-  methods: {
-      
-  }
-  
+  created () {},
+  mounted () {},
+  methods: {}
 }
 </script>
 
