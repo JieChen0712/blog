@@ -7,8 +7,11 @@
         </div>
         <div class="menulist">
           <userstatus></userstatus>
-          <menutool></menutool>
+          <searchbox></searchbox>
           <menulist></menulist>
+        </div>
+        <div class="tool-wrapper">
+            <menutool></menutool>
         </div>
       </div>
     </div>
@@ -18,6 +21,7 @@
 <script type="text/ecmascript">
 import menulist from './MenuList'
 import userstatus from '../userstatus/status'
+import searchbox from '../searchbox/searchbox'
 import menutool from '../toolbox/menutool'
 export default {
   name: 'MenuLeft',
@@ -39,6 +43,7 @@ export default {
   components: {
     menulist,
     userstatus,
+    searchbox,
     menutool
   }
 }
@@ -50,6 +55,8 @@ export default {
     height: 100%;
     width: 250px;
     overflow: hidden;
+    padding-left: 5px;
+    padding-bottom: 35px;
     @include menu-bg-color()
     .hidden-scroll{
       height:100%;
@@ -72,6 +79,14 @@ export default {
             margin: 0;
             @include menu-logo-color()
           }
+        }
+        .tool-wrapper{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 35px;
+            width: 100%;
+            overflow: hidden;
         }
       }
     }

@@ -36,3 +36,17 @@
     color: #fff;
     background-color: #409EFF;
 }
+@mixin search-box(){
+    background-color: #0c1119;
+    color: #9c9c9c;
+    border-color: #3c485d;
+    transition: color .5s ease-in;
+    &:focus{
+        border-color: #3660a9;
+        color: #fff;
+        box-shadow: 0 0 10px rgba(54,96,168,.5);
+    }
+    &~.el-input__suffix .el-icon-search{
+        color: #fff;
+    }
+}
