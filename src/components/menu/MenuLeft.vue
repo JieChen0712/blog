@@ -64,6 +64,7 @@ export default {
       .menu-wrapper{
         width: 270px;
         height: 100%;
+        /*padding-right: 20px;*/
         overflow-y: scroll;
         overflow-x: hidden;
         .logo-wrapper{
@@ -86,7 +87,6 @@ export default {
             left: 0;
             height: 35px;
             width: 100%;
-            overflow: hidden;
         }
       }
     }

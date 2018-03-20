@@ -50,3 +50,12 @@
         color: #fff;
     }
 }
+
+@mixin icon-color(){
+    color: #b9b9b9;
+    transition: all .5s ease-in;
+    &:hover{
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255,255,255,.5);
+    }
+}

@@ -7,6 +7,8 @@ import axios from 'axios'
 // import element-ui
 import elementui from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+// font-awesome icon
+import 'font-awesome/css/font-awesome.min.css'
 
 Vue.config.productionTip = false
 Vue.use(elementui)

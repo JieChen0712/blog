@@ -1,3 +1,4 @@
+// 1px边框
 @mixin border-1px($color){
     position: relative;
     &:after{
@@ -9,6 +10,52 @@
         border-top: solid 1px $color;
         content: "";
         color: $color;
+    }
+}
+// 左右边框（占80%）
+@mixin border-right($color){
+    position: relative;
+    &:after{
+        display: block;
+        position: absolute;
+        height: 80%;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        border-right: solid 1px $color;
+        content: "";
+        color: $color;
+    }
+}
+
+@mixin border-left($color){
+    position: relative;
+    &:before{
+        display: block;
+        position: absolute;
+        height: 80%;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        border-left: solid 1px $color;
+        content: "";
+        color: $color;
+    }
+}
+
+// 左右边框（占100%）
+@mixin border-top($color){
+    position: relative;
+    &:after{
+        display: block;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 0;
+        border-top: solid 1px $color;
+        content: "";
+        color: $color;
+        box-shadow: 0px -1px 5px $color;
     }
 }
 
