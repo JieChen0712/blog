@@ -1,5 +1,7 @@
 <template>
   <div class="status">
+    <el-tooltip :disabled="!isCollapse" class="item" effect="dark" placement="right">
+    <div slot="content">{{userName}}<br/>{{userRole}}<br/>{{userStatus}}</div>
     <div class="user-info">
       <div class="avatar-wrapper">
         <img class="avatar" src="./image/user.jpg" alt="用户头像"/>
@@ -10,11 +12,15 @@
         <span class="user-status" v-text="userStatus"></span>
       </div>
     </div>
+    </el-tooltip>
   </div>
 </template>
 
 <script type="text/ecmascript">
 export default {
+  props: {
+    isCollapse: Boolean
+  },
   data () {
     return {
       userName: '',

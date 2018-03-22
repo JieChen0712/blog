@@ -21,6 +21,11 @@
 
 <script type="text/ecmascript">
 export default {
+  props: {
+    isCollapse: Boolean,
+    useRouter: Boolean,
+    uniqueOpened: Boolean
+  },
   data () {
     return {
       list: {
@@ -28,10 +33,7 @@ export default {
       },
       textColor: '',
       activeTextColor: '',
-      backgroundColor: '',
-      isCollapse: false,
-      useRouter: true,
-      uniqueOpened: true
+      backgroundColor: ''
     }
   },
   created () {
