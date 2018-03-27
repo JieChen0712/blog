@@ -64,6 +64,10 @@
     border-bottom: 1px solid #10151d;
 }
 
+@mixin menu-border-right(){
+    border-right: 1px solid #10151d;
+}
+
 @mixin border-none(){
     &:after{
         display: none;

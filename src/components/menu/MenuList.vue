@@ -101,6 +101,7 @@ export default {
     /*min-height: 400px;*/
   }
   .el-menu{
+    @include menu-border-right();
     .el-menu-item,.el-submenu{
       @include menu-text-color()
     }

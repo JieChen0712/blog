@@ -68,9 +68,11 @@ export default {
     @include menu-bg-color();
     .collapse{
         position: absolute;
-        left: 30px;
+        left: 25px;
         top: 10px;
         font-size: 25px;
+        cursor: pointer;
+        transition: color .3s ease;
         &.open{
             @include menu-logo-color();
         }

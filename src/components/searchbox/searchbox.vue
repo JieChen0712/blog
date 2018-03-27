@@ -1,5 +1,5 @@
 <template>
-  <div class="searchbox">
+  <div class="searchbox" v-show="!isCollapse">
     <el-autocomplete
       class="inline-input"
       suffix-icon="el-icon-search"
@@ -14,6 +14,9 @@
 
 <script type="text/ecmascript">
 export default {
+  props: {
+    isCollapse: Boolean
+  },
   data () {
     return {
       restaurants: [],

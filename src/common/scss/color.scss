@@ -13,6 +13,14 @@
     color: #b9b9b9;
 }
 
+@mixin menu-border-tcolor(){
+    color: #202a3c;
+}
+
+@mixin menu-border-bcolor(){
+    color: #10151d;
+}
+
 /*
  * 徽章的颜色组
  */

@@ -2,11 +2,11 @@
   <div class="status">
     <el-tooltip :disabled="!isCollapse" class="item" effect="dark" placement="right">
     <div slot="content">{{userName}}<br/>{{userRole}}<br/>{{userStatus}}</div>
-    <div class="user-info">
+    <div class="user-info" :class="{close:isCollapse}">
       <div class="avatar-wrapper">
         <img class="avatar" src="./image/user.jpg" alt="用户头像"/>
       </div>
-      <div class="info-wrapper">
+      <div class="info-wrapper" v-show="!isCollapse">
         <span class="user-name" v-text="userName"></span>
         <span class="user-role" v-text="userRole"></span>
         <span class="user-status" v-text="userStatus"></span>
@@ -46,6 +46,18 @@ export default {
         padding: 20px;
         overflow: hidden;
         box-sizing: border-box;
+        transition: all .5s ease;
+        &.close{
+          height: 65px;
+          padding: 10px 10px;
+          .avatar-wrapper{
+            width: 40px;
+            border-radius: 80px;
+            .avatar{
+                border-radius:80px;
+            }
+          }
+        }
         @include menu-item-border();
         .avatar-wrapper{
             float:left;
@@ -54,11 +66,13 @@ export default {
             border: 1px solid #585858;
             border-radius: 8px;
             margin-right: 15px;
+            transition: all .5s ease;
             .avatar{
                 width: 100%;
                 height: auto;
                 border-radius:6px;
                 vertical-align: middle;
+                transition: all .5s ease;
             }
         }
         .info-wrapper{
