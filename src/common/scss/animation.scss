@@ -1,0 +1,25 @@
+@mixin LeftTopFade($normal_w,$width,$time){
+    &.movefade-enter-active{
+        animation: LeftTopFade $time reverse ease;
+    }
+    &.movefade-leave-active{
+        animation: LeftTopFade $time ease;
+    }
+    @keyframes LeftTopFade{
+        0% {width: $normal_w;opacity: 1;}
+        50% {width: $width;opacity: 1;}
+        100% {width: $width;opacity: 0;}
+    }
+}
+
+@mixin Fade($opacity,$time,$delay){
+    &.fade-enter-active{
+        opacity: $opacity;
+        transition: opacity $time ease $delay;
+    }
+    &.fade-leave-active{
+        opacity: 0;
+        transition: opacity $time ease;
+    }
+}
+

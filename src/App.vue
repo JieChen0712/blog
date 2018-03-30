@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <div class="left_wrapper_full">
-      <menuleft></menuleft>
-    </div>
+    <menuleft></menuleft>
     <div class="right_wrapper_full"><router-view/></div>
   </div>
 </template>
@@ -27,16 +25,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  .left_wrapper_full{
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 250px;
-    transition: all .5s ease-out;
-    overflow-x: hidden;
-    z-index: 100;
-  }
   .right_wrapper_full{
     position: fixed;
     top: 60px;

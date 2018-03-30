@@ -1,5 +1,5 @@
 <template>
-  <div class="menutool">
+  <div class="menutool" :class="{close:isCollapse}">
     <ul class="tool-list">
       <li>
         <i class="fa fa-bell icons"></i>
@@ -21,6 +21,9 @@
 
 <script type="text/ecmascript">
 export default {
+  props: {
+    isCollapse: Boolean
+  },
   data () {
     return {}
   },

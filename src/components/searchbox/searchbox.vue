@@ -1,6 +1,7 @@
 <template>
+    <transition name="movefade">
   <div class="searchbox" v-show="!isCollapse">
-    <el-autocomplete
+      <el-autocomplete
       class="inline-input"
       suffix-icon="el-icon-search"
       v-model="state2"
@@ -10,6 +11,7 @@
       @select="handleSelect"
     ></el-autocomplete>
   </div>
+  </transition>
 </template>
 
 <script type="text/ecmascript">
@@ -54,9 +56,11 @@ export default {
 
 <style lang="scss" type="text/css">
 @import '../../common/scss/index.scss';
+@import '../../common/scss/animation.scss';
 .searchbox{
     padding: 10px 20px;
     @include menu-item-border();
+    @include LeftTopFade(100%,60px,.5s);
     .el-input--suffix .el-input__inner{
         @include search-box();
     }
