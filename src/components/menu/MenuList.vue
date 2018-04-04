@@ -48,7 +48,7 @@ export default {
           {
             'menuid': '1-1',
             'name': '账号管理',
-            'link': 'www.baidu.com',
+            'link': 'upload',
             'icon': '',
             'status': '1'
           },

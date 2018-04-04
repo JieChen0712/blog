@@ -6,11 +6,13 @@
       <div class="avatar-wrapper">
         <img class="avatar" src="./image/user.jpg" alt="用户头像"/>
       </div>
-      <div class="info-wrapper" v-show="!isCollapse">
-        <span class="user-name" v-text="userName"></span>
-        <span class="user-role" v-text="userRole"></span>
-        <span class="user-status" v-text="userStatus"></span>
-      </div>
+      <transition name="fade">
+          <div class="info-wrapper" v-show="!isCollapse">
+            <span class="user-name" v-text="userName"></span>
+            <span class="user-role" v-text="userRole"></span>
+            <span class="user-status" v-text="userStatus"></span>
+          </div>
+      </transition>
     </div>
     </el-tooltip>
   </div>
@@ -40,6 +42,7 @@ export default {
 
 <style lang="scss" scoped="" type="text/css">
 @import '../../common/scss/index.scss';
+@import '../../common/scss/animation.scss';
 .status{
     .user-info{
         height: 100px;
@@ -77,6 +80,7 @@ export default {
         }
         .info-wrapper{
             float:left;
+            @include Fade(1,.2s,.3s);
             .user-name,.user-role,.user-status{
                 display: block;
                 text-align: left;

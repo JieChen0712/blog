@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <menuleft></menuleft>
-    <div class="right_wrapper_full"><router-view/></div>
+    <menuleft @collapse="toggleMenu" :isCollapse="isCollapse"></menuleft>
+    <div class="right_wrapper_full" :class="{close:isCollapse}"><keep-alive><router-view></router-view></keep-alive></div>
   </div>
 </template>
 
@@ -10,6 +10,16 @@ import menuleft from './components/menu/MenuLeft'
 
 export default {
   name: 'App',
+  data () {
+    return {
+      isCollapse: false
+    }
+  },
+  methods: {
+    toggleMenu () {
+      this.isCollapse = !this.isCollapse
+    }
+  },
   components: {
     menuleft
   }
@@ -24,16 +34,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   .right_wrapper_full{
     position: fixed;
-    top: 60px;
+    top: 0;
     right: 0;
     left: 250px;
     bottom: 0;
     transition: all .5s ease-out;
     overflow-x: hidden;
     z-index: 100;
+    &.close{
+      left: 70px;
+    }
   }
 }
 </style>

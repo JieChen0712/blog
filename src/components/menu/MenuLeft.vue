@@ -8,7 +8,6 @@
           <p class="logo-text" v-show="!isCollapse">Jie Chen</p>
           </transition>
         </div>
-        
         <div class="menulist">
           <userstatus :isCollapse="isCollapse"></userstatus>
           <searchbox :isCollapse="isCollapse"></searchbox>
@@ -29,9 +28,11 @@ import searchbox from '../searchbox/searchbox'
 import menutool from '../toolbox/menutool'
 export default {
   name: 'MenuLeft',
+  props: {
+    isCollapse: Boolean
+  },
   data () {
     return {
-      isCollapse: false, // 菜单关闭或开启状态
       useRouter: true, // 是否使用路由
       uniqueOpened: true // 是否只能展示一列的菜单
     }
@@ -39,7 +40,7 @@ export default {
   created () {},
   methods: {
     toggleMenu () {
-      this.isCollapse = !this.isCollapse
+    //  this.isCollapse = !this.isCollapse
       this.$emit('collapse', event.target, this.isCollapse)
     },
     check_link () {
@@ -118,7 +119,7 @@ export default {
           box-sizing: border-box;
           .logo-text{
             margin: 0;
-            @include Fade(1,.5s,.5s);
+            @include Fade(1,.2s,.3s);
             @include menu-logo-color();
           }
         }
