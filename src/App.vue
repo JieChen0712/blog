@@ -1,28 +1,14 @@
 <template>
   <div id="app">
-    <menuleft @collapse="toggleMenu" :isCollapse="isCollapse"></menuleft>
-    <div class="right_wrapper_full" :class="{close:isCollapse}"><keep-alive><router-view></router-view></keep-alive></div>
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-import menuleft from './components/menu/MenuLeft'
-
 export default {
-  name: 'App',
-  data () {
-    return {
-      isCollapse: false
-    }
-  },
-  methods: {
-    toggleMenu () {
-      this.isCollapse = !this.isCollapse
-    }
-  },
-  components: {
-    menuleft
-  }
+  name: 'App'
 }
 </script>
 
@@ -34,18 +20,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  .right_wrapper_full{
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 250px;
-    bottom: 0;
-    transition: all .5s ease-out;
-    overflow-x: hidden;
-    z-index: 100;
-    &.close{
-      left: 70px;
-    }
-  }
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: all .2s ease;
+}
+.fade-enter,
+.fade-leave-active {
+    opacity: 0;
 }
 </style>

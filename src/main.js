@@ -23,4 +23,4 @@ new Vue({
 }).$mount('#app')
 
 // 默认跳到hellow页面
-router.push('./upload')
+router.push('./home')

@@ -48,7 +48,7 @@ export default {
           {
             'menuid': '1-1',
             'name': '账号管理',
-            'link': 'upload',
+            'link': '/home/upload',
             'icon': '',
             'status': '1'
           },
