@@ -78,6 +78,7 @@ export default {
     padding-left: 5px;
     padding-bottom: 35px;
     transition: width .5s ease;
+    box-sizing: border-box;
     &.close{
       width: 70px
     }

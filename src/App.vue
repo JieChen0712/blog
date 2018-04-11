@@ -14,6 +14,7 @@ export default {
 
 <style lang="scss" scoped="" type="text/css">
 @import './common/scss/color.scss';
+@import './common/scss/animation.scss';
 #app {
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -25,13 +26,6 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-}
-.fade-enter-active,
-.fade-leave-active {
-    transition: all .2s ease;
-}
-.fade-enter,
-.fade-leave-active {
-    opacity: 0;
+  @include Fade(1,.5s,0s);
 }
 </style>

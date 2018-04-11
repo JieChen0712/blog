@@ -1,7 +1,11 @@
 <template>
   <div class="home">
     <menuleft @collapse="toggleMenu" :isCollapse="isCollapse"></menuleft>
-    <div class="right_wrapper_full" :class="{close:isCollapse}"><keep-alive><router-view></router-view></keep-alive></div>
+    <div class="right_wrapper_full" :class="{close:isCollapse}">
+      <transition name="rotate" mode="out-in">
+        <keep-alive><router-view class="wrapper"></router-view></keep-alive>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -25,6 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped="" type="text/css">
+@import '../common/scss/animation.scss';
 .right_wrapper_full{
     position: fixed;
     top: 0;
@@ -36,6 +41,9 @@ export default {
     z-index: 100;
     &.close{
       left: 70px;
+    }
+    .wrapper{
+      @include Rotate(0deg,90deg,.5s);
     }
   }
 </style>

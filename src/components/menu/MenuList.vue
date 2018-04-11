@@ -55,7 +55,7 @@ export default {
           {
             'menuid': '1-2',
             'name': '账号管理2',
-            'link': 'www.baidu.coms',
+            'link': '/home/hello',
             'icon': '',
             'status': '1'
           }

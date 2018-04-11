@@ -25,8 +25,27 @@
 //      animation-delay: $delay;
     }
     @keyframes Fade{
-        0% {opacity: 1;}
+        0% {opacity: $opacity;}
         100% {opacity: 0;}
     }
 }
 
+@mixin Rotate($enterangle,$leaveangle,$time){
+    &.rotate-enter-active{
+       opacity: 0;
+       transform-origin:top right;
+       animation: enter $time ease;
+    }
+    &.rotate-leave-active{
+        transform-origin:top right;
+        animation: leave $time ease;
+    }
+    @keyframes leave{
+        0% {opacity: 1;transform: rotate3d(0,0,0,$enterangle);}
+        100% {opacity: 0;transform: rotate3d(0,0,1,$leaveangle);}
+    }
+    @keyframes enter{
+       0% {opacity: 0;transform: rotate3d(1,1,1,-$leaveangle);}
+       100% {opacity: 1;transform: rotate3d(0,0,0,$enterangle);}
+    }
+}
