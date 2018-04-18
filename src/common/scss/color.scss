@@ -67,3 +67,17 @@
         text-shadow: 0 0 10px rgba(255,255,255,.5);
     }
 }
+
+// 面包屑颜色组
+@mixin breadcrumb-bg-color(){
+    background-color: #354052;
+    color: #fff;
+}
+
+@mixin breadcrumb-border-color(){
+    border-color: #354052;
+}
+
+@mixin breadcrumb-text-color(){
+    color: #409eff;
+}

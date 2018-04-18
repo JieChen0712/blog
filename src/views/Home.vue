@@ -22,6 +22,9 @@ export default {
       this.isCollapse = !this.isCollapse
     }
   },
+  mounted () {
+  // console.log(this.$route)
+  },
   components: {
     menuleft
   }

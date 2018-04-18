@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <breadcrumb></breadcrumb>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
@@ -85,16 +84,12 @@
 </template>
 
 <script>
-import breadcrumb from './breadcrumb/breadcrumb'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
+      msg: 'Welcome to Your Vue.js App'
     }
-  },
-  components: {
-    breadcrumb
   }
 }
 </script>
