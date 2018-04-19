@@ -3,8 +3,24 @@
     <breadcrumb></breadcrumb>
     <div class="detail-wrapper">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-  <el-form-item label="活动名称" prop="name">
-    <el-input v-model="ruleForm.name"></el-input>
+  <el-form-item label="称呢：" prop="name">
+    <el-input v-model="ruleForm.name" size="small input-normal" placeholder="你的称呢"></el-input>
+  </el-form-item>
+  <el-form-item label="用户名：" prop="name">
+    <span class="r-text">JieChen</span>
+  </el-form-item>
+  <el-form-item label="我的签名：" prop="desc">
+    <el-input type="textarea" v-model="ruleForm.desc" size="txtarea"></el-input>
+  </el-form-item>
+  <el-form-item label="性别：" prop="resource">
+    <el-radio-group v-model="ruleForm.resource">
+      <el-radio label="男"></el-radio>
+      <el-radio label="女"></el-radio>
+      <el-radio label="保密"></el-radio>
+    </el-radio-group>
+  </el-form-item>
+  <el-form-item label="出生日期：">
+    <el-date-picker type="date" v-model="ruleForm.desc" placeholder="选择出生日期" class="el-date-pick"></el-date-picker>
   </el-form-item>
   <el-form-item label="活动区域" prop="region">
     <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
@@ -35,12 +51,6 @@
       <el-checkbox label="线下主题活动" name="type"></el-checkbox>
       <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
     </el-checkbox-group>
-  </el-form-item>
-  <el-form-item label="特殊资源" prop="resource">
-    <el-radio-group v-model="ruleForm.resource">
-      <el-radio label="线上品牌商赞助"></el-radio>
-      <el-radio label="线下场地免费"></el-radio>
-    </el-radio-group>
   </el-form-item>
   <el-form-item label="活动形式" prop="desc">
     <el-input type="textarea" v-model="ruleForm.desc"></el-input>
@@ -117,9 +127,12 @@ export default {
 </script>
 
 <style lang="scss" scoped="" type="text/css">
+@import '../../common/scss/base.scss';
 .setting{
-  padding: .5rem;
+  margin: .5rem;
+  border:solid 1px red;
   .detail-wrapper{
+    padding:1.5rem;
     text-align: left;
     max-width: 830px;
   }

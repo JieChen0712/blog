@@ -3,7 +3,7 @@ body,html{
     font-weight: 200;
     font-family: 'PingFang SC','STHeitiSC-Light','helvetica-Light',arial,sans-serif;
 }
-
+// 清除浮动
 .clearfix{
     display: inline-block;
     &:after{
@@ -15,6 +15,32 @@ body,html{
         visibility: hidden;
     }
 }
+
+// 百分比输入框大小
+.el-form{
+    .input-normal{
+        float: left;
+        width: 217px;
+        margin-right: 40px;
+    }
+    .nick-name-not{
+        color: #aaa;
+    }
+    .r-text{
+        color: #898989;
+    }
+    .el-input--txtarea{
+        textarea{
+            width: 618px;
+            height: 88px;
+            padding: 5px 7px;
+            line-height: 1.5;
+            color: #1f2d3d;
+            resize: none;
+        }
+    }
+}
+
 
 // 1px的边框处理
 @media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5){

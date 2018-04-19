@@ -34,8 +34,8 @@ export default {
       width: 0;
       height: 0;
       position: absolute;
-      left: 0;
-      top: 0;
+      left: -1px;
+      top: -1px;
       border-top: 45px solid white;
       border-right: 45px solid transparent;
       box-sizing: content-box;
