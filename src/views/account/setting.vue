@@ -22,11 +22,8 @@
   <el-form-item label="出生日期：">
     <el-date-picker type="date" v-model="ruleForm.desc" placeholder="选择出生日期" class="el-date-pick"></el-date-picker>
   </el-form-item>
-  <el-form-item label="活动区域" prop="region">
-    <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-      <el-option label="区域一" value="shanghai"></el-option>
-      <el-option label="区域二" value="beijing"></el-option>
-    </el-select>
+  <el-form-item label="所在地：" prop="region">
+    <citypicker></citypicker>
   </el-form-item>
   <el-form-item label="活动时间" required>
     <el-col :span="11">
@@ -66,6 +63,7 @@
 
 <script type="text/ecmascript">
 import breadcrumb from '../../components/breadcrumb/breadcrumb'
+import citypicker from '../../components/citypicker/citypicker'
 export default {
   data () {
     return {
@@ -121,7 +119,8 @@ export default {
     }
   },
   components: {
-    breadcrumb
+    breadcrumb,
+    citypicker
   }
 }
 </script>
