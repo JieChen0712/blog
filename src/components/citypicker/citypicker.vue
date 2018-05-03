@@ -3,7 +3,7 @@
     <el-cascader
     expand-trigger="hover"
     :options="options"
-    v-model="selectedOptions"
+    v-model="selectedOption"
     @change="handleChange">
     </el-cascader>
   </div>
@@ -11,10 +11,13 @@
 
 <script type="text/ecmascript">
 export default {
+  props: {
+    address: Array
+  },
   data () {
     return {
       options: [],
-      selectedOptions: []
+      selectedOption: this.address
     }
   },
   created () {
@@ -62,7 +65,15 @@ export default {
   methods: {
     handleChange (value) {
       console.log(value)
-      console.log(this.selectedOptions)
+      this.selectedOption = value
+    }
+  },
+  watch: {
+    address (val) {
+      this.address = val
+    },
+    selectedOption (val) {
+      this.$emit('change', val)
     }
   }
 }
