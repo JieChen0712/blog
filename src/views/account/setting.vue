@@ -33,22 +33,22 @@
       <citypicker :address="formData.address" @change="setAddress"></citypicker>
     </el-col>
   </el-form-item>
-  <el-form-item label="手机号码" required>
+  <el-form-item label="手机号码：" required>
     <el-col :span="7">
       <el-input prefix-icon="el-icon-mobile-phone" v-model="formData.phone" placeholder="请输入手机号码"></el-input>
     </el-col>
   </el-form-item>
-  <el-form-item label="邮箱" required>
+  <el-form-item label="邮箱：" required>
     <el-col :span="7">
       <el-input prefix-icon="el-icon-message" v-model="formData.email" placeholder="请输入邮箱"></el-input>
     </el-col>
   </el-form-item>
-  <el-form-item label="QQ">
+  <el-form-item label="QQ：">
     <el-col :span="7">
       <el-input prefix-icon="fa fa-qq" v-model="formData.qq" placeholder="请输入QQ号码"></el-input>
     </el-col>
   </el-form-item>
-  <el-form-item label="微信" required>
+  <el-form-item label="微信：" required>
     <el-col :span="7">
       <el-input prefix-icon="fa fa-wechat" v-model="formData.wechat" placeholder="请输入微信号"></el-input>
     </el-col>

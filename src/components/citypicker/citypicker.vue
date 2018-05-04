@@ -10,6 +10,7 @@
 </template>
 
 <script type="text/ecmascript">
+import {getcitydata} from '../../api/api'
 export default {
   props: {
     address: Array
@@ -21,10 +22,8 @@ export default {
     }
   },
   created () {
-    this.$http.get('../static/data/area.json')
+    getcitydata()
       .then(response => {
-        console.log(response)
-        console.log(response.data)
         let cityData = []
         for (let i in response.data) {
           let parent = response.data[i]

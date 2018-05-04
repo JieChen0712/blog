@@ -15,9 +15,7 @@ export default {
     return {}
   },
   created () {},
-  mounted () {
-    console.log(this.$router.options)
-  },
+  mounted () {},
   methods: {}
 }
 </script>
