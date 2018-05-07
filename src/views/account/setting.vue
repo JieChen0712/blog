@@ -87,6 +87,22 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.$http.post('/api/user/set_user_detail',{
+            nickname: this.formData.name,
+            sex: this.formData.sex,
+            phone: this.formData.phone,
+            qq: this.formData.qq,
+            wechat: this.formData.wechat,
+            email: this.formData.email,
+            introduct: this.formData.introduct,
+            province: this.formData.province,
+            city: this.formData.city,
+            county: this.formData.county,
+            address: this.formData.address,
+            brith_day: this.formData.birth_day,
+            uid: 6
+          })
+          .then()
           alert('submit!')
         } else {
           console.log('error submit!!')
