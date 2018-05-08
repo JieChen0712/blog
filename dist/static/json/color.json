@@ -1,0 +1,9 @@
+{
+    "color": {
+        "menu": {
+            "background-color": "#1c232f",
+            "active-text-color": "#fff",
+            "text-color": "#b9b9b9"
+        }
+    }
+}

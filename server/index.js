@@ -30,7 +30,7 @@ app.all('*', function(req, res, next) {
 app.use(express.static(path.resolve(__dirname,'../dist')));
 
 //app.get('*',function(req,res){
-//  const html = fs.readFileSync(path.resolve(__dirname,'../dist/index.html'),"utf-8")
+//  const html = fs.readFileSync(path.resolve(__dirname,'../dist/test.html'),"utf-8")
 //  res.send(html)
 //})
 

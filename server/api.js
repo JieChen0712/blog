@@ -92,9 +92,9 @@ router.get('/api/login/getAccount', (req, res, fields) => {
 
 // 用户信息修改接口
 router.post('/api/user/set_user_detail', (req, res, fields) => {
-    models.getConnection((err, conn) => {
-        conn.query(sql.user.set_user_detail, 
-            [
+//  console.log(req);
+//  res.send(req.body.address);
+    console.log([
                 req.body.nickname, 
                 req.body.sex, 
                 req.body.phone, 
@@ -108,6 +108,23 @@ router.post('/api/user/set_user_detail', (req, res, fields) => {
                 req.body.address, 
                 req.body.brith_day, 
                 md5(req.body.uid)
+            ]);
+    models.getConnection((err, conn) => {
+        conn.query(sql.user.set_user_detail,
+            [
+                req.body.nickname, 
+                req.body.sex, 
+                req.body.phone, 
+                req.body.qq, 
+                req.body.wechat, 
+                req.body.email, 
+                req.body.introduct, 
+                req.body.province, 
+                req.body.city, 
+                req.body.county, 
+                req.body.address, 
+                req.body.brith_day, 
+                req.body.uid
             ], (err, result) => {
             if(err) {
                 res.send(err);

@@ -18,9 +18,9 @@
   </el-form-item>
   <el-form-item label="性别：" prop="sex">
     <el-radio-group v-model="formData.sex">
-      <el-radio label="男"></el-radio>
-      <el-radio label="女"></el-radio>
-      <el-radio label="保密"></el-radio>
+      <el-radio label="1">男</el-radio>
+      <el-radio label="2">女</el-radio>
+      <el-radio label="0">保密</el-radio>
     </el-radio-group>
   </el-form-item>
   <el-form-item label="出生日期：">
@@ -87,23 +87,28 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$http.post('/api/user/set_user_detail',{
+          this.$http.post('/api/user/set_user_detail', {
             nickname: this.formData.name,
             sex: this.formData.sex,
             phone: this.formData.phone,
             qq: this.formData.qq,
             wechat: this.formData.wechat,
             email: this.formData.email,
-            introduct: this.formData.introduct,
+            introduct: this.formData.desc,
             province: this.formData.province,
             city: this.formData.city,
             county: this.formData.county,
-            address: this.formData.address,
-            brith_day: this.formData.birth_day,
-            uid: 6
+            address: this.formData.address.join(' '),
+            brith_day: this.formData.date,
+            uid: '6'
           })
-          .then()
-          alert('submit!')
+            .then(response => {
+              console.log(response)
+            })
+            .catch(error => {
+              console.log(error)
+            })
+          console.log('submit!')
         } else {
           console.log('error submit!!')
           return false
@@ -115,6 +120,9 @@ export default {
     },
     setAddress (value) {
       this.formData.address = value
+      this.formData.province = value[0]
+      this.formData.city = value[1]
+      this.formData.county = value[2]
     }
   },
   components: {

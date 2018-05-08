@@ -13,6 +13,7 @@ import 'font-awesome/css/font-awesome.min.css'
 Vue.config.productionTip = false
 Vue.use(elementui)
 Vue.use(router)
+
 Vue.prototype.$http = axios
 
 /* eslint-disable no-new */
