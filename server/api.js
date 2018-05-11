@@ -150,4 +150,24 @@ router.post('/api/user/set_user_detail', (req, res, fields) => {
     });
 });
 
+// 用户登录接口
+router.post('/api/login', (req, res, fields) => {
+    models.getConnection((err, conn) => {
+        conn.query(sql.user.login, [req.body.ac], (err, result) => {
+            if(err) {
+                res.send(err);
+            } else {
+                if(md5(req.body.pd)==md5(result[0]['password'])){
+                    console.log('success login');
+                }else{
+                    console.log('error login');
+                }
+                res.send(result[0]['password']);
+            }
+            conn.release();
+        });
+    });
+});
+
+
 module.exports = router;
