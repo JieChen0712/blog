@@ -158,7 +158,11 @@ router.post('/api/login', (req, res, fields) => {
                 res.send(err);
             } else {
                 if(md5(req.body.pd)==md5(result[0]['password'])){
+                    let user = {'account': req.body.ac,'name':result[0]['name'],'password':md5(result[0]['password'])};
+                    req.session.user = user;
+                    req.session.save();
                     console.log('success login');
+                    console.log(req.session);
                 }else{
                     console.log('error login');
                 }

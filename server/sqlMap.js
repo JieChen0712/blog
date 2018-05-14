@@ -10,7 +10,7 @@ const sqlMap = {
         query_user: 'SELECT * FROM admin WHERE username = ? and password = ?',
         delete_user: 'DELETE FROM admin WHERE username =?',
         set_user_detail: 'UPDATE user_detail SET nickname = ?,sex = ?,phone = ?,qq = ?,wechat = ?,email = ?,introduce = ?,province = ?,city = ?,county = ?,address = ?,brith_day = ? WHERE uid = ?',
-        login: 'SELECT password FROM admin WHERE account = ?'
+        login: 'SELECT * FROM admin WHERE account = ?'
     }
 }
 
