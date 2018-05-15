@@ -26,7 +26,15 @@ export default {
     }
   },
   created () {},
-  mounted () {},
+  mounted () {
+    this.$http.get('/api/login/getAccount')
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  },
   methods: {
     onSubmit () {
       this.$http.post('/api/login', {

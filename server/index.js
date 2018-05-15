@@ -6,6 +6,7 @@ const cookieSession = require('cookie-session');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const express = require('express');
+const history = require('connect-history-api-fallback');
 //const passport = require('passport');
 //const LocalStrategy = require('passport-local').Strategy;
 //const flash = require('connect-flash');
@@ -48,20 +49,23 @@ app.all('*', function(req, res, next) {
     }
 });
 
-app.get('/', function(req, res, next) {
+app.get('/',function(req, res, next) {
+  console.log('req')
+//console.log(req.cookies.signedCookies.user)
     if(req.session.user){
         var user=req.session.user;
         var name=user.name;
-        res.send('你好'+name+'，欢迎来到我的家园。');
+        console.log(name)
+//      res.send('你好'+name+'，欢迎来到我的家园。');
         next();
     }else{
-        res.redirect('index');
-        res.send('你还没有登录，先登录下再试试！');
+        res.redirect('/login');
+//      res.send('你还没有登录，先登录下再试试！');
     }
 });
 
 // 访问静态资源文件
-//app.use(express.static(path.resolve(__dirname,'../dist')));
+app.use(express.static(path.resolve(__dirname,'../dist')));
 //app.use(express.static(path.resolve(__dirname,'../dist')));
 app.use(api);
 

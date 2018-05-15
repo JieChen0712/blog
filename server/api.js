@@ -82,8 +82,10 @@ router.get('/api/login/getAccount', (req, res, fields) => {
     models.getConnection((err, conn) => {
         conn.query(sql.common.select_all, ['admin'], (err, result) => {
             if(err) {
+              console.log(req.sessionID);
                 res.send(err);
             } else {
+              console.log(req.sessionID);
                 responseJSON(res, result);
                 //              res.send(result);
             }
@@ -163,6 +165,8 @@ router.post('/api/login', (req, res, fields) => {
                     let user = {'account': req.body.ac,'name':result[0]['name'],'password':md5(result[0]['password'])};
                     req.session.user = user;
                     req.session.save();
+                    res.cookie('NODESESSIONID',req.sessionID, {maxAge: 1000 * 1000});
+//                  req.cookies.user = req.sessionId;
                     console.log('success login');
                     console.log(req.sessionStore);
                     console.log(req.session);
