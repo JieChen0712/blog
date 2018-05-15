@@ -9,15 +9,16 @@ import elementui from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // font-awesome icon
 import 'font-awesome/css/font-awesome.min.css'
+// import {getCookie, delCookie} from './common/js/base.js'
 
 Vue.config.productionTip = false
 Vue.use(elementui)
 Vue.use(router)
 
+axios.defaults.withCredentials = true
 Vue.prototype.$http = axios
 
 router.beforeEach((to, from, next) => {
-// NProgress.start()
   if (to.path === '/login') {
     sessionStorage.removeItem('user')
   }

@@ -11,9 +11,12 @@ const express = require('express');
 //const flash = require('connect-flash');
 const app = express();
 
+app.set('views', path.join(__dirname, '../dist'));
+app.set('view engine', 'ejs');
+app.set('trust proxy', 1);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
+app.use(cookieParser('keyboard cat'));
 
 app.use(session({
     name: 'user',
@@ -33,6 +36,7 @@ app.use(session({
 app.all('*', function(req, res, next) {
     let html = fs.readFileSync(path.resolve(__dirname,'../dist/index.html'),"utf-8");
     res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', 'true');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
@@ -44,26 +48,38 @@ app.all('*', function(req, res, next) {
     }
 });
 
+app.get('/', function(req, res, next) {
+    if(req.session.user){
+        var user=req.session.user;
+        var name=user.name;
+        res.send('你好'+name+'，欢迎来到我的家园。');
+        next();
+    }else{
+        res.redirect('index');
+        res.send('你还没有登录，先登录下再试试！');
+    }
+});
+
 // 访问静态资源文件
-app.use(express.static(path.resolve(__dirname,'../dist')));
+//app.use(express.static(path.resolve(__dirname,'../dist')));
 //app.use(express.static(path.resolve(__dirname,'../dist')));
 app.use(api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-var err = new Error('Not Found');
-err.status = 404;
-next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 //
 //// production error handler
 //// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-res.status(err.status || 500);
-res.render('error', {
-    message: err.message,
-    error: {}
-});
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 
 //app.get('/',function(req,res){

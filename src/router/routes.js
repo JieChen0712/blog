@@ -1,7 +1,8 @@
 import HelloWorld from '../components/HelloWorld'
 import upload from '../components/Upload'
-import Home from '../views/Home.vue'
+import Home from '../views/Home'
 import setting from '../views/account/setting'
+import Login from '../views/login'
 
 export default[
 // {path: '/hello', component: HelloWorld, name: 'hello'},
@@ -16,5 +17,6 @@ export default[
       { path: 'setting', component: setting, name: '个人中心' }
     ]
   },
+  {path: '/login', component: Login, name: '登录'},
   {path: '/', redirect: '/home', name: '主页'}
 ]

@@ -18,6 +18,8 @@ const responseJSON = (res, ret) => {
     }
 };
 
+
+
 // 用户登录接口
 router.post('/api/login/check_login', (req, res, fields) => {
     models.getConnection((err, conn) => {
@@ -162,11 +164,23 @@ router.post('/api/login', (req, res, fields) => {
                     req.session.user = user;
                     req.session.save();
                     console.log('success login');
+                    console.log(req.sessionStore);
                     console.log(req.session);
+                    console.log(req.sessionID);
+                    result_info = {
+                        code: 1,
+                        info: result[0]['name'],
+                        msg: "登录成功！"
+                    }
                 }else{
+                    result_info = {
+                        code: 2,
+                        info: result[0]['name'],
+                        msg: "登录失败！"
+                    }
                     console.log('error login');
                 }
-                res.send(result[0]['password']);
+                responseJSON(res, result_info);
             }
             conn.release();
         });
