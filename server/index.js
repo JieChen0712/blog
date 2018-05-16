@@ -49,21 +49,36 @@ app.all('*', function(req, res, next) {
     }
 });
 
-app.get('/',function(req, res, next) {
-  console.log('req')
-//console.log(req.cookies.signedCookies.user)
+app.get('/api/login*',function(req, res, next) {
     if(req.session.user){
         var user=req.session.user;
         var name=user.name;
         console.log(name)
-//      res.send('你好'+name+'，欢迎来到我的家园。');
         next();
     }else{
-        res.redirect('/login');
+        console.log('req')
+//      res.redirect('/blog/login');
+        res.send('你还没有登录，先登录下再试试！');
+    }
+});
+app.get('/blog',function(req, res, next) {
+        res.redirect('/blog/home');
+//      res.send('你还没有登录，先登录下再试试！');
+    
+});
+app.get('/blog/home*',function(req, res, next) {
+    if(req.session.user){
+        var user=req.session.user;
+        var name=user.name;
+        console.log(name)
+        next();
+    }else{
+        console.log('req')
+        res.redirect('/blog/login');
 //      res.send('你还没有登录，先登录下再试试！');
     }
 });
-
+app.use(history());
 // 访问静态资源文件
 app.use(express.static(path.resolve(__dirname,'../dist')));
 //app.use(express.static(path.resolve(__dirname,'../dist')));

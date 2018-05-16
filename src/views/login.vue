@@ -44,7 +44,7 @@ export default {
         .then(response => {
           console.log(response)
           if (response.data.code === 1) {
-            this.$router.push('/home')
+            this.$router.push('/blog/home')
           }
         })
         .catch(error => {

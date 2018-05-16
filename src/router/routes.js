@@ -7,16 +7,15 @@ import Login from '../views/login'
 export default[
 // {path: '/hello', component: HelloWorld, name: 'hello'},
   {
-    path: '/home',
+    path: '/blog/home',
     component: Home,
     name: '主页',
     children: [
-      { path: 'upload', component: upload, name: 'upload', hidden: true },
-      { path: 'hello', component: HelloWorld, name: 'hello' },
-      { path: '', component: HelloWorld, name: 'empty' },
-      { path: 'setting', component: setting, name: '个人中心' }
+      { path: '/blog/home/upload', component: upload, name: 'upload', hidden: true },
+      { path: '/blog/home/hello', component: HelloWorld, name: 'hello' },
+      { path: '/blog/home/', component: HelloWorld, name: 'empty' },
+      { path: '/blog/home/setting', component: setting, name: '个人中心' }
     ]
   },
-  {path: '/login', component: Login, name: '登录'},
-  {path: '/', redirect: '/home', name: '主页'}
+  {path: '/blog/login', component: Login, name: '登录'}
 ]
