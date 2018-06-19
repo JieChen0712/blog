@@ -40,4 +40,4 @@ new Vue({
 }).$mount('#app')
 
 // 默认跳到hellow页面
-// router.push('./home')
+router.push('/blog/login')

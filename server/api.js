@@ -167,10 +167,10 @@ router.post('/api/login', (req, res, fields) => {
                     req.session.save();
                     res.cookie('NODESESSIONID',req.sessionID, {maxAge: 1000 * 1000});
 //                  req.cookies.user = req.sessionId;
-                    console.log('success login');
-                    console.log(req.sessionStore);
-                    console.log(req.session);
-                    console.log(req.sessionID);
+//                  console.log('success login');
+//                  console.log(req.sessionStore);
+//                  console.log(req.session);
+//                  console.log(req.sessionID);
                     result_info = {
                         code: 1,
                         info: result[0]['name'],
