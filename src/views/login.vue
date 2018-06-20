@@ -50,21 +50,20 @@ export default {
           // _this.$router.replace('/table')
           this.logining = true
           // NProgress.start()
-          var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass }
-          console.log(loginParams)
+          var loginParams = { 'ac': this.ruleForm2.account, 'pd': this.ruleForm2.checkPass }
           login(loginParams)
             .then(response => {
               this.logining = false
               // NProgress.done()
-              if (response.code === 1) {
+              if (response.data.code === 1) {
                 this.$message({
-                  message: response.msg,
+                  message: response.data.msg,
                   type: 'success'
                 })
-                this.$router.push({ path: '/home' })
+                this.$router.push({ path: '/blog/home' })
               } else {
                 this.$message({
-                  message: response.msg,
+                  message: response.data.msg,
                   type: 'error'
                 })
               }

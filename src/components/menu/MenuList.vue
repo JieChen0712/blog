@@ -48,14 +48,14 @@ export default {
           {
             'menuid': '1-1',
             'name': '账号管理',
-            'link': '/home/setting',
+            'link': '/blog/home/setting',
             'icon': '',
             'status': '1'
           },
           {
             'menuid': '1-2',
             'name': '账号管理2',
-            'link': '/home/hello',
+            'link': '/blog/home/hello',
             'icon': '',
             'status': '1'
           }
@@ -67,7 +67,15 @@ export default {
         'link': 'baidu',
         'status': '1',
         'icon': 'el-icon-menu',
-        'sub_menu': null
+        'sub_menu': [
+          {
+            'menuid': '2-1',
+            'name': '日志分类',
+            'link': '/blog/home/log_kind',
+            'icon': '',
+            'status': '1'
+          }
+        ]
       }
     ]
     this.$http.get('../static/json/color.json')

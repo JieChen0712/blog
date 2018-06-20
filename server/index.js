@@ -15,8 +15,8 @@ const app = express();
 app.set('views', path.join(__dirname, '../dist'));
 app.set('view engine', 'ejs');
 app.set('trust proxy', 1);
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use(cookieParser('keyboard cat'));
 
 app.use(session({
@@ -41,7 +41,7 @@ app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
-    if (req.method == 'OPTIONS') {
+    if (req.method == 'OPTIONS' && req.originalUrl.indexOf('/api')!=0) {
         res.send(html);
         /make the require of options turn back quickly/
     } else {
@@ -49,35 +49,35 @@ app.all('*', function(req, res, next) {
     }
 });
 
-app.get('/api/login*',function(req, res, next) {
-    if(req.session.user){
-        var user=req.session.user;
-        var name=user.name;
-        console.log(name)
-        next();
-    }else{
-        console.log('req')
+//app.get('/api/login*',function(req, res, next) {
+//  if(req.session.user){
+//      var user=req.session.user;
+//      var name=user.name;
+//      console.log(name)
+//      next();
+//  }else{
+//      console.log('req')
+////      res.redirect('/blog/login');
+//      res.send('你还没有登录，先登录下再试试！');
+//  }
+//});
+//app.get('/blog',function(req, res, next) {
+//      res.redirect('/blog/home');
+////      res.send('你还没有登录，先登录下再试试！');
+//  
+//});
+//app.get('/blog/home*',function(req, res, next) {
+//  if(req.session.user){
+//      var user=req.session.user;
+//      var name=user.name;
+//      console.log(name)
+//      next();
+//  }else{
+//      console.log('req')
 //      res.redirect('/blog/login');
-        res.send('你还没有登录，先登录下再试试！');
-    }
-});
-app.get('/blog',function(req, res, next) {
-        res.redirect('/blog/home');
-//      res.send('你还没有登录，先登录下再试试！');
-    
-});
-app.get('/blog/home*',function(req, res, next) {
-    if(req.session.user){
-        var user=req.session.user;
-        var name=user.name;
-        console.log(name)
-        next();
-    }else{
-        console.log('req')
-        res.redirect('/blog/login');
-//      res.send('你还没有登录，先登录下再试试！');
-    }
-});
+////      res.send('你还没有登录，先登录下再试试！');
+//  }
+//});
 app.use(history());
 // 访问静态资源文件
 app.use(express.static(path.resolve(__dirname,'../dist')));

@@ -6,6 +6,7 @@ import Login from '../views/login'
 
 export default[
 // {path: '/hello', component: HelloWorld, name: 'hello'},
+  {path: '/404',component: NotFound,name: '', hidden: true},
   {
     path: '/blog/home',
     component: Home,
@@ -17,5 +18,7 @@ export default[
       { path: '/blog/home/setting', component: setting, name: '个人中心' }
     ]
   },
-  {path: '/blog/login', component: Login, name: '登录'}
+  {path: '/blog/login', component: Login, name: '登录'},
+  {path:'/blog', redirect:'/blog/home'},
+  {path: '*',hidden: true,redirect: { path: '/404' }}
 ]

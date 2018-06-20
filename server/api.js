@@ -77,7 +77,7 @@ router.post('/api/img/upload', function(req, res, next) {
 //});
 
 // 查询所有用户接口
-router.get('/api/login/getAccount', (req, res, fields) => {
+router.get('/api/login/getAccount',requireLogin, (req, res, fields) => {
     // 通过模型去查找数据库
     models.getConnection((err, conn) => {
         conn.query(sql.common.select_all, ['admin'], (err, result) => {
@@ -95,7 +95,7 @@ router.get('/api/login/getAccount', (req, res, fields) => {
 });
 
 // 用户信息修改接口
-router.post('/api/user/set_user_detail', (req, res, fields) => {
+router.post('/api/user/set_user_detail', requireLogin, (req, res, fields) => {
 //  console.log(req);
 //  res.send(req.body.address);
     console.log([
@@ -155,7 +155,7 @@ router.post('/api/user/set_user_detail', (req, res, fields) => {
 });
 
 // 用户登录接口
-router.post('/api/login', (req, res, fields) => {
+router.post('/api/blog/login', (req, res, fields) => {
     models.getConnection((err, conn) => {
         conn.query(sql.user.login, [req.body.ac], (err, result) => {
             if(err) {
@@ -167,7 +167,7 @@ router.post('/api/login', (req, res, fields) => {
                     req.session.save();
                     res.cookie('NODESESSIONID',req.sessionID, {maxAge: 1000 * 1000});
 //                  req.cookies.user = req.sessionId;
-//                  console.log('success login');
+                    console.log('success login');
 //                  console.log(req.sessionStore);
 //                  console.log(req.session);
 //                  console.log(req.sessionID);
@@ -179,7 +179,7 @@ router.post('/api/login', (req, res, fields) => {
                 }else{
                     result_info = {
                         code: 2,
-                        info: result[0]['name'],
+                        info: null,
                         msg: "登录失败！"
                     }
                     console.log('error login');
@@ -191,5 +191,15 @@ router.post('/api/login', (req, res, fields) => {
     });
 });
 
+/**
+ * Middleware 用户权限校验
+ */
+function requireLogin (req, res, next) {
+    if(req.user){
+        next();
+    }else{
+        next(new Error('登录用户才能访问'));
+    }
+}
 
 module.exports = router;

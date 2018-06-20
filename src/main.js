@@ -8,29 +8,32 @@ import axios from 'axios'
 import elementui from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // font-awesome icon
+import promise from 'es6-promise'
 import 'font-awesome/css/font-awesome.min.css'
-// import {getCookie, delCookie} from './common/js/base.js'
+import {getCookie, delCookie} from './common/js/base.js'
 
 Vue.config.productionTip = false
 Vue.use(elementui)
 Vue.use(router)
 
+promise.polyfill(App)
+
 axios.defaults.withCredentials = true
 Vue.prototype.$http = axios
 
-// router.beforeEach((to, from, next) => {
-// if (to.path === '/login') {
-//  delCookie('NODESESSIONID')
-// }
-// let user = getCookie('NODESESSIONID')
-// if (!user && to.path !== '/login') {
-//  next({
-//    path: '/login'
-//  })
-// } else {
-//  next()
-// }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.path === '/blog/Login') {
+    delCookie('NODESESSIONID')
+  }
+  let user = getCookie('NODESESSIONID')
+  if (!user && to.path !== '/blog/Login') {
+    next({
+      path: '/blog/Login'
+    })
+  } else {
+    next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
@@ -40,4 +43,4 @@ new Vue({
 }).$mount('#app')
 
 // 默认跳到hellow页面
-router.push('/blog/login')
+// router.push('/blog/Login')
