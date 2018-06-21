@@ -77,15 +77,18 @@ router.post('/api/img/upload', function(req, res, next) {
 //});
 
 // 查询所有用户接口
-router.get('/api/login/getAccount',requireLogin, (req, res, fields) => {
+router.get('/api/blog/getAccount', (req, res, fields) => {
     // 通过模型去查找数据库
     models.getConnection((err, conn) => {
-        conn.query(sql.common.select_all, ['admin'], (err, result) => {
+        let param = req.query || req.params;
+        let pageNum = parseInt(param.pageNum || 1);// 页码
+        let end = parseInt(param.pageSize || 10); // 默认页数
+        let start = (pageNum - 1) * end;
+        console.log(req.body)
+        conn.query(sql.common.select_all, ['user_account',start, end], (err, result) => {
             if(err) {
-              console.log(req.sessionID);
                 res.send(err);
             } else {
-              console.log(req.sessionID);
                 responseJSON(res, result);
                 //              res.send(result);
             }
@@ -98,21 +101,21 @@ router.get('/api/login/getAccount',requireLogin, (req, res, fields) => {
 router.post('/api/user/set_user_detail', requireLogin, (req, res, fields) => {
 //  console.log(req);
 //  res.send(req.body.address);
-    console.log([
-                req.body.nickname, 
-                req.body.sex, 
-                req.body.phone, 
-                req.body.qq, 
-                req.body.wechat, 
-                req.body.email, 
-                req.body.introduct, 
-                req.body.province, 
-                req.body.city, 
-                req.body.county, 
-                req.body.address, 
-                req.body.brith_day, 
-                md5(req.body.uid)
-            ]);
+//  console.log([
+//              req.body.nickname, 
+//              req.body.sex, 
+//              req.body.phone, 
+//              req.body.qq, 
+//              req.body.wechat, 
+//              req.body.email, 
+//              req.body.introduct, 
+//              req.body.province, 
+//              req.body.city, 
+//              req.body.county, 
+//              req.body.address, 
+//              req.body.brith_day, 
+//              md5(req.body.uid)
+//          ]);
     models.getConnection((err, conn) => {
         conn.query(sql.user.set_user_detail,
             [

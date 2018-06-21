@@ -47,15 +47,15 @@ export default {
         'sub_menu': [
           {
             'menuid': '1-1',
-            'name': '账号管理',
+            'name': '个人中心',
             'link': '/blog/home/setting',
             'icon': '',
             'status': '1'
           },
           {
             'menuid': '1-2',
-            'name': '账号管理2',
-            'link': '/blog/home/hello',
+            'name': '用户列表',
+            'link': '/blog/home/accountList',
             'icon': '',
             'status': '1'
           }

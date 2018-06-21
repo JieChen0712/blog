@@ -40,7 +40,7 @@ app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', 'true');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-
+    console.log(req.originalUrl.indexOf('/api'))
     if (req.method == 'OPTIONS' && req.originalUrl.indexOf('/api')!=0) {
         res.send(html);
         /make the require of options turn back quickly/
@@ -78,11 +78,12 @@ app.all('*', function(req, res, next) {
 ////      res.send('你还没有登录，先登录下再试试！');
 //  }
 //});
+app.use(api);
 app.use(history());
 // 访问静态资源文件
 app.use(express.static(path.resolve(__dirname,'../dist')));
 //app.use(express.static(path.resolve(__dirname,'../dist')));
-app.use(api);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

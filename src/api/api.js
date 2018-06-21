@@ -8,6 +8,8 @@ axios.defaults.transformRequest = (data, headers) => { return headers['Content-T
 
 export const login = params => { return axios.post(`/api/blog/login`, params) }
 
+export const getUsers = params => { return axios.get(`/api/blog/getAccount`, params) }
+
 export const requestLogin = params => { return axios.post(`/login`, params).then(res => res.data) }
 
 export const getUserList = params => { return axios.get(`/user/list`, { params: params }) }
