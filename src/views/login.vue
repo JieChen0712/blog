@@ -56,15 +56,20 @@ export default {
               this.logining = false
               // NProgress.done()
               if (response.data.code === 1) {
-                this.$message({
+                this.$notify({
+                  title: '成功',
                   message: response.data.msg,
-                  type: 'success'
+                  type: 'success',
+                  position: 'bottom-right',
+                  showClose: false
                 })
                 this.$router.push({ path: '/blog/home' })
               } else {
-                this.$message({
+                this.$notify.error({
+                  title: '错误',
                   message: response.data.msg,
-                  type: 'error'
+                  position: 'bottom-right',
+                  showClose: false
                 })
               }
             })

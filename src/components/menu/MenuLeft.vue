@@ -75,8 +75,7 @@ export default {
     height: 100%;
     width: 250px;
     overflow: hidden;
-    padding-left: 5px;
-    padding-bottom: 35px;
+    padding: 55px 0px 35px 5px;
     transition: width .5s ease;
     box-sizing: border-box;
     &.close{
@@ -110,6 +109,13 @@ export default {
           width: 90px;
         }
         .logo-wrapper{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          min-width: 250px;
+          -webkit-transition: all .5s ease;
+          transition: all .5s ease;
           height: 55px;
           padding: 15px 20px;
           color: white;

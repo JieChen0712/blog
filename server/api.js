@@ -77,19 +77,28 @@ router.post('/api/img/upload', function(req, res, next) {
 //});
 
 // 查询所有用户接口
-router.get('/api/blog/getAccount', (req, res, fields) => {
+router.get('/api/blog/getAccount', requireLogin, (req, res, fields) => {
     // 通过模型去查找数据库
     models.getConnection((err, conn) => {
         let param = req.query || req.params;
         let pageNum = parseInt(param.pageNum || 1);// 页码
-        let end = parseInt(param.pageSize || 10); // 默认页数
+        let end = parseInt(param.pageSize || 2); // 默认页数
         let start = (pageNum - 1) * end;
-        console.log(req.body)
-        conn.query(sql.common.select_all, ['user_account',start, end], (err, result) => {
+//      console.log(param)
+        conn.query(sql.common.select_all + sql.common.count, ['user_account',start, end,'user_account'], (err, result) => {
             if(err) {
                 res.send(err);
             } else {
-                responseJSON(res, result);
+              let result_info = {
+                code: 1,
+                info: {
+                  list: result[0],
+                  currertPage: pageNum,
+                  count: result[1][0]['sum']
+                },
+                msg: "获取成功"
+              }
+              responseJSON(res, result_info);
                 //              res.send(result);
             }
             conn.release();
@@ -168,7 +177,7 @@ router.post('/api/blog/login', (req, res, fields) => {
                     let user = {'account': req.body.ac,'name':result[0]['name'],'password':md5(result[0]['password'])};
                     req.session.user = user;
                     req.session.save();
-                    res.cookie('NODESESSIONID',req.sessionID, {maxAge: 1000 * 1000});
+                    res.cookie('NODESESSIONID',req.sessionID, {maxAge: 1000 * 10000});
 //                  req.cookies.user = req.sessionId;
                     console.log('success login');
 //                  console.log(req.sessionStore);
@@ -198,10 +207,11 @@ router.post('/api/blog/login', (req, res, fields) => {
  * Middleware 用户权限校验
  */
 function requireLogin (req, res, next) {
-    if(req.user){
+    if(req.session.user){
         next();
     }else{
-        next(new Error('登录用户才能访问'));
+        res.cookie('NODESESSIONID','', {maxAge: -1});
+        res.send('用户登录后才能访问');
     }
 }
 

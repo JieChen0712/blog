@@ -40,7 +40,7 @@ app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', 'true');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-    console.log(req.originalUrl.indexOf('/api'))
+//  console.log(req.originalUrl.indexOf('/api'))
     if (req.method == 'OPTIONS' && req.originalUrl.indexOf('/api')!=0) {
         res.send(html);
         /make the require of options turn back quickly/

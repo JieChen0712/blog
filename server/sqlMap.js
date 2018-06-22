@@ -1,7 +1,7 @@
 const sqlMap = {
     common: {
-        select_all: 'SELECT * FROM ?? limit ?, ?',
-        count: 'select count(*) as sum from ??'
+        select_all: 'SELECT * FROM ?? limit ?, ?;',
+        count: 'select count(*) as sum from ??;'
     },
     user: {
         all_user: 'SELECT * FROM admin',

@@ -78,7 +78,7 @@ export default {
         ]
       }
     ]
-    this.$http.get('../static/json/color.json')
+    this.$http.get('../../static/json/color.json')
       .then(response => {
         let menuColor = response.data.color.menu
         this.textColor = menuColor['text-color']

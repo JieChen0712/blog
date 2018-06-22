@@ -1,21 +1,19 @@
 <template>
   <div class="table">
-      <el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
-        <el-table-column type="selection" width="55">
+      <el-table :data="data" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
+        <el-table-column align="left" type="selection" width="55">
         </el-table-column>
-        <el-table-column type="index" width="60">
+        <el-table-column align="left" type="index" width="60">
         </el-table-column>
-        <el-table-column prop="name" label="姓名" width="120" sortable>
+        <el-table-column align="left" prop="account" label="帐号"  sortable>
         </el-table-column>
-        <el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+        <el-table-column align="left" prop="password" label="密码">
         </el-table-column>
-        <el-table-column prop="age" label="年龄" width="100" sortable>
+        <el-table-column align="left" prop="power" label="权限" sortable>
         </el-table-column>
-        <el-table-column prop="birth" label="生日" width="120" sortable>
+        <el-table-column align="left" prop="type" label="类型" :formatter="formatType" sortable>
         </el-table-column>
-        <el-table-column prop="addr" label="地址" min-width="180" sortable>
-        </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column align="left" label="操作" >
             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </el-table-column>
@@ -31,7 +29,7 @@ export default {
       filters: {
         name: ''
       },
-      users: [],
+      data: [],
       total: 0,
       page: 1,
       listLoading: false,
@@ -42,18 +40,35 @@ export default {
     this.getUsers()
   },
   methods: {
+    handleCurrentChange (val) {
+      this.page = val
+      this.getUsers()
+    },
     getUsers () {
       let params = {
         pageNum: this.page,
         name: this.filters.name
       }
+      this.listLoading = true
       getUsers(params)
-        .then(response => {
-          console.log(response)
+        .then(res => {
+          if (res.data.code === 1) {
+            this.total = res.data.count
+            this.data = res.data.info.list
+            this.listLoading = false
+          } else {
+            this.$message.error(res.data.msg)
+          }
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    selsChange (sels) {
+      this.sels = sels
+    },
+    formatType (row, column) {
+      return row.type === 1 ? '系统注册' : row.type === 2 ? 'QQ注册' : '微信注册'
     }
   }
 }
@@ -62,5 +77,8 @@ export default {
 <style lang="scss" scoped="" type="text/css">
 .table{
   width: 100%;
+  tr,td,th{
+    text-align: left;
+  }
 }
 </style>
