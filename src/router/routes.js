@@ -4,10 +4,11 @@ import Home from '../views/Home'
 import setting from '../views/account/setting'
 import accountList from '../views/account/list'
 import Login from '../views/login'
+import NotFound from '../views/404'
 
 export default[
 // {path: '/hello', component: HelloWorld, name: 'hello'},
-// {path: '/404', component: NotFound, name: '', hidden: true},
+  {path: '/404', component: NotFound, name: '', hidden: true},
   {
     path: '/blog/home',
     component: Home,
