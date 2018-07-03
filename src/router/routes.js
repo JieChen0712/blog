@@ -5,6 +5,7 @@ import setting from '../views/account/setting'
 import accountList from '../views/account/list'
 import Login from '../views/login'
 import NotFound from '../views/404'
+import Register from '../views/register'
 
 export default[
 // {path: '/hello', component: HelloWorld, name: 'hello'},
@@ -22,6 +23,7 @@ export default[
     ]
   },
   {path: '/blog/login', component: Login, name: '登录'},
+  {path: '/blog/register', component: Register, name: '注册'},
   {path: '/blog', redirect: '/blog/home'},
   {path: '*', hidden: true, redirect: { path: '/404' }}
 ]

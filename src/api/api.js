@@ -5,12 +5,12 @@ const querystring = require('querystring')
 axios.defaults.withCredentials = true
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.transformRequest = (data, headers) => { return headers['Content-Type'] === 'application/json' ? data : querystring.stringify(data) }
-
+// 登录接口
 export const login = params => { return axios.post(`/api/blog/login`, params) }
-
+// 获取所有用户信息
 export const getUsers = params => { return axios.get(`/api/blog/getAccount?pageNum=${params.pageNum}`) }
-
-export const requestLogin = params => { return axios.post(`/login`, params).then(res => res.data) }
+// 注册账号
+export const register = params => { return axios.post(`/api/blog/register`, params) }
 
 export const getUserList = params => { return axios.get(`/user/list`, { params: params }) }
 
