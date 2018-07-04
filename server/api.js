@@ -5,6 +5,7 @@ const sql = require('./sqlMap'); // sql语句集
 const md5 = require('js-md5'); // md5加密验证
 const upload = require('./upload');
 const fs = require('fs');
+const common = require('./common');
 
 // 响应请求的json数据模板
 const responseJSON = (res, ret) => {
@@ -197,37 +198,67 @@ router.post('/api/blog/login', (req, res, fields) => {
 router.post('/api/blog/register', (req, res, fields) => {
   let power = 1;
   let type = 1;
-  let password = '';
+  let name = req.body.name;
+  let password = req.body.pd;
+  let account = req.body.ac;
   let result_info = null;
-  let is_exist = true;
-  models.getConnection((err, conn) => {
-    conn.query(sql.common.check_exist, ["user_account", "account", req.body.ac], (err, datas) => {
-      if(err) {
-        res.send(err);
-      } else {
-        console.log(datas);
-        if(datas.length > 0) {
+  common.getLink(sql.common.check_exist, ["user_account", "account", account], function(err, result) {
+    if(err) {
+      res.send(err);
+    } else if(result != null && result[0]['num'] > 0) {
+      result_info = {
+        code: -1,
+        info: null,
+        msg: '该账号已存在！'
+      }
+      responseJSON(res, result_info);
+    } else {
+      password = md5(password);
+      common.getLink(sql.user.register, [account, password, power, type], function(err, results) {
+        console.log(results);
+        if(err) {
+          res.send(err);
+        } else if (results) {
+          let user = {
+            'account': account,
+            'name': account,
+            'password': password
+          };
+          req.session.user = user;
+          req.session.save();
+          res.cookie('NODESESSIONID', req.sessionID, {
+            maxAge: 1000 * 10000
+          });
+          let time = new Date().valueOf();
+          let clientIp = getClientIP(req);
+          let superagent = require('superagent');
+          let ipurl = 'http://ip.taobao.com/service/getIpInfo.php?ip='+ clientIp;
+          superagent.get(ipurl)
+            .withCredentials()
+            .end((err, data) => {
+              if (data.ok) {
+                const address_info = JSON.parse(data.text);
+                common.getLink(sql.user.add_user_detail, [name, account, address_info.data.province, address_info.data.city, time, clientIp],function(errors, datas){});
+              } else {
+                console.log('获取地址信息失败！');
+              }
+            });
+          console.log('register login');
           result_info = {
-            code: -1,
-            info: null,
-            msg: "该帐号已被注册！"
+            code: 1,
+            info: results,
+            msg: '注册成功！'
           }
-          responseJSON(res, result_info);
         } else {
-          is_exist = false;
+          result_info = {
+            code: -2,
+            info: null,
+            msg: '注册失败！'
+          }
         }
-      }
-      conn.release();
-    })
-    
-    password = md5(req.body.pd)
-    conn.query(sql.user.register, [req.body.ac, password, power, type], (e, data) => {
-      if(e){
-        res.send(e);
-      }else{
-        console.log(data);
-      }
-    })
+        responseJSON(res, result_info);
+      })
+    }
   })
 })
 
@@ -251,19 +282,13 @@ function requireLogin(req, res, next) {
  * @param {Object} req - 请求
  */
 function getClientIP(req) {
-    return req.headers['x-forwarded-for'] || // 判断是否有反向代理 IP
-        req.connection.remoteAddress || // 判断 connection 的远程 IP
-        req.socket.remoteAddress || // 判断后端的 socket 的 IP
-        req.connection.socket.remoteAddress;
+  return req.headers['x-forwarded-for'] || // 判断是否有反向代理 IP
+    req.connection.remoteAddress || // 判断 connection 的远程 IP
+    req.socket.remoteAddress || // 判断后端的 socket 的 IP
+    req.connection.socket.remoteAddress;
 };
 
 module.exports = router;
-
-
-
-
-
-
 
 //router.post('/api/blog/register', (req, res, fields) => {
 //let power = 1;

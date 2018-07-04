@@ -107,7 +107,7 @@ app.use(function(err, req, res, next) {
 //  res.send(html)
 //})
 
-app.listen(8085);
+app.listen(8085, '0.0.0.0');
 console.log('success to listen....');
 
 

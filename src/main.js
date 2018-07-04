@@ -22,13 +22,13 @@ axios.defaults.withCredentials = true
 Vue.prototype.$http = axios
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/blog/Login') {
+  if (to.path === '/blog/login') {
     delCookie('NODESESSIONID')
   }
   let user = getCookie('NODESESSIONID')
-  if (!user && to.path !== '/blog/Login') {
+  if (!user && to.path !== '/blog/login' && to.path !== '/blog/register') {
     next({
-      path: '/blog/Login'
+      path: '/blog/login'
     })
   } else {
     next()

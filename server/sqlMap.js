@@ -2,7 +2,7 @@ const sqlMap = {
     common: {
         select_all: 'SELECT * FROM ?? limit ?, ?;',
         count: 'select count(*) as sum from ??;',
-        check_exist: 'select * from ?? where ?? = ?;'
+        check_exist: 'SELECT COUNT(1) AS num FROM ?? WHERE ?? = ?'
     },
     user: {
         all_user: 'SELECT * FROM admin;',
@@ -14,7 +14,7 @@ const sqlMap = {
         set_user_detail: 'UPDATE user_detail SET nickname = ?,sex = ?,phone = ?,qq = ?,wechat = ?,email = ?,introduce = ?,province = ?,city = ?,county = ?,address = ?,brith_day = ? WHERE uid = ?;',
         login: 'SELECT * FROM admin WHERE account = ?;',
         register: 'INSERT INTO user_account (account, password, power, type) values (?, ?, ?, ?);',
-        add_user_detail: 'INSERT INTO user_detail (email, province, city, register_time, register_ip) values (?, ?, ?, ?, ?);'
+        add_user_detail: 'INSERT INTO user_detail (name, email, province, city, register_time, register_ip) values (?, ?, ?, ?, ?, ?);'
     }
 }
 
