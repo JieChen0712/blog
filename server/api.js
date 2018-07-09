@@ -219,16 +219,16 @@ router.post('/api/blog/register', (req, res, fields) => {
         if(err) {
           res.send(err);
         } else if (results) {
-          let user = {
-            'account': account,
-            'name': account,
-            'password': password
-          };
-          req.session.user = user;
-          req.session.save();
-          res.cookie('NODESESSIONID', req.sessionID, {
-            maxAge: 1000 * 10000
-          });
+//        let user = {
+//          'account': account,
+//          'name': account,
+//          'password': password
+//        };
+//        req.session.user = user;
+//        req.session.save();
+//        res.cookie('NODESESSIONID', req.sessionID, {
+//          maxAge: 1000 * 10000
+//        });
           let time = new Date().valueOf();
           let clientIp = getClientIP(req);
           let superagent = require('superagent');
@@ -247,7 +247,7 @@ router.post('/api/blog/register', (req, res, fields) => {
           result_info = {
             code: 1,
             info: results,
-            msg: '注册成功！'
+            msg: '注册成功！请等待管理员审核！'
           }
         } else {
           result_info = {

@@ -8,10 +8,10 @@
       <el-form-item prop="email">
         <el-input type="email" v-model="formData.email" auto-complete="off" placeholder="邮箱地址"></el-input>
       </el-form-item>
-      <el-form-item prop="password">
+      <el-form-item prop="pass">
         <el-input type="password" v-model="formData.password" auto-complete="off" placeholder="密码"></el-input>
       </el-form-item>
-      <el-form-item prop="checPass">
+      <el-form-item prop="checkPass">
         <el-input type="password" v-model="formData.checkPass" auto-complete="off" placeholder="确认密码"></el-input>
       </el-form-item>
       <el-form-item style="width:100%;">
@@ -25,17 +25,17 @@
 import { register } from '../api/api'
 export default {
   data () {
-    let validatePass = (rule, value, callback) => {
+    var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
       } else {
         if (this.formData.checkPass !== '') {
-          this.$refs.ruleForm2.validateField('checkPass')
+          this.$refs.formData.validateField('checkPass')
         }
         callback()
       }
     }
-    let validatePass2 = (rule, value, callback) => {
+    var validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'))
       } else if (value !== this.formData.passWord) {
@@ -53,6 +53,10 @@ export default {
         checPass: ''
       },
       rules2: {
+        name: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
         pass: [
           { validator: validatePass, trigger: 'blur' }
         ],
@@ -79,7 +83,6 @@ export default {
                   position: 'bottom-right',
                   showClose: false
                 })
-                this.$router.push({ path: '/blog/home' })
               } else {
                 this.$notify.error({
                   title: '错误',
