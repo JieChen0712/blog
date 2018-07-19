@@ -89,6 +89,7 @@ export default {
         font-size: 25px;
         cursor: pointer;
         transition: color .5s ease;
+        z-index: 10;
         &.open{
             @include menu-logo-color();
         }

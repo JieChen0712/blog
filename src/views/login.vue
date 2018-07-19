@@ -29,7 +29,7 @@ import register from './register'
 export default {
   data () {
     return {
-      register: false,
+      register: true,
       logining: false,
       ruleForm2: {
         account: '',

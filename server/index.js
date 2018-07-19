@@ -7,6 +7,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const express = require('express');
 const history = require('connect-history-api-fallback');
+const ueditor = require('ueditor');
 //const passport = require('passport');
 //const LocalStrategy = require('passport-local').Strategy;
 //const flash = require('connect-flash');

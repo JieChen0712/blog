@@ -262,6 +262,34 @@ router.post('/api/blog/register', (req, res, fields) => {
   })
 })
 
+router.post('/api/add_article', requireLogin, (req, res, field) => {
+  models.getConnection((err, conn) => {
+    conn.query(sql.article.add, [req.body.title, req.body.content, req.body.time, req.body.author, req.body.status], (err, result) => {
+      if(err){
+        res.send(err);
+      }else{
+        let result_info;
+        if(Object.keys(result).length == 0) {
+          result_info = {
+            code: 0,
+            info: null,
+            msg: "文章发布失败！"
+          };
+        } else {
+          result_info = {
+            code: 1,
+            info: result,
+            msg: "文章发布成功！"
+          }
+        }
+        responseJSON(res, result_info);
+        //              res.send(result_info);
+      }
+      conn.release();
+    })
+  })
+});
+
 /**
  * Middleware 用户权限校验
  */

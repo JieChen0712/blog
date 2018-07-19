@@ -15,6 +15,9 @@ const sqlMap = {
         login: 'SELECT * FROM admin WHERE account = ?;',
         register: 'INSERT INTO user_account (account, password, power, type) values (?, ?, ?, ?);',
         add_user_detail: 'INSERT INTO user_detail (name, email, province, city, register_time, register_ip) values (?, ?, ?, ?, ?, ?);'
+    },
+    article: {
+        add: 'INSERT INTO artcile (title, content, time, author, status) values (?, ?, ?, ?, ?)'
     }
 }
 
