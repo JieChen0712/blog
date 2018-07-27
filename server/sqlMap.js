@@ -17,7 +17,8 @@ const sqlMap = {
         add_user_detail: 'INSERT INTO user_detail (name, email, province, city, register_time, register_ip) values (?, ?, ?, ?, ?, ?);'
     },
     article: {
-        add: 'INSERT INTO artcile (title, content, time, author, status) values (?, ?, ?, ?, ?)'
+        add: 'INSERT INTO artcile (title, content, time, author, status) values (?, ?, ?, ?, ?)',
+        delete: 'DELETE FROM article '
     }
 }
 

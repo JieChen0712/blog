@@ -7,6 +7,16 @@
           <el-input v-model="formData.name" placeholder="你的称呢"></el-input>
         </el-col>
       </el-form-item>
+      <el-form-item label="封面：" prop="name">
+        <el-col :span="7">
+          <el-input v-model="formData.name" placeholder="你的称呢"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="描述：" prop="name">
+        <el-col :span="7">
+          <el-input v-model="formData.name" placeholder="文章的内容描述"></el-input>
+        </el-col>
+      </el-form-item>
       <el-form-item label="分类：" prop="name">
         <el-col :span="7">
           <el-select v-model="value8" filterable placeholder="请选择">
@@ -36,7 +46,9 @@ export default {
       formData: {
         title: '',
         kind: '',
-        ueContent: ''
+        ueContent: '',
+        disc: '',
+        
       },
       options: [{
         value: '选项1',
