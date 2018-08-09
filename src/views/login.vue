@@ -16,9 +16,9 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="register_wrapper">
+    <!--<div class="register_wrapper">
       <register></register>
-    </div>
+    </div>-->
   </div>
 </template>
 

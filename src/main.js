@@ -10,7 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 // font-awesome icon
 import promise from 'es6-promise'
 import 'font-awesome/css/font-awesome.min.css'
-import {getCookie, delCookie} from './common/js/base.js'
+// import {getCookie, delCookie} from './common/js/base.js'
 // ueditor
 import '../static/ueditor/ueditor.config.js'
 import '../static/ueditor/ueditor.all.min.js'
@@ -26,19 +26,19 @@ promise.polyfill(App)
 axios.defaults.withCredentials = true
 Vue.prototype.$http = axios
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/blog/login') {
-    delCookie('NODESESSIONID')
-  }
-  let user = getCookie('NODESESSIONID')
-  if (!user && to.path !== '/blog/login' && to.path !== '/blog/register') {
-    next({
-      path: '/blog/login'
-    })
-  } else {
-    next()
-  }
-})
+//  router.beforeEach((to, from, next) => {
+//    if (to.path === '/blog/login') {
+//      delCookie('NODESESSIONID')
+//    }
+//    let user = getCookie('NODESESSIONID')
+//    if (!user && to.path !== '/blog/login' && to.path !== '/blog/register') {
+//      next({
+//        path: '/blog/login'
+//      })
+//    } else {
+//      next()
+//    }
+//  })
 
 /* eslint-disable no-new */
 new Vue({

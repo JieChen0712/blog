@@ -12,12 +12,7 @@
           <span class="r-text">JieChen</span>
         </el-form-item>
         <el-form-item label="用户头像：" prop="avatar">
-          <el-col :span="7">
-            <el-upload class="avatar-uploader" action="/api/img/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-              <img v-if="formData.avatar" :src="formData.avatar" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </el-col>
+          <uploadsingle :filePath="filePath" :imgUrl="formData.avatar" @change="setAvatar"></uploadsingle>
         </el-form-item>
         <el-form-item label="我的签名：" prop="desc">
           <el-col :span="24">
@@ -73,6 +68,7 @@
 <script type="text/ecmascript">
 import breadcrumb from '../../components/breadcrumb/breadcrumb'
 import citypicker from '../../components/citypicker/citypicker'
+import uploadsingle from '../../components/upload/uploadSingle'
 import rule from '../../common/js/rules.js'
 export default {
   data () {
@@ -89,7 +85,8 @@ export default {
         qq: '',
         wechat: ''
       },
-      rules: rule
+      rules: rule,
+      filePath: {path: 'avatar'}
     }
   },
   methods: {
@@ -134,25 +131,14 @@ export default {
       this.formData.city = value[1]
       this.formData.county = value[2]
     },
-    handleAvatarSuccess (res, file) {
-      this.formData.avatar = URL.createObjectURL(file.raw)
-    },
-    beforeAvatarUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
+    setAvatar (value) {
+      this.formData.avatar = value
     }
   },
   components: {
     breadcrumb,
-    citypicker
+    citypicker,
+    uploadsingle
   }
 }
 </script>
@@ -166,28 +152,6 @@ export default {
     padding:1.5rem;
     text-align: left;
     max-width: 830px;
-  }
-  .avatar-uploader {
-    border:solid 5px red;
-    .el-upload {
-      border:solid 5px red!important;
-      /*border: 1px dashed #d9d9d9;*/
-      border-radius: 6px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      &:hover{
-        border-color: #409EFF;
-      }
-    }
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
   }
 }
 </style>
