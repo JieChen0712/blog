@@ -6,10 +6,10 @@ import router from './router'
 import axios from 'axios'
 // import element-ui
 import elementui from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import '../node_modules/element-ui/lib/theme-chalk/index.css'
 // font-awesome icon
 import promise from 'es6-promise'
-import 'font-awesome/css/font-awesome.min.css'
+import '../node_modules/font-awesome/css/font-awesome.min.css'
 // import {getCookie, delCookie} from './common/js/base.js'
 // ueditor
 import '../static/ueditor/ueditor.config.js'

@@ -46,15 +46,10 @@ export default {
 </script>
 
 <style lang="scss" scoped="" type="text/css">
+@import '../../common/scss/base.scss';
 .upload {
   .avatar-uploader {
-    border: solid 5px red;
-    .el-upload {
-      border: solid 5px red;
-    }
-  }
-  .el-upload-dragger {
-    width: 180px;
+    overflow: hidden;
   }
   .avatar-uploader-icon {
     font-size: 28px;

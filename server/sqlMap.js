@@ -5,7 +5,7 @@ const sqlMap = {
         check_exist: 'SELECT COUNT(1) AS num FROM ?? WHERE ?? = ?'
     },
     user: {
-        all_user: 'SELECT * FROM admin;',
+        all_user: 'SELECT * FROM user_account;',
         query_username: 'SELECT * FROM admin WHERE username = ?;',
         add_user: 'INSERT INTO admin(username,password) values(?,?);',
         updata_pd: 'UPDATE admin SET password = ? WHERE username = ?;',
@@ -15,6 +15,13 @@ const sqlMap = {
         login: 'SELECT * FROM admin WHERE account = ?;',
         register: 'INSERT INTO user_account (account, password, power, type) values (?, ?, ?, ?);',
         add_user_detail: 'INSERT INTO user_detail (name, email, province, city, register_time, register_ip) values (?, ?, ?, ?, ?, ?);'
+    },
+    admin: {
+      getInfo: 'SELECT * FROM (SELECT * FROM admin WHERE id = ?) AS admin LEFT JOIN admin_detail ON admin.id = admin_detail.uid;',
+      insertInfo: 'INSERT INTO admin_detail(name,phone,headimg,register_time,register_ip,email,wechat,qq,status,nickname,introduce,province,city,county,sex,birth_day,address,uid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,);',
+      setInfo: 'UPDATE admin_detail SET nickname = ?,sex = ?,phone = ?,qq = ?,wechat = ?,email = ?,introduce = ?,province = ?,city = ?,county = ?,address = ?,brith_day = ? WHERE uid = ?;',
+      checkLogin: 'SELECT * FROM admin WHERE username = ? and password = ?;',
+      login: 'SELECT * FROM admin WHERE account = ?;',
     },
     article: {
         add: 'INSERT INTO artcile (title, content, time, author, status) values (?, ?, ?, ?, ?)',

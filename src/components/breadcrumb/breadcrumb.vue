@@ -26,6 +26,7 @@ export default {
     position: relative;
     height:50px;
     padding-left: 55px;
+    overflow: hidden;
     @include breadcrumb-bg-color();
     &:before{
       content: "";

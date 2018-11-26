@@ -66,6 +66,7 @@
 </template>
 
 <script type="text/ecmascript">
+import { getAdminInfo, setAdminInfo } from '@/api/api'
 import breadcrumb from '../../components/breadcrumb/breadcrumb'
 import citypicker from '../../components/citypicker/citypicker'
 import uploadsingle from '../../components/upload/uploadSingle'
@@ -89,11 +90,20 @@ export default {
       filePath: {path: 'avatar'}
     }
   },
+  mounted () {
+    getAdminInfo()
+  },
   methods: {
+    getAdminInfo () {
+      this.$http.get(getAdminInfo)
+        .then(response => {
+          console.log(response)
+        })
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$http.post('/api/user/set_user_detail', {
+          this.$http.post(setAdminInfo, {
             nickname: this.formData.name,
             avatar: this.formData.avatar,
             sex: this.formData.sex,
@@ -152,6 +162,7 @@ export default {
     padding:1.5rem;
     text-align: left;
     max-width: 830px;
+    overflow: hidden;
   }
 }
 </style>

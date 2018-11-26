@@ -6,15 +6,15 @@ axios.defaults.withCredentials = true
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.transformRequest = (data, headers) => { return headers['Content-Type'] === 'application/json' ? data : querystring.stringify(data) }
 // 登录接口
-export const login = params => { return axios.post(`/api/blog/login`, params) }
+export const login = params => { return axios.post(`/api/blog/admin/login`, params) }
 // 获取所有用户信息
 export const getUsers = params => { return axios.get(`/api/blog/getAccount?pageNum=${params.pageNum}`) }
 // 注册账号
-export const register = params => { return axios.post(`/api/blog/register`, params) }
-
-export const getUserList = params => { return axios.get(`/user/list`, { params: params }) }
-
-export const getUserListPage = params => { return axios.get(`/user/listpage`, { params: params }) }
+export const register = params => { return axios.post(`/api/blog/user/register`, params) }
+// 获取管理员信息
+export const getAdminInfo = () => { return axios.get(`/api/blog/admin/getAdminInfo`) }
+// 保存编辑的管理员信息
+export const setAdminInfo = params => { return axios.post(`/api/user/set_user_detail`, params) }
 
 export const removeUser = params => { return axios.get(`/user/remove`, { params: params }) }
 

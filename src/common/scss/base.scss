@@ -35,6 +35,15 @@ body,html{
     }
 }
 
+.avatar-uploader{
+    .el-upload{
+        width: 100%;
+        .el-upload-dragger{
+            width: 100%;
+        }
+    }
+}
+
 
 // 1px的边框处理
 @media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5){

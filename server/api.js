@@ -97,6 +97,29 @@ router.get('/api/blog/getAccount', requireLogin, (req, res, fields) => {
   });
 });
 
+// 查询管理员信息接口
+router.get('/api/blog/admin/getAdminInfo', requireLogin, (req, res, fields) => {
+  // 通过模型去查找数据库
+  models.getConnection((err, conn) => {
+    let uid = req.session.user.id;
+    console.log(uid);
+    conn.query(sql.admin.getInfo, [uid], (err, result) => {
+      if(err) {
+        res.send(err);
+      } else {
+        let result_info = {
+          code: 1,
+          info: result[0],
+          msg: "获取成功"
+        }
+        responseJSON(res, result_info);
+        //              res.send(result);
+      }
+      conn.release();
+    });
+  });
+});
+
 // 用户信息修改接口
 router.post('/api/user/set_user_detail', requireLogin, (req, res, fields) => {
   //  console.log(req);
@@ -157,23 +180,20 @@ router.post('/api/user/set_user_detail', requireLogin, (req, res, fields) => {
 });
 
 // 用户登录接口
-router.post('/api/blog/login', (req, res, fields) => {
+router.post('/api/blog/admin/login', (req, res, fields) => {
   models.getConnection((err, conn) => {
-    conn.query(sql.user.login, [req.body.ac], (err, result) => {
+    conn.query(sql.admin.login, [req.body.ac], (err, result) => {
       if(err) {
         res.send(err);
       } else {
         if(md5(req.body.pd) == md5(result[0]['password'])) {
-          let user = {
-            'account': req.body.ac,
-            'name': result[0]['name'],
-            'password': md5(result[0]['password'])
-          };
+          let user = result[0];
           req.session.user = user;
           req.session.save();
           res.cookie('NODESESSIONID', req.sessionID, {
             maxAge: 1000 * 10000
           });
+          console.log(req.session.user);
           console.log('success login');
           result_info = {
             code: 1,
@@ -195,7 +215,7 @@ router.post('/api/blog/login', (req, res, fields) => {
   });
 });
 
-router.post('/api/blog/register', (req, res, fields) => {
+router.post('/api/blog/user/register', (req, res, fields) => {
   let power = 1;
   let type = 1;
   let name = req.body.name;

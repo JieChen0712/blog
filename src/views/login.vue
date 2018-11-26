@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { login } from '../api/api'
+import { login } from '@/api/api'
 import register from './register'
 // import NProgress from 'nprogress'
 export default {
