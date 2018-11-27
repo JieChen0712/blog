@@ -71,7 +71,14 @@ export default {
           {
             'menuid': '2-1',
             'name': '日志分类',
-            'link': '/blog/home/log_kind',
+            'link': '/blog/home/article/kind',
+            'icon': '',
+            'status': '1'
+          },
+          {
+            'menuid': '2-2',
+            'name': '日志列表',
+            'link': '/blog/home/article/index',
             'icon': '',
             'status': '1'
           }

@@ -6,7 +6,8 @@ import accountList from '../views/account/list'
 import Login from '../views/login'
 import NotFound from '../views/404'
 import Register from '../views/register'
-// import ArticleEdit from '../views/article/edit'
+import ArticleDetail from '../views/article/detail'
+import Article from '../views/article/index'
 
 export default[
 // {path: '/hello', component: HelloWorld, name: 'hello'},
@@ -20,8 +21,9 @@ export default[
       { path: '/blog/home/hello', component: HelloWorld, name: 'hello' },
       { path: '/blog/home/', component: HelloWorld, name: 'empty' },
       { path: '/blog/home/setting', component: setting, name: '个人中心' },
-      { path: '/blog/home/accountList', component: accountList, name: '用户列表' }
-      // { path: '/blog/home/article_edit', component: ArticleEdit, name: '编辑文章' }
+      { path: '/blog/home/accountList', component: accountList, name: '用户列表' },
+      { path: '/blog/home/article/detail', component: ArticleDetail, name: '文章编辑或添加' },
+      { path: '/blog/home/article/index', component: Article, name: '文章列表' }
     ]
   },
   {path: '/blog/login', component: Login, name: '登录'},
