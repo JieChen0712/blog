@@ -1,5 +1,6 @@
 <template>
   <div class="index">
+    <breadcrumb></breadcrumb>
     <el-table :data="tableData" ref="filterTable" style="width: 100%">
       <el-table-column label="日期" prop="date" sortable column-key="date"
       :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"
@@ -31,6 +32,7 @@
 </template>
 
 <script type="text/ecmascript">
+import breadcrumb from '../../components/breadcrumb/breadcrumb'
 export default {
   data () {
     return {
@@ -66,6 +68,9 @@ export default {
       const property = column['property']
       return row[property] === value
     }
+  },
+  components: {
+    breadcrumb
   }
 }
 </script>

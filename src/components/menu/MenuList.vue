@@ -20,6 +20,7 @@
 </template>
 
 <script type="text/ecmascript">
+import Color from '&/json/color.json'
 export default {
   props: {
     isCollapse: Boolean,
@@ -31,9 +32,9 @@ export default {
       list: {
         type: Array
       },
-      textColor: '',
-      activeTextColor: '',
-      backgroundColor: ''
+      textColor: Color.color.menu['text-color'],
+      activeTextColor: Color.color.menu['active-text-color'],
+      backgroundColor: Color.color.menu['background-color']
     }
   },
   created () {
@@ -85,16 +86,6 @@ export default {
         ]
       }
     ]
-    this.$http.get('../../static/json/color.json')
-      .then(response => {
-        let menuColor = response.data.color.menu
-        this.textColor = menuColor['text-color']
-        this.activeTextColor = menuColor['active-text-color']
-        this.backgroundColor = menuColor['background-color']
-      })
-      .catch(error => {
-        console.log(error)
-      })
   },
   mounted () {},
   methods: {

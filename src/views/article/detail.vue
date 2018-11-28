@@ -35,6 +35,7 @@
 
 <script type="text/ecmascript">
 import ueditor from '../../components/ueditor/ueditor'
+import breadcrumb from '../../components/breadcrumb/breadcrumb'
 
 export default {
   data () {
@@ -69,7 +70,8 @@ export default {
     }
   },
   components: {
-    ueditor
+    ueditor,
+    breadcrumb
   },
   created () {},
   mounted () {
