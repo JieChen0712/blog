@@ -1,35 +1,37 @@
 <template>
   <div class="detail">
     <breadcrumb></breadcrumb>
-    <el-form :model="formData" :rules="rules" ref="formData" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="标题：" prop="name">
-        <el-col :span="7">
-          <el-input v-model="formData.name" placeholder="文章标题"></el-input>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="封面：" prop="name">
-        <el-col :span="7">
-          <el-input v-model="formData.name" placeholder="文章的封面"></el-input>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="描述：" prop="name">
-        <el-col :span="7">
-          <el-input v-model="formData.name" placeholder="文章的内容描述"></el-input>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="分类：" prop="name">
-        <el-col :span="7">
-          <el-select v-model="value8" filterable placeholder="文章分类">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-          </el-select>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="文章内容：" prop="desc">
-        <el-col :span="24">
-          <ueditor :id=ueId :config=ueConfig :content=formData.ueContent ref="ue"></ueditor>
-        </el-col>
-      </el-form-item>
-    </el-form>
+    <div class="tb-wrap">
+      <el-form :model="formData" :rules="rules" ref="formData" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="标题：" prop="name">
+          <el-col :span="7">
+            <el-input v-model="formData.name" placeholder="文章标题"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="封面：" prop="name">
+          <el-col :span="7">
+            <el-input v-model="formData.name" placeholder="文章的封面"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="描述：" prop="name">
+          <el-col :span="7">
+            <el-input v-model="formData.name" placeholder="文章的内容描述"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="分类：" prop="name">
+          <el-col :span="7">
+            <el-select v-model="value8" filterable placeholder="文章分类">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+            </el-select>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="文章内容：" prop="desc">
+          <el-col :span="24">
+            <ueditor :id=ueId :config=ueConfig :content=formData.ueContent ref="ue"></ueditor>
+          </el-col>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 

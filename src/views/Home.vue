@@ -46,6 +46,11 @@ export default {
       left: 70px;
     }
     .wrapper{
+      height: 100%;
+      padding: .5rem;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
       @include Rotate(0deg,90deg,.5s);
     }
   }

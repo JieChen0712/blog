@@ -34,7 +34,7 @@ body,html{
         }
     }
 }
-
+// 上传图片控件
 .avatar-uploader{
     .el-upload{
         width: 100%;
@@ -44,6 +44,26 @@ body,html{
     }
 }
 
+// 固定基本内容样式
+.tb-wrap{
+    position: relative;
+    flex: 1;
+    border:solid 1px #354052;
+    overflow: hidden;
+}
+
+// 表格固定距离底部40px留给分页显示
+.el-table{
+    margin-bottom: 40px;
+}
+
+// 分页固定样式
+.page-wrap{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+}
 
 // 1px的边框处理
 @media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5){

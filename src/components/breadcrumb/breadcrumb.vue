@@ -23,6 +23,7 @@ export default {
 <style lang="scss" type="text/css">
 @import '../../common/scss/color.scss';
 .breadcrumb-wrapper{
+    flex: 0 0 50px;
     position: relative;
     height:50px;
     padding-left: 55px;
