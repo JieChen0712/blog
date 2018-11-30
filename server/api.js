@@ -204,6 +204,7 @@ router.post('/api/blog/admin/login', (req, res, fields) => {
           result_info = {
             code: 2,
             info: null,
+            a: [],
             msg: "登录失败！"
           }
           console.log('error login');

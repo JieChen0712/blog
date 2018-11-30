@@ -2,6 +2,20 @@
   <div class="index">
     <breadcrumb></breadcrumb>
     <div class="tb-wrap">
+      <el-form :inline="true" :model="filterArticle" class="demo-form-inline">
+        <el-form-item label="文章标题">
+          <el-input v-model="filterArticle.name" placeholder="审批人"></el-input>
+        </el-form-item>
+        <el-form-item label="发布状态">
+          <el-select v-model="filterArticle.status" placeholder="活动区域">
+            <el-option label="显示" value="1"></el-option>
+            <el-option label="不显示" value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="filterSubmit">查询</el-button>
+        </el-form-item>
+      </el-form>
       <el-table :data="tableData" ref="filterTable" border max-height="790" style="width: 100%">
         <el-table-column label="日期" prop="date" sortable column-key="date"
         :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"
@@ -109,7 +123,11 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      }],
+      filterArticle: {
+        name: '',
+        status: '1'
+      }
     }
   },
   created () {},
@@ -124,6 +142,9 @@ export default {
     filterHandler (value, row, column) {
       const property = column['property']
       return row[property] === value
+    },
+    filterSubmit () {
+      console.log('submit')
     },
     handleSizeChange (val) {
       console.log(`每页 ${val} 条`)

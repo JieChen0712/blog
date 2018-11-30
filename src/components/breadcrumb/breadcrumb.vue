@@ -2,9 +2,9 @@
   <div class="breadcrumb">
     <div class="breadcrumb-wrapper">
       <p class="title">{{$router.options.name}}</p>
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item v-for="item in $route.matched"  :key="item.path" :to="item.path">{{item.name}}</el-breadcrumb-item>
-        </el-breadcrumb>
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item v-for="item in $route.matched"  :key="item.path" :to="item.path">{{item.name}}</el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
   </div>
 </template>
