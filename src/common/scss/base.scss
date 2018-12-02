@@ -1,12 +1,14 @@
-body,html{
+body,
+html {
     line-height: 1;
     font-weight: 200;
-    font-family: 'PingFang SC','STHeitiSC-Light','helvetica-Light',arial,sans-serif;
+    font-family: 'PingFang SC', 'STHeitiSC-Light', 'helvetica-Light', arial, sans-serif;
 }
+
 // 清除浮动
-.clearfix{
+.clearfix {
     display: inline-block;
-    &:after{
+    &:after {
         display: block;
         content: ".";
         height: 0;
@@ -17,67 +19,96 @@ body,html{
 }
 
 // 百分比输入框大小
-.el-form{
-    .nick-name-not{
+.el-form {
+    .el-form-item{
+      text-align: left;
+    }
+    .nick-name-not {
         color: #aaa;
     }
-    .r-text{
+    .r-text {
         color: #898989;
     }
-    .el-input--txtarea{
-        textarea{
+    .el-input{
+      min-width: 100px;
+    }
+    .el-input--txtarea {
+        textarea {
             height: 88px;
             padding: 5px 7px;
+            min-width: 180px;
             line-height: 1.5;
             color: #1f2d3d;
             resize: none;
         }
     }
 }
+
+// ueditor
+.ueditor{
+  line-height: initial;
+}
+
 // 上传图片控件
-.avatar-uploader{
-    .el-upload{
+.avatar-uploader {
+    .el-upload {
         width: 100%;
-        .el-upload-dragger{
+        .el-upload-dragger {
             width: 100%;
         }
     }
 }
 
 // 固定基本内容样式
-.tb-wrap{
-    position: relative;
-    flex: 1;
-    border:solid 1px #354052;
-    overflow: hidden;
+.fm-wrap, .tb-wrap{
+  position: relative;
+  flex: 1;
+  padding: 20px 0;
+  border: solid 1px #354052;
+  overflow: hidden;
+}
+
+// 表单基本样式
+.fm-wrap {
+    overflow-y: scroll;
 }
 
 // 表格固定距离底部40px留给分页显示
-.el-table{
-    margin-bottom: 40px;
+.el-table {}
+// 表格头部筛选样式
+.filter-form {
+    text-align: left;
+    .el-form-item {
+        margin: 10px;
+    }
 }
 
 // 分页固定样式
-.page-wrap{
+.page-wrap {
     position: absolute;
     bottom: 0;
     right: 0;
+    left: 0;
+    background-color: #fff;
     text-align: right;
+    z-index: 5;
 }
 
 // 1px的边框处理
-@media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5){
-    .border-1px{
-        &::after{
+@media (-webkit-min-device-pixel-ratio: 1.5),
+(min-device-pixel-ratio: 1.5) {
+    .border-1px {
+        &::after {
             -webkit-transform: scaleY(.7);
             transform: scaleY(.7);
         }
     }
 }
 
-@media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2){
-    .border-1px{
-        &::after{
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-device-pixel-ratio: 2) {
+    .border-1px {
+        &::after {
             -webkit-transform: scaleY(.5);
             transform: scaleY(.5);
         }

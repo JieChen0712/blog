@@ -84,6 +84,36 @@ export default {
             'status': '1'
           }
         ]
+      },
+      {
+        'menuid': '3',
+        'name': '用户数据统计',
+        'link': 'baidu',
+        'status': '1',
+        'icon': 'el-icon-menu',
+        'sub_menu': [
+          {
+            'menuid': '3-1',
+            'name': '图表分析',
+            'link': '/blog/home/article/kind',
+            'icon': '',
+            'status': '1'
+          },
+          {
+            'menuid': '3-2',
+            'name': '表格分析',
+            'link': '/blog/home/article/index',
+            'icon': '',
+            'status': '1'
+          }
+        ]
+      },
+      {
+        'menuid': '4',
+        'name': '管理员日志',
+        'link': '/blog/home/article/detail',
+        'status': '1',
+        'icon': 'el-icon-menu'
       }
     ]
   },

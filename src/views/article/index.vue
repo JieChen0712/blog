@@ -1,8 +1,8 @@
 <template>
   <div class="index">
     <breadcrumb></breadcrumb>
-    <div class="tb-wrap">
-      <el-form :inline="true" :model="filterArticle" class="demo-form-inline">
+    <div class="tb-wrap" ref="tbWrap">
+      <el-form :inline="true" :model="filterArticle" class="filter-form" ref="filterWrap">
         <el-form-item label="文章标题">
           <el-input v-model="filterArticle.name" placeholder="审批人"></el-input>
         </el-form-item>
@@ -16,7 +16,7 @@
           <el-button type="primary" @click="filterSubmit">查询</el-button>
         </el-form-item>
       </el-form>
-      <el-table :data="tableData" ref="filterTable" border max-height="790" style="width: 100%">
+      <el-table :data="tableData" size="mini" ref="filterTable" border :max-height="tableHeight" style="width: 100%">
         <el-table-column label="日期" prop="date" sortable column-key="date"
         :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"
         :filter-method="filterHandler" width="180">
@@ -44,7 +44,7 @@
         </el-table-column>
       </el-table>
       <div class="page-wrap">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage1" :page-size="20" background layout="total, prev, pager, next, jumper" :total="1000"></el-pagination>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="20" background layout="total, prev, pager, next, jumper" :total="1000"></el-pagination>
       </div>
     </div>
   </div>
@@ -55,6 +55,9 @@ import breadcrumb from '../../components/breadcrumb/breadcrumb'
 export default {
   data () {
     return {
+      resize: false,
+      tableHeight: 0,
+      currentPage: 1,
       tableData: [{
         date: '2016-05-02',
         name: '王小虎',
@@ -130,9 +133,26 @@ export default {
       }
     }
   },
-  created () {},
-  mounted () {},
+  created () {
+    let winHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    this.tableHeight = winHeight - 170
+  },
+  mounted () {
+    let taht = this
+    window.onresize = () => {
+      return (() => {
+        taht.countMaxHeight()
+      })()
+    }
+  },
   methods: {
+    countMaxHeight () {
+      let wrapHeight = this.$refs.tbWrap.offsetHeight
+      // 获取elemet-ui组件的高度要加$el
+      let filterHeight = this.$refs.filterWrap.$el.offsetHeight
+      let tableHeight = wrapHeight - filterHeight - 40
+      this.tableHeight = tableHeight
+    },
     handleEdit (index, row) {
       console.log(index, row)
     },
@@ -151,6 +171,19 @@ export default {
     },
     handleCurrentChange (val) {
       console.log(`当前页: ${val}`)
+    }
+  },
+  watch: {
+    tableHeight (val) {
+      if (!this.resize) {
+        this.tableHeight = val
+        this.resize = true
+        let that = this
+        // 为防止频繁调整大小时导致卡顿
+        setTimeout(() => {
+          that.resize = false
+        }, 400)
+      }
     }
   },
   components: {
