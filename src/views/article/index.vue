@@ -134,11 +134,14 @@ export default {
     }
   },
   created () {
-    let winHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-    this.tableHeight = winHeight - 170
+    // let winHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    // this.tableHeight = winHeight - 170
   },
   mounted () {
     let taht = this
+    this.$nextTick(() => {
+      this.countMaxHeight()
+    })
     window.onresize = () => {
       return (() => {
         taht.countMaxHeight()
@@ -150,7 +153,8 @@ export default {
       let wrapHeight = this.$refs.tbWrap.offsetHeight
       // 获取elemet-ui组件的高度要加$el
       let filterHeight = this.$refs.filterWrap.$el.offsetHeight
-      let tableHeight = wrapHeight - filterHeight - 40
+      let tableHeight = wrapHeight - filterHeight - 52
+      console.log(wrapHeight + '  ' + filterHeight)
       this.tableHeight = tableHeight
     },
     handleEdit (index, row) {

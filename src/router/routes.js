@@ -8,6 +8,7 @@ import NotFound from '../views/404'
 import Register from '../views/register'
 import ArticleDetail from '../views/article/detail'
 import Article from '../views/article/index'
+import PageView from '../views/analysis/pageview'
 
 export default[
 // {path: '/hello', component: HelloWorld, name: 'hello'},
@@ -23,7 +24,8 @@ export default[
       { path: '/blog/home/setting', component: setting, name: '个人中心' },
       { path: '/blog/home/accountList', component: accountList, name: '用户列表' },
       { path: '/blog/home/article/detail', component: ArticleDetail, name: '文章编辑或添加' },
-      { path: '/blog/home/article/index', component: Article, name: '文章列表' }
+      { path: '/blog/home/article/index', component: Article, name: '文章列表' },
+      { path: '/blog/home/analysis/pageview', component: PageView, name: '浏览量统计' }
     ]
   },
   {path: '/blog/login', component: Login, name: '登录'},
