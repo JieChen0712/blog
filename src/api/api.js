@@ -15,6 +15,8 @@ export const register = params => { return axios.post(`/api/blog/user/register`,
 export const getAdminInfo = () => { return axios.get(`/api/blog/admin/getAdminInfo`) }
 // 保存编辑的管理员信息
 export const setAdminInfo = params => { return axios.post(`/api/user/set_user_detail`, params) }
+// 获取网站区域的浏览信息
+export const getPageViewDate = params => { return axios.post(`/api/blog/admin/getPageViewDate`, params) }
 
 export const removeUser = params => { return axios.get(`/user/remove`, { params: params }) }
 

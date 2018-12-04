@@ -95,7 +95,7 @@ export default {
           {
             'menuid': '3-1',
             'name': '图表分析',
-            'link': '/blog/home/article/kind',
+            'link': '/blog/home/analysis/pageview',
             'icon': '',
             'status': '1'
           },
