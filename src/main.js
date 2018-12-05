@@ -10,7 +10,7 @@ import '../node_modules/element-ui/lib/theme-chalk/index.css'
 // font-awesome icon
 import promise from 'es6-promise'
 import '../node_modules/font-awesome/css/font-awesome.min.css'
-// import {getCookie, delCookie} from './common/js/base.js'
+// import {getCookie, delCookie, evil} from './common/js/base.js'
 // ueditor
 import '../static/ueditor/ueditor.config.js'
 import '../static/ueditor/ueditor.all.min.js'

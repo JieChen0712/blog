@@ -17,3 +17,8 @@ export function getCookie (name) {
 export function delCookie (name) {
   setCookie(name, ' ', -1)
 }
+
+export function evil (fn) {
+  let Fn = Function // 一个变量指向Function，防止有些前端编译工具报错
+  return new Fn('return ' + fn)()
+}
