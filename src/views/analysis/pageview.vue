@@ -15,8 +15,7 @@ import { getPageViewDate } from '../../api/api'
 import { evil } from '@/common/js/base.js'
 import CityMap from '&/echarts/city.json'
 import '&/echarts/china.js'
-// const MAPURL = '../../static/echarts/map/' // 线上
-const MAPURL = 'http://localhost:8080/static/' // 线下
+const MAPURL = '/static/echarts/map/' // 线下
 const CHINESE = ['河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '北京', '天津', '上海', '重庆', '香港', '澳门', '台湾']
 const PINYIN = ['hebei', 'shanxi', 'neimenggu', 'liaoning', 'jilin', 'heilongjiang', 'jiangsu', 'zhejiang', 'anhui', 'fujian', 'jiangxi', 'shandong', 'henan', 'hubei', 'hunan', 'guangdong', 'guangxi', 'hainan', 'sichuan', 'guizhou', 'yunnan', 'xizang', 'shanxi1', 'gansu', 'qinghai', 'ningxia', 'xinjiang', 'beijing', 'tianjin', 'shanghai', 'chongqing', 'xianggang', 'aomen', 'taiwan']
 export default {
@@ -203,7 +202,7 @@ export default {
         .then(res => {
           let type = ''
           let area = ''
-          echarts.registerMap(strs, res)
+          echarts.registerMap(strs, res.data)
           that.worldMap = echarts.init(document.getElementById('worldMap'))
           if (strs === 'china') {
             type = 'all'

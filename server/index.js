@@ -81,8 +81,10 @@ app.all('*', function(req, res, next) {
 //});
 app.use(api);
 app.use(history());
-// 访问静态资源文件
+// 访问静态项目文件
 app.use(express.static(path.resolve(__dirname,'../dist')));
+// 访问静态资源文件
+app.use('/static', express.static('./static'));
 //app.use(express.static(path.resolve(__dirname,'../dist')));
 
 
