@@ -1,3 +1,4 @@
+'use strict';
 const models = require('./db'); // 引用mysql的配置连接数据库
 const express = require('express'); // 使用express框架
 const router = express.Router(); // 开启路由
@@ -6,6 +7,9 @@ const md5 = require('js-md5'); // md5加密验证
 const upload = require('./upload');
 const fs = require('fs');
 const common = require('./common');
+
+//controllers
+const User = require('./controllers/user');
 
 // 响应请求的json数据模板
 const responseJSON = (res, ret) => {
@@ -20,32 +24,7 @@ const responseJSON = (res, ret) => {
 };
 
 // 用户登录接口
-router.post('/api/login/check_login', (req, res, fields) => {
-  models.getConnection((err, conn) => {
-    conn.query(sql.user.query_user, [req.body.ac, md5(req.body.pd)], (err, result) => {
-      if(err) {
-        res.send(err);
-      } else {
-        if(Object.keys(result).length == 0) {
-          result_info = {
-            code: 0,
-            info: null,
-            msg: "暂无数据"
-          };
-        } else {
-          result_info = {
-            code: 1,
-            info: result,
-            msg: "获取成功"
-          }
-        }
-        responseJSON(res, result_info);
-        //              res.send(result_info);
-      }
-      conn.release();
-    });
-  });
-});
+//router.post('/api/login/check_login', User.check_login);
 
 // 上传文件接口
 router.post('/api/img/upload', function(req, res, next) {
@@ -64,7 +43,6 @@ router.post('/api/img/upload', function(req, res, next) {
       }
     }
   });
-
 });
 
 // 查询所有用户接口

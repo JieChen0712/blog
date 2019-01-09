@@ -20,7 +20,7 @@ const sqlMap = {
       getInfo: 'SELECT * FROM (SELECT * FROM admin WHERE id = ?) AS admin LEFT JOIN admin_detail ON admin.id = admin_detail.uid;',
       insertInfo: 'INSERT INTO admin_detail(name,phone,headimg,register_time,register_ip,email,wechat,qq,status,nickname,introduce,province,city,county,sex,birth_day,address,uid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,);',
       setInfo: 'UPDATE admin_detail SET nickname = ?,sex = ?,phone = ?,qq = ?,wechat = ?,email = ?,introduce = ?,province = ?,city = ?,county = ?,address = ?,brith_day = ? WHERE uid = ?;',
-      checkLogin: 'SELECT * FROM admin WHERE username = ? and password = ?;',
+      checkLogin: 'SELECT account,password FROM admin WHERE account = ?',
       login: 'SELECT * FROM admin WHERE account = ?;',
     },
     article: {

@@ -16,28 +16,35 @@ const fs = require('fs');
 //let uploadFolder = '../uploads/';
 //createFolder(uploadFolder);
 
-let storage =multer.diskStorage({
-   destination:function(req,res,cb){
-       cb(null, upload.uploadFolder);
-   },
-   filename: function (req, file, cb) {
-        cb(null, Date.now()+file.originalname)
-   }
+let storage = multer.diskStorage({
+  destination: function(req, res, cb) {
+    cb(null, upload.uploadFolder);
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + file.originalname)
+  }
 });
 
 let upload = {
-    mult : multer({ storage: storage }),
-    uploadFolder : '../uploads/',
-    createFolder: (folder) => {
-       try {
-            fs.accessSync(folder);
-        }
-        catch (e) {
-            fs.mkdirSync(folder);
-        } 
+  mult: multer({
+    storage: storage
+  }),
+  uploadFolder: 'normal',
+  baseFolder: '../uploads/',
+  createFolder: (folder) => {
+    if(folder){
+      folder = upload.baseFolder + folder;
+    }else{
+      folder = upload.baseFolder + upload.uploadFolder;
     }
+    try {
+      fs.accessSync(folder);
+    } catch(e) {
+      fs.mkdirSync(folder);
+    }
+  }
 };
 
-upload.createFolder(upload.uploadFolder);
+//upload.createFolder(upload.uploadFolder);
 
 module.exports = upload;
