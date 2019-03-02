@@ -32,11 +32,11 @@ let upload = {
   uploadFolder: 'normal',
   baseFolder: '../uploads/',
   createFolder: (folder) => {
-    if(folder){
-      folder = upload.baseFolder + folder;
-    }else{
-      folder = upload.baseFolder + upload.uploadFolder;
-    }
+//  if(folder){
+//    folder = upload.baseFolder + folder + '/';
+//  }else{
+//    folder = upload.baseFolder + upload.uploadFolder + '/';
+//  }
     try {
       fs.accessSync(folder);
     } catch(e) {

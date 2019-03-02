@@ -4,12 +4,13 @@ const express = require('express'); // 使用express框架
 const router = express.Router(); // 开启路由
 const sql = require('./sqlMap'); // sql语句集
 const md5 = require('js-md5'); // md5加密验证
-const upload = require('./upload');
+//const upload = require('./upload');
 const fs = require('fs');
 const common = require('./common');
 
 //controllers
 const User = require('./controllers/user');
+const Upload = require('./controllers/upload');
 
 // 响应请求的json数据模板
 const responseJSON = (res, ret) => {
@@ -25,25 +26,29 @@ const responseJSON = (res, ret) => {
 
 // 用户登录接口
 //router.post('/api/login/check_login', User.check_login);
+// 用户登录接口
+router.post('/api/blog/admin/login',User.admin_login);
 
 // 上传文件接口
-router.post('/api/img/upload', function(req, res, next) {
-  upload.uploadFolder = '../uploads/avatar'; // 自定义路径
-  upload.createFolder(upload.uploadFolder); // 创建自定义路径文件
-  var up = upload.mult.single('avatar'); // 创建上传的multer对象
-  up(req, res, function(err) { // 上传实例
-    if(err) {
-      throw err;
-      return;
-    } else {
-      if(req.file) {
-        res.send(req.file);
-        console.log(req.file);
-        console.log(req.body);
-      }
-    }
-  });
-});
+router.post('/api/img/upload',Upload.upload_img);
+//router.post('/api/img/upload', function(req, res, next) {
+//console.log(req.files)
+//upload.uploadFolder = '../uploads/avatar'; // 自定义路径
+//upload.createFolder(upload.uploadFolder); // 创建自定义路径文件
+//var up = upload.mult.single('avatar'); // 创建上传的multer对象
+//up(req, res, function(err) { // 上传实例
+//  if(err) {
+//    throw err;
+//    return;
+//  } else {
+//    if(req.file) {
+//      res.send(req.file);
+//      console.log(req.file);
+//      console.log(req.body);
+//    }
+//  }
+//});
+//});
 
 // 查询所有用户接口
 router.get('/api/blog/getAccount', requireLogin, (req, res, fields) => {
@@ -157,42 +162,42 @@ router.post('/api/user/set_user_detail', requireLogin, (req, res, fields) => {
   });
 });
 
-// 用户登录接口
-router.post('/api/blog/admin/login', (req, res, fields) => {
-  models.getConnection((err, conn) => {
-    conn.query(sql.admin.login, [req.body.ac], (err, result) => {
-      if(err) {
-        res.send(err);
-      } else {
-        if(md5(req.body.pd) == md5(result[0]['password'])) {
-          let user = result[0];
-          req.session.user = user;
-          req.session.save();
-          res.cookie('NODESESSIONID', req.sessionID, {
-            maxAge: 1000 * 10000
-          });
-          console.log(req.session.user);
-          console.log('success login');
-          result_info = {
-            code: 1,
-            info: result[0]['name'],
-            msg: "登录成功！"
-          }
-        } else {
-          result_info = {
-            code: 2,
-            info: null,
-            a: [],
-            msg: "登录失败！"
-          }
-          console.log('error login');
-        }
-        responseJSON(res, result_info);
-      }
-      conn.release();
-    });
-  });
-});
+
+//router.post('/api/blog/admin/login', (req, res, fields) => {
+//models.getConnection((err, conn) => {
+//  conn.query(sql.admin.login, [req.body.ac], (err, result) => {
+//    if(err) {
+//      res.send(err);
+//    } else {
+//      if(md5(req.body.pd) == md5(result[0]['password'])) {
+//        let user = result[0];
+//        req.session.user = user;
+//        req.session.save();
+//        res.cookie('NODESESSIONID', req.sessionID, {
+//          maxAge: 1000 * 10000
+//        });
+//        console.log(req.session.user);
+//        console.log('success login');
+//        result_info = {
+//          code: 1,
+//          info: result[0]['name'],
+//          msg: "登录成功！"
+//        }
+//      } else {
+//        result_info = {
+//          code: 2,
+//          info: null,
+//          a: [],
+//          msg: "登录失败！"
+//        }
+//        console.log('error login');
+//      }
+//      responseJSON(res, result_info);
+//    }
+//    conn.release();
+//  });
+//});
+//});
 
 router.post('/api/blog/user/register', (req, res, fields) => {
   let power = 1;
