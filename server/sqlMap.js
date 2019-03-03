@@ -21,10 +21,10 @@ const sqlMap = {
       insertInfo: 'INSERT INTO admin_detail(name,phone,headimg,register_time,register_ip,email,wechat,qq,status,nickname,introduce,province,city,county,sex,birth_day,address,uid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,);',
       setInfo: 'UPDATE admin_detail SET nickname = ?,sex = ?,phone = ?,qq = ?,wechat = ?,email = ?,introduce = ?,province = ?,city = ?,county = ?,address = ?,brith_day = ? WHERE uid = ?;',
       checkLogin: 'SELECT account,password FROM admin WHERE account = ?',
-      login: 'SELECT password FROM admin WHERE account = ?;',
+      login: 'SELECT password, id FROM admin WHERE account = ?;',
     },
     article: {
-        add: 'INSERT INTO artcile (title, content, time, author, status) values (?, ?, ?, ?, ?)',
+        add: 'INSERT INTO article (uid, title, kind, status, content, disc, imgurl, time) values (?, ?, ?, ?, ?, ?, ?, ?)',
         delete: 'DELETE FROM article '
     }
 }

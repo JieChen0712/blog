@@ -42,6 +42,7 @@ exports.admin_login = (req, res, fields) => {
       res.send(err);
     } else {
       let result_info = [];
+      console.log(common.md5(req.body.pd));
       if(common.md5(req.body.pd) === result[0]['password']) {
         let user = result[0];
         req.session.user = user;

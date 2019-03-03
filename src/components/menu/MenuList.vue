@@ -82,6 +82,13 @@ export default {
             'link': '/blog/home/article/index',
             'icon': '',
             'status': '1'
+          },
+          {
+            'menuid': '2-3',
+            'name': '添加日志',
+            'link': '/blog/home/article/detail?type=add',
+            'icon': '',
+            'status': '1'
           }
         ]
       },

@@ -68,6 +68,13 @@ html {
   overflow: hidden;
 }
 
+.tb-wrap .scroll-hide{
+  width: calc(100% + 22px);
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
 // 表单基本样式
 .fm-wrap {
     overflow-y: scroll;
