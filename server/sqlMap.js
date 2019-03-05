@@ -2,7 +2,7 @@ const sqlMap = {
     common: {
         select_all: 'SELECT * FROM ?? limit ?, ?;',
         count: 'select count(*) as sum from ??;',
-        check_exist: 'SELECT COUNT(1) AS num FROM ?? WHERE ?? = ?'
+        check_exist: 'SELECT COUNT(1) AS num FROM ?? WHERE ?? = ?;'
     },
     user: {
         all_user: 'SELECT * FROM user_account;',
@@ -24,7 +24,12 @@ const sqlMap = {
       login: 'SELECT password, id FROM admin WHERE account = ?;',
     },
     article: {
-        add: 'INSERT INTO article (uid, title, kind, status, content, disc, imgurl, time) values (?, ?, ?, ?, ?, ?, ?, ?)',
+        add: 'INSERT INTO article (uid, title, kind, status, content, disc, imgurl, time) values (?, ?, ?, ?, ?, ?, ?, ?);',
+        edit: 'UPDATE article WHERE id = ?, uid = ? SET title = ?, kind = ?, status = ?, content = ?, disc = ?, imgurl = ?, time = ?;',
+        delete: 'UPDATE article WHERE id = ?, uid = ? SET status = 2, time = ?;',
+        add_kind: 'INSERT INTO article (uid, name, time) values (?, ?, ?);',
+        edit_kind: 'UPDATE article_kind WHERE uid = ?, id = ? SET name = ?, status = ?;',
+        delete_kind: 'UPDATE article_kind WHERE uid = ?, id = ? SET status = 2, time = ?;',
         delete: 'DELETE FROM article '
     }
 }
