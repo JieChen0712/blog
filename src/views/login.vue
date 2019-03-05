@@ -123,7 +123,7 @@ export default {
       margin: 0px 0px 35px 0px;
     }
     .register,.login{
-      width: 48%;
+      width: 47%;
     }
   }
 }

@@ -11,6 +11,7 @@ const common = require('./common');
 //controllers
 const User = require('./controllers/user');
 const Upload = require('./controllers/upload');
+const Article = require('./controllers/article');
 
 // 响应请求的json数据模板
 const responseJSON = (res, ret) => {
@@ -31,6 +32,9 @@ router.post('/api/blog/admin/login',User.admin_login);
 
 // 上传文件接口
 router.post('/api/img/upload',Upload.upload_img);
+
+// 文章添加
+router.post('/api/blog/admin/save_article', requireLogin, Article.add);
 //router.post('/api/img/upload', function(req, res, next) {
 //console.log(req.files)
 //upload.uploadFolder = '../uploads/avatar'; // 自定义路径

@@ -21,6 +21,7 @@
     "express-session": "^1.15.6",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "ueditor": "^1.2.3",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
