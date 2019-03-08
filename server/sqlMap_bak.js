@@ -1,38 +1,4 @@
-const transf_str = {
-  '>=' : '>=',
-  '<=' : '<=',
-  '!=' : '<>',
-  'in' : 'IN',
-  'between' : 'BETWEEN',
-  'and' : 'AND',
-  'or' : 'OR',
-  'not in' : 'IS NOT IN',
-}
-
 const sqlMap = {
-    find ( table, field = *, where) => {
-      let result = {};
-      let sqlstr = '';
-      if(table){
-        result.code = -1;
-        result.msg = '表名不能为空！';
-        return result;
-      }
-      sqlstr = `SELECT ${field} FORM ${table}`;
-      if(typeof(data) == "object" && Object.prototype.toString.call(data).toLowerCase() == "[object object]" && !data.length){ 
-        sqlstr += ' WHERE ';
-        for(let key in where){
-          if(where[key].symbols !== undefined && where[key].symbols !== null && where[key].symbols !== ""){
-            let symbols = transf_str[where[key].symbols];
-            let value = where[key].value;
-            sqlstr += ` ${key} ${symbols} ${value} ,`;
-          }else{
-            sqlstr += `${key}`;
-          }
-          
-        }
-      }
-    },
     common: {
         select_all_page: 'SELECT * FROM ?? limit ?, ?;',
         select_all: 'SELECT * FROM ?? WHERE ??;',

@@ -107,6 +107,10 @@ exports.delete = (req, res, fields) => {
   })
 }
 
+exports.get_article = (req, res, fields) => {
+  
+}
+
 // 添加分类
 exports.add_kind = (req, res, fields) => {
   let result_info = {};
