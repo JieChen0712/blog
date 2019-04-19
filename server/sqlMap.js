@@ -1,37 +1,89 @@
+const comm = require('./common.js');
+
 const transf_str = {
-  '>=' : '>=',
-  '<=' : '<=',
-  '!=' : '<>',
+  'egt' : '>=',
+  'elt' : '<=',
+  'neq' : '<>',
+  'eq'  : '=',
+  'gt'  : '>',
+  'lt'  : '<',
   'in' : 'IN',
   'between' : 'BETWEEN',
+  'notBetween' : 'NOT BETWEEN',
+  'like' : 'LIKE',
+  'notLike' : 'NOT LIKE',
   'and' : 'AND',
   'or' : 'OR',
   'not in' : 'IS NOT IN',
+  'distinct' : 'DISTINCT',
+  'group by' : 'GROUP BY',
 }
 
 const sqlMap = {
-    find ( table, field = *, where) => {
+    find : (table, field, where) => {
       let result = {};
       let sqlstr = '';
-      if(table){
+      if(comm.empty(field)){
+        field = ' * ';
+      }
+      console.log(comm.empty(table));
+      if(comm.empty(table)){
         result.code = -1;
         result.msg = '表名不能为空！';
         return result;
       }
-      sqlstr = `SELECT ${field} FORM ${table}`;
-      if(typeof(data) == "object" && Object.prototype.toString.call(data).toLowerCase() == "[object object]" && !data.length){ 
-        sqlstr += ' WHERE ';
-        for(let key in where){
-          if(where[key].symbols !== undefined && where[key].symbols !== null && where[key].symbols !== ""){
-            let symbols = transf_str[where[key].symbols];
-            let value = where[key].value;
-            sqlstr += ` ${key} ${symbols} ${value} ,`;
-          }else{
-            sqlstr += `${key}`;
+      sqlstr = `SELECT ${field} FROM ${table} `;
+      if(comm.isArrayFn(where)){
+        if(where.length > 0){
+          sqlstr += ' WHERE ';
+          for(let key in where){
+            if(comm.isArrayFn(where[key])){
+              sqlstr += ' ( ';
+              for(let key2 in where[key]){
+                let symbols = transf_str[where[key][key2]['symbols']];
+                let link = transf_str[where[key][key2]['link']];
+                let value = where[key][key2].value;
+                let name = where[key][key2].name;
+                if(typeof value === 'string'){
+                  value = "'"+value+"'";
+                }
+                if(!comm.empty(link)){
+                  sqlstr += ` ${name} ${symbols} ${value} ${link} `;
+                }else{
+                  sqlstr += ` ${name} ${symbols} ${value} `;
+                }
+              }
+              sqlstr += ' ) ';
+            }else{
+              let symbols = transf_str[where[key]['symbols']];
+              let link = transf_str[where[key]['link']];
+              let value = where[key].value;
+              let name = where[key].name;
+              if(typeof value === 'string'){
+                value = "'"+value+"'";
+              }
+              if(!comm.empty(link)){
+                sqlstr += ` ${name} ${symbols} ${value} ${link} `;
+              }else{
+                sqlstr += ` ${name} ${symbols} ${value} `;
+              }
+            }
           }
-          
         }
       }
+      return sqlstr;
+//    if(typeof(where) == "object" && Object.prototype.toString.call(where).toLowerCase() == "[object object]" && !where.length){ 
+//      sqlstr += ' WHERE ';
+//      for(let key in where){
+//        if(where[key].symbols !== undefined && where[key].symbols !== null && where[key].symbols !== ""){
+//          let symbols = transf_str[where[key].symbols];
+//          let value = where[key].value;
+//          sqlstr += ` ${key} ${symbols} ${value} ,`;
+//        }else{
+//          sqlstr += `${key}`;
+//        }
+//      }
+//    }
     },
     common: {
         select_all_page: 'SELECT * FROM ?? limit ?, ?;',

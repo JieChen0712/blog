@@ -7,12 +7,12 @@ const md5 = require('js-md5'); // md5加密验证
 
 const common = {
   getLink(strsql, param, callback) {
-    pool.getConnection( (err, conn) => {
-      if (err) throw err; // not connected!
+    pool.getConnection((err, conn) => {
+      if(err) throw err; // not connected!
       conn.query(strsql, param, (errs, result, fields) => {
         // Handle error after the release.
-        if (errs) throw errs;
-        
+        if(errs) throw errs;
+
         conn.release();
         callback(errs, result);
       })
@@ -30,6 +30,20 @@ const common = {
   },
   md5(param) {
     return md5(param);
+  },
+  isArrayFn(value) {
+    if(typeof Array.isArray === "function") {
+      return Array.isArray(value);
+    } else {
+      return Object.prototype.toString.call(value) === "[object Array]";
+    }
+  },
+  empty(value){
+    if(value != "" && value != null && value != undefined){
+      return false;
+    }else{
+      return true;
+    }
   }
 }
 

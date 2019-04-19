@@ -9,6 +9,7 @@ const fs = require('fs');
 const common = require('./common');
 
 //controllers
+const Test = require('./controllers/test');
 const User = require('./controllers/user');
 const Upload = require('./controllers/upload');
 const Article = require('./controllers/article');
@@ -25,6 +26,8 @@ const responseJSON = (res, ret) => {
   }
 };
 
+
+router.get('/api/blog/test/test_sql',Test.test_sql);
 // 用户登录接口
 //router.post('/api/login/check_login', User.check_login);
 // 用户登录接口
