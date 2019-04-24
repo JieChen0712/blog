@@ -44,6 +44,15 @@ const common = {
     }else{
       return true;
     }
+  },
+  emptyArray(value){
+    if(value != "" && value != null && value != undefined){
+      return false;
+    }else if(value.length == 0){
+      return false;
+    }else{
+      return true;
+    }
   }
 }
 

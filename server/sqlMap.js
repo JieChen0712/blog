@@ -17,22 +17,11 @@ const transf_str = {
   'not in' : 'IS NOT IN',
   'distinct' : 'DISTINCT',
   'group by' : 'GROUP BY',
+  'order by' : 'ORDER BY',
 }
 
 const sqlMap = {
-    find : (table, field, where) => {
-      let result = {};
-      let sqlstr = '';
-      if(comm.empty(field)){
-        field = ' * ';
-      }
-      console.log(comm.empty(table));
-      if(comm.empty(table)){
-        result.code = -1;
-        result.msg = '表名不能为空！';
-        return result;
-      }
-      sqlstr = `SELECT ${field} FROM ${table} `;
+    mapWhere : (sqlstr, where) => {
       if(comm.isArrayFn(where)){
         if(where.length > 0){
           sqlstr += ' WHERE ';
@@ -72,6 +61,57 @@ const sqlMap = {
         }
       }
       return sqlstr;
+    },
+    mapData: (sqlstr, data, model) => {
+      let countData = 0;
+      let tempKey = '';
+      let tempValue = '';
+      if(comm.isArrayFn(data)){
+        if(data.length > 0){
+          for(let key in data){
+            countData++;
+            let value = data[key].value;
+            let name = data[key].name;
+            if(typeof value === 'string'){
+              value = "'"+value+"'";
+            }
+            if(model == 1){
+              if(countData >= data.length){
+                sqlstr += ` ${name} = ${value} `;
+              }else{
+                sqlstr += ` ${name} = ${value} , `;
+              }
+            }else if(model == 2){
+              if(countData >= data.length){
+                tempKey += ` ${name} `;
+                tempValue += ` ${value} `;
+              }else{
+                tempKey += ` ${name}, `;
+                tempValue += ` ${value}, `;
+              }
+            }
+          }
+          if(model == 2){
+            sqlstr += ` (${tempKey}) VALUES (${tempValue}) `;
+          }
+        }
+      }
+      return sqlstr;
+    },
+    find : (table, field, where) => {
+      let result = {};
+      let sqlstr = '';
+      if(comm.empty(field)){
+        field = ' * ';
+      }
+      if(comm.empty(table)){
+        result.code = -1;
+        result.msg = '表名不能为空！';
+        return result;
+      }
+      sqlstr = `SELECT ${field} FROM ${table} `;
+      sqlstr = sqlMap.mapWhere(sqlstr, where);
+      return sqlstr + ';';
 //    if(typeof(where) == "object" && Object.prototype.toString.call(where).toLowerCase() == "[object object]" && !where.length){ 
 //      sqlstr += ' WHERE ';
 //      for(let key in where){
@@ -84,6 +124,51 @@ const sqlMap = {
 //        }
 //      }
 //    }
+    },
+    save : (table, data, where) => {
+      let result = {};
+      let sqlstr = '';
+      
+      if(comm.empty(table)){
+        result.code = -1;
+        result.msg = '表名不能为空！';
+        return result;
+      }
+      if(comm.emptyArray(data)){
+        result.code = -1;
+        result.msg = '更新的数据不能为空！';
+        return result;
+      }
+      sqlstr = `UPDATE ${table} SET `;
+      sqlstr = sqlMap.mapData(sqlstr, data, 1);
+      sqlstr = sqlMap.mapWhere(sqlstr, where);
+      return sqlstr + ';';
+    },
+    delete: (table, where) => {
+      let result = {};
+      let sqlstr = '';
+      
+      if(comm.empty(table)){
+        result.code = -1;
+        result.msg = '表名不能为空！';
+        return result;
+      }
+      sqlstr = `DELETE FROM ${table} `;
+      sqlstr = sqlMap.mapWhere(sqlstr, where);
+      return sqlstr + ';';
+    },
+    add: (table, data) => {
+      let result = {};
+      let sqlstr = '';
+      
+      if(comm.empty(table)){
+        result.code = -1;
+        result.msg = '表名不能为空！';
+        return result;
+      }
+      sqlstr = `INSERT INTO ${table} `
+      sqlstr = sqlMap.mapData(sqlstr, data, 2);
+      return sqlstr + ';';
     },
     common: {
         select_all_page: 'SELECT * FROM ?? limit ?, ?;',
