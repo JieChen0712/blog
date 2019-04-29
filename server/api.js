@@ -27,7 +27,7 @@ const responseJSON = (res, ret) => {
 };
 
 
-router.get('/api/blog/test/test_sql',Test.test_sql_add);
+router.get('/api/blog/test/test_sql',Test.test_sql_select);
 // 用户登录接口
 //router.post('/api/login/check_login', User.check_login);
 // 用户登录接口

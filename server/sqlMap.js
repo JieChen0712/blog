@@ -9,16 +9,19 @@ const transf_str = {
   'lt'  : '<',
   'in' : 'IN',
   'between' : 'BETWEEN',
-  'notBetween' : 'NOT BETWEEN',
+  'notbetween' : 'NOT BETWEEN',
   'like' : 'LIKE',
-  'notLike' : 'NOT LIKE',
+  'notlike' : 'NOT LIKE',
   'and' : 'AND',
   'or' : 'OR',
   'not in' : 'IS NOT IN',
   'distinct' : 'DISTINCT',
   'group by' : 'GROUP BY',
   'order by' : 'ORDER BY',
+  'limit' : 'LIMIT',
 }
+
+const special_transf = ['between','notbetween','like','notlike'];
 
 const sqlMap = {
     mapWhere : (sqlstr, where) => {
@@ -33,8 +36,14 @@ const sqlMap = {
                 let link = transf_str[where[key][key2]['link']];
                 let value = where[key][key2].value;
                 let name = where[key][key2].name;
-                if(typeof value === 'string'){
+                if(typeof value === 'string' && special_transf.indexOf(where[key][key2]['symbols']) == -1){
                   value = "'"+value+"'";
+                }else if(where[key][key2]['symbols'] === 'like' || where[key][key2]['symbols'] === 'notlike'){
+                  value = "'%"+value+"%'";
+                }else if(comm.isArrayFn(value) && special_transf.indexOf(where[key][key2]['symbols']) == -1){
+                  value = '( '+ value.join(',') + ')';
+                }else if(where[key][key2]['symbols'] == 'between' || where[key][key2]['symbols'] == 'notbetween'){
+                  value = value[0] + ' AND ' + value[1];
                 }
                 if(!comm.empty(link)){
                   sqlstr += ` ${name} ${symbols} ${value} ${link} `;
@@ -48,13 +57,29 @@ const sqlMap = {
               let link = transf_str[where[key]['link']];
               let value = where[key].value;
               let name = where[key].name;
-              if(typeof value === 'string'){
+              if(typeof value === 'string' && special_transf.indexOf(where[key]['symbols']) == -1){
                 value = "'"+value+"'";
+              }else if(where[key]['symbols'] === 'like' || where[key]['symbols'] === 'notlike'){
+                value = "'%"+value+"%'";
               }
-              if(!comm.empty(link)){
-                sqlstr += ` ${name} ${symbols} ${value} ${link} `;
-              }else{
-                sqlstr += ` ${name} ${symbols} ${value} `;
+              if(!comm.empty(name) && !comm.empty(value) && !comm.empty(symbols)){
+                if(comm.isArrayFn(value) && special_transf.indexOf(where[key]['symbols']) == -1){
+                  value = '( '+ value.join(',') + ')';
+                }else if(where[key]['symbols'] == 'between' || where[key]['symbols'] == 'notbetween'){
+                  value = value[0] + ' AND ' + value[1];
+                }
+                if(!comm.empty(link)){
+                  sqlstr += ` ${name} ${symbols} ${value} ${link} `;
+                }else{
+                  sqlstr += ` ${name} ${symbols} ${value} `;
+                }
+              }else if(!comm.empty(name) && comm.empty(value) && !comm.empty(symbols)){
+                sqlstr += ` ${symbols}  ${name} `;
+              }else if(comm.empty(name) && !comm.empty(value) && !comm.empty(symbols)){
+                if(comm.isArrayFn(value)){
+                  value = value.join(',');
+                }
+                sqlstr += ` ${symbols}  ${value} `;
               }
             }
           }
@@ -109,9 +134,9 @@ const sqlMap = {
         result.msg = '表名不能为空！';
         return result;
       }
-      sqlstr = `SELECT ${field} FROM ${table} `;
+      sqlstr = `SELECT ${field} FROM \`${table}\` `;
       sqlstr = sqlMap.mapWhere(sqlstr, where);
-      return sqlstr + ';';
+      return sqlstr + ' LIMIT 1;';
 //    if(typeof(where) == "object" && Object.prototype.toString.call(where).toLowerCase() == "[object object]" && !where.length){ 
 //      sqlstr += ' WHERE ';
 //      for(let key in where){
@@ -124,6 +149,21 @@ const sqlMap = {
 //        }
 //      }
 //    }
+    },
+    select : (table, field, where) => {
+      let result = {};
+      let sqlstr = '';
+      if(comm.empty(field)){
+        field = ' * ';
+      }
+      if(comm.empty(table)){
+        result.code = -1;
+        result.msg = '表名不能为空！';
+        return result;
+      }
+      sqlstr = `SELECT ${field} FROM \`${table}\` `;
+      sqlstr = sqlMap.mapWhere(sqlstr, where);
+      return sqlstr + ';';
     },
     save : (table, data, where) => {
       let result = {};
@@ -139,7 +179,7 @@ const sqlMap = {
         result.msg = '更新的数据不能为空！';
         return result;
       }
-      sqlstr = `UPDATE ${table} SET `;
+      sqlstr = `UPDATE \`${table}\` SET `;
       sqlstr = sqlMap.mapData(sqlstr, data, 1);
       sqlstr = sqlMap.mapWhere(sqlstr, where);
       return sqlstr + ';';
@@ -153,7 +193,7 @@ const sqlMap = {
         result.msg = '表名不能为空！';
         return result;
       }
-      sqlstr = `DELETE FROM ${table} `;
+      sqlstr = `DELETE FROM \`${table}\` `;
       sqlstr = sqlMap.mapWhere(sqlstr, where);
       return sqlstr + ';';
     },
@@ -166,7 +206,7 @@ const sqlMap = {
         result.msg = '表名不能为空！';
         return result;
       }
-      sqlstr = `INSERT INTO ${table} `
+      sqlstr = `INSERT INTO \`${table}\` `
       sqlstr = sqlMap.mapData(sqlstr, data, 2);
       return sqlstr + ';';
     },
