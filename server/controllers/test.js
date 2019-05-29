@@ -144,3 +144,21 @@ exports.test_sql_add = (req, res, fields) => {
   }
   comm.responseJSON(res, result_info);
 }
+
+exports.test_sql_count = (req, res, fields) => {
+  let table = 'admin';
+  let where = [
+    [{
+        name: 'id',
+        value: null,
+        symbols: 'is not'
+    }]
+  ];
+  let sqlstr = sql.count(table, where);
+  let result_info = {
+    code: 1,
+    info: sqlstr,
+    msg: "登录成功！"
+  }
+  comm.responseJSON(res, result_info);
+}

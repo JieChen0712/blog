@@ -14,6 +14,7 @@ const transf_str = {
   'notlike' : 'NOT LIKE',
   'and' : 'AND',
   'or' : 'OR',
+  'is not' : 'IS NOT',
   'not in' : 'IS NOT IN',
   'distinct' : 'DISTINCT',
   'group by' : 'GROUP BY',
@@ -36,6 +37,11 @@ const sqlMap = {
                 let link = transf_str[where[key][key2]['link']];
                 let value = where[key][key2].value;
                 let name = where[key][key2].name;
+                //默认symbols为等于
+                if(comm.empty(symbols)){
+                	symbols = '=';
+                }
+                
                 if(typeof value === 'string' && special_transf.indexOf(where[key][key2]['symbols']) == -1){
                   value = "'"+value+"'";
                 }else if(where[key][key2]['symbols'] === 'like' || where[key][key2]['symbols'] === 'notlike'){
@@ -209,6 +215,39 @@ const sqlMap = {
       sqlstr = `INSERT INTO \`${table}\` `
       sqlstr = sqlMap.mapData(sqlstr, data, 2);
       return sqlstr + ';';
+    },
+    count: (table, where) => {
+    	let result = {};
+      let sqlstr = '';
+      
+    	if(comm.empty(table)){
+        result.code = -1;
+        result.msg = '表名不能为空！';
+        return result;
+      }
+    	
+    	sqlstr = `SELECT COUNT(*) as count FROM \`${table}\` `;
+    	sqlstr = sqlMap.mapWhere(sqlstr, where);
+    	return sqlstr + ' LIMIT 1;';
+    	
+    },
+    sum: (table, name) => {
+    	let result = {};
+      let sqlstr = '';
+      
+    	if(comm.empty(table)){
+        result.code = -1;
+        result.msg = '表名不能为空！';
+        return result;
+      }
+    	if(comm.empty(name)){
+        result.code = -1;
+        result.msg = '字段名不能为空！';
+        return result;
+      }
+    	sqlstr = `SELECT SUM(${name}) as count FROM \`${table}\`  LIMIT 1;`;
+    	return sqlstr;
+    	
     },
     common: {
         select_all_page: 'SELECT * FROM ?? limit ?, ?;',

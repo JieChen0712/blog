@@ -8,15 +8,19 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const history = require('connect-history-api-fallback');
 const ueditor = require('ueditor');
+//var morgan = require('morgan');
 //const passport = require('passport');
 //const LocalStrategy = require('passport-local').Strategy;
 //const flash = require('connect-flash');
 const app = express();
 
+// configure app
+//app.use(morgan('dev')); // log requests to the console
+
 app.set('views', path.join(__dirname, '../dist'));
 app.set('view engine', 'ejs');
 app.set('trust proxy', 1);
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser('keyboard cat'));
 
@@ -99,6 +103,7 @@ app.use(function(req, res, next) {
 //// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
+    console.log(err);
     res.render('error', {
         message: err.message,
         error: {}

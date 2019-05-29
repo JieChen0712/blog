@@ -15,15 +15,15 @@ exports.upload_img = (req, res, next) => {
   upload.createFolder(upload.uploadFolder); // 创建自定义路径文件
   var up = upload.mult.single('avatar'); // 创建上传的multer对象
   up(req, res, function(err) { // 上传实例
-    console.log(req.body)
+//  console.log(req.body)
     if(err) {
       throw err;
       return;
     } else {
       if(req.file) {
         res.send(req.file);
-        console.log(req.file);
-        console.log(req.body);
+//      console.log(req.file);
+//      console.log(req.body);
       }
     }
   });

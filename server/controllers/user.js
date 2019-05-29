@@ -37,7 +37,15 @@ const sql = require('../sqlMap'); // sql语句集
 
 // 用户登录接口
 exports.admin_login = (req, res, fields) => {
-  common.getLink(sql.admin.login, [req.body.ac], (err, result) => {
+	let table = 'admin';
+	let where = [
+    [{
+        name: 'account',
+        value: req.body.ac,
+    }]
+	];
+	let sqlstr = sql.find(table, null, where);
+  common.getLink(sqlstr, [], (err, result) => {
     if(err) {
       res.send(err);
     } else {
