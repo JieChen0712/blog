@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "log4js": "^4.3.1",
     "superagent": "^3.8.3",
     "ueditor": "^1.2.3"
   },

@@ -39,41 +39,41 @@ const sql = require('../sqlMap'); // sql语句集
 exports.admin_login = (req, res, fields) => {
 	let table = 'admin';
 	let where = [
-    [{
-        name: 'account',
-        value: req.body.ac,
-    }]
+		[{
+			name: 'account',
+			value: req.body.ac,
+		}]
 	];
 	let sqlstr = sql.find(table, null, where);
-  common.getLink(sqlstr, [], (err, result) => {
-    if(err) {
-      res.send(err);
-    } else {
-      let result_info = [];
-      if(common.md5(req.body.pd) === result[0]['password']) {
-        let user = result[0];
-        req.session.user = user;
-        req.session.save();
-        res.cookie('NODESESSIONID', req.sessionID, {
-          maxAge: 1000 * 10000
-        });
-        console.log(req.session.user);
-        console.log('success login');
-        result_info = {
-          code: 1,
-          info: result[0]['name'],
-          msg: "登录成功！"
-        }
-      } else {
-        result_info = {
-          code: 2,
-          info: null,
-          a: [],
-          msg: "登录失败！"
-        }
-        console.log('error login');
-      }
-      common.responseJSON(res, result_info);
-    }
-  });
+	common.getLink(sqlstr, [], (err, result) => {
+		if(err) {
+			res.send(err);
+		} else {
+			let result_info = [];
+			if(common.md5(req.body.pd) === result[0]['password']) {
+				let user = result[0];
+				req.session.user = user;
+				req.session.save();
+				res.cookie('NODESESSIONID', req.sessionID, {
+					maxAge: 1000 * 10000
+				});
+				console.log(req.session.user);
+				console.log('success login');
+				result_info = {
+					code: 1,
+					info: result[0]['name'],
+					msg: "登录成功！"
+				}
+			} else {
+				result_info = {
+					code: 2,
+					info: null,
+					a: [],
+					msg: "登录失败！"
+				}
+				console.log('error login');
+			}
+			common.responseJSON(res, result_info);
+		}
+	});
 };

@@ -13,6 +13,7 @@ const ueditor = require('ueditor');
 //const LocalStrategy = require('passport-local').Strategy;
 //const flash = require('connect-flash');
 const app = express();
+const log = require('./logs').logger;
 
 // configure app
 //app.use(morgan('dev')); // log requests to the console
@@ -20,9 +21,11 @@ const app = express();
 app.set('views', path.join(__dirname, '../dist'));
 app.set('view engine', 'ejs');
 app.set('trust proxy', 1);
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cookieParser('keyboard cat'));
+
+
 
 app.use(session({
     name: 'user',
@@ -98,14 +101,33 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
-//
-//// production error handler
-//// no stacktraces leaked to user
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        log.error("Something went wrong:", err.stack);
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            title: 'error msg',
+            name: err.name,
+        	stack: err.stack,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    console.log(err);
+    log.error(err.stack);
     res.render('error', {
         message: err.message,
+        title: 'error msg',
+        name: err.name,
+        stack: err.stack,
         error: {}
     });
 });
