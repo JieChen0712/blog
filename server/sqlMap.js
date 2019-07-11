@@ -249,6 +249,39 @@ const sqlMap = {
     	return sqlstr;
     	
     },
+    join: (table_a, table_b, fields_a, fields_b, bind_key_a, bind_key_b) => {
+    	let result = {};
+    	let temp_fa = '';
+    	let temp_fb = '';
+    	if(comm.empty(table_a) || comm.empty(table_b) || comm.empty(bind_key_a) || comm.empty(bind_key_b)){
+    		result.code = -1;
+    		result.msg = '参数有误';
+    		return result;
+    	}
+    	
+    	if(comm.isArrayAndEmpty(fields_a)){
+    		temp_fa = ' A.* ,';
+    	}else{
+    		for(let key in fields_a){
+    				temp_fa += " A." + fields_a[key] + ",";
+    		}
+    	}
+    	
+    	if(comm.isArrayAndEmpty(fields_b)){
+    		temp_fb = 'B.*';
+    	}else{
+    		for(let key in fields_b){
+    			if(key == fields_b.length - 1){
+    				temp_fb += " B." + fields_b[key];
+    			}else{
+    				temp_fb += " B." + fields_b[key] + ",";
+    			}
+    		}
+    	}
+    	
+    	let sqlstr = 'SELECT ' + temp_fa + temp_fb + ' FROM ' + table_a + ' AS A LEFT JOIN ' + table_b + ' AS B ON A.' + bind_key_a + ' = B.' + bind_key_b;
+    	return sqlstr;
+    },
     common: {
         select_all_page: 'SELECT * FROM ?? limit ?, ?;',
         select_all: 'SELECT * FROM ?? WHERE ??;',
@@ -265,7 +298,8 @@ const sqlMap = {
         set_user_detail: 'UPDATE user_detail SET nickname = ?,sex = ?,phone = ?,qq = ?,wechat = ?,email = ?,introduce = ?,province = ?,city = ?,county = ?,address = ?,brith_day = ? WHERE uid = ?;',
         login: 'SELECT * FROM admin WHERE account = ?;',
         register: 'INSERT INTO user_account (account, password, power, type) values (?, ?, ?, ?);',
-        add_user_detail: 'INSERT INTO user_detail (name, email, province, city, register_time, register_ip) values (?, ?, ?, ?, ?, ?);'
+        add_user_detail: 'INSERT INTO user_detail (name, email, province, city, register_time, register_ip) values (?, ?, ?, ?, ?, ?);',
+        get_user_list: 'SELECT '
     },
     admin: {
       getInfo: 'SELECT * FROM (SELECT * FROM admin WHERE id = ?) AS admin LEFT JOIN admin_detail ON admin.id = admin_detail.uid;',

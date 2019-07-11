@@ -38,6 +38,12 @@ router.post('/api/img/upload',Upload.upload_img);
 
 // 文章添加
 router.post('/api/blog/admin/save_article', requireLogin, Article.add);
+
+// 获取用户列表
+router.post('/api/blog/getAccount', User.user_list);
+
+// 获取管理员列表
+router.post('/api/blog/admin/getAdminInfo', requireLogin, User.admin_user_list);
 //router.post('/api/img/upload', function(req, res, next) {
 //console.log(req.files)
 //upload.uploadFolder = '../uploads/avatar'; // 自定义路径
@@ -58,34 +64,34 @@ router.post('/api/blog/admin/save_article', requireLogin, Article.add);
 //});
 
 // 查询所有用户接口
-router.get('/api/blog/getAccount', requireLogin, (req, res, fields) => {
-  // 通过模型去查找数据库
-  models.getConnection((err, conn) => {
-    let param = req.query || req.params;
-    let pageNum = parseInt(param.pageNum || 1); // 页码
-    let end = parseInt(param.pageSize || 2); // 默认页数
-    let start = (pageNum - 1) * end;
-    //      console.log(param)
-    conn.query(sql.common.select_all + sql.common.count, ['user_account', start, end, 'user_account'], (err, result) => {
-      if(err) {
-        res.send(err);
-      } else {
-        let result_info = {
-          code: 1,
-          info: {
-            list: result[0],
-            currertPage: pageNum,
-            count: result[1][0]['sum']
-          },
-          msg: "获取成功"
-        }
-        responseJSON(res, result_info);
-        //              res.send(result);
-      }
-      conn.release();
-    });
-  });
-});
+//router.get('/api/blog/getAccount', (req, res, fields) => {
+//// 通过模型去查找数据库
+//models.getConnection((err, conn) => {
+//  let param = req.query || req.params;
+//  let pageNum = parseInt(param.pageNum || 1); // 页码
+//  let end = parseInt(param.pageSize || 20); // 默认页数
+//  let start = (pageNum - 1) * end;
+//  //      console.log(param)
+//  conn.query(sql.common.select_all + sql.common.count, ['user_account', start, end, 'user_account'], (err, result) => {
+//    if(err) {
+//      res.send(err);
+//    } else {
+//      let result_info = {
+//        code: 1,
+//        info: {
+//          list: result[0],
+//          currertPage: pageNum,
+//          count: result[1][0]['sum']
+//        },
+//        msg: "获取成功"
+//      }
+//      responseJSON(res, result_info);
+//      //              res.send(result);
+//    }
+//    conn.release();
+//  });
+//});
+//});
 
 // 查询管理员信息接口
 router.get('/api/blog/admin/getAdminInfo', requireLogin, (req, res, fields) => {

@@ -3,38 +3,6 @@
 const common = require('../common');
 const sql = require('../sqlMap'); // sql语句集
 
-//exports.check_login = (req, res, fields) => {
-//common.getLink(sql.admin.checkLogin, [req.body.ac], (err, result) => {
-//  if(err) {
-//    res.send(err);
-//  } else {
-//    let result_info;
-//    if(Object.keys(result).length == 0) {
-//      result_info = {
-//        code: 0,
-//        info: null,
-//        msg: "无该用户"
-//      };
-//    } else {
-//      if(result[0].password === common.md5(req.body.pd)){
-//        result_info = {
-//          code: 1,
-//          info: null,
-//          msg: "登录成功"
-//        }
-//      }else{
-//        result_info = {
-//          code: -1,
-//          info: null,
-//          msg: "帐号密码错误"
-//        }
-//      }
-//    }
-//    common.responseJSON(res, result_info);
-//  }
-//});
-//};
-
 // 用户登录接口
 exports.admin_login = (req, res, fields) => {
 	let table = 'admin';
@@ -49,7 +17,7 @@ exports.admin_login = (req, res, fields) => {
 		if(err) {
 			res.send(err);
 		} else {
-			let result_info = [];
+			let result_info = {};
 			if(common.md5(req.body.pd) === result[0]['password']) {
 				let user = result[0];
 				req.session.user = user;
@@ -77,3 +45,72 @@ exports.admin_login = (req, res, fields) => {
 		}
 	});
 };
+
+// 查询用户列表
+exports.user_list = (req, res, fields) => {
+	let name = req.body.name;
+	let phone = req.body.phone;
+	let account = req.body.ac;
+	let where = [];
+	
+	let sqlstr = sql.join('user_detail','user_account',[],['power','type','account','status'],'uid','id');
+	if(!common.empty(name) && (!common.empty(phone) || !common.empty(account))){
+		where.push({
+			name: 'A.name',
+			value: name,
+			symbols: 'like',
+			link: 'or'
+		})
+	}else if(!common.empty(name)){
+		where.push({
+			name: 'A.name',
+			value: name,
+			symbols: 'like',
+		})
+	}
+	
+	if(!common.empty(phone) && !common.empty(account)){
+		where.push({
+			name: 'A.phone',
+			value: phone,
+			symbols: 'like',
+			link: 'or'
+		});
+	}else if(!common.empty(phone)){
+		where.push({
+			name: 'A.phone',
+			value: phone,
+			symbols: 'like',
+		});
+	}
+	
+	if(!common.empty(account)){
+		where.push({
+		    name: 'B.account',
+		    value: account,
+		    symbols: 'like'
+	   });
+	}
+	sqlstr = sql.mapWhere(sqlstr,where);
+	common.getLink(sqlstr, [], (err, result) => {
+		if(err) {
+			res.send(err);
+		} else {
+			let result_info = {
+				code: 1,
+				msg: '获取成功！',
+				info: result
+			};
+			common.responseJSON(res, result_info);
+		}
+	});
+}
+
+// 获取管理员用户列表
+exports.admin_user_list = (req, res, fields) => {
+	
+}
+// 用户注册接口
+exports.user_register = (req, res, fields) => {
+	
+}

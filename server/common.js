@@ -38,6 +38,23 @@ const common = {
       return Object.prototype.toString.call(value) === "[object Array]";
     }
   },
+  isArrayAndEmpty(value) {
+  	let flag;
+    if(typeof Array.isArray === "function") {
+      flag = Array.isArray(value);
+    } else {
+      flag = Object.prototype.toString.call(value) === "[object Array]";
+    }
+    
+    if(flag){
+    	if(value.length <= 0){
+    		flag = true;
+    	}else{
+    		flag = false;
+    	}
+    }
+    return flag;
+  },
   empty(value){
     if(value != "" && value != null && value != undefined){
       return false;

@@ -36,24 +36,24 @@ exports.add = (req, res, fields) => {
 	let sqlstr = sql.add(table, data);
 	common.getLink(sqlstr, [], (err, result) => {
 		if(err) {
-      res.send(err);
-    } else {
-      if(result.affectedRows){
-        result_info = {
-          code: 1,
-          msg: '添加成功！',
-          info: null
-        };
-      }else{
-        result_info = {
-          code: -1,
-          msg: '添加失败！',
-          info: null
-        };
-      }
-    }
-    common.responseJSON(res, result_info);
-	}
+	      res.send(err);
+	    } else {
+	      if(result.affectedRows){
+	        result_info = {
+	          code: 1,
+	          msg: '添加成功！',
+	          info: null
+	        };
+	      }else{
+	        result_info = {
+	          code: -1,
+	          msg: '添加失败！',
+	          info: null
+	        };
+	      }
+	    }
+    	common.responseJSON(res, result_info);
+	})
 }
 
 // 编辑文章
