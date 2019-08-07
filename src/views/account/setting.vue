@@ -39,6 +39,11 @@
               <citypicker :address="formData.address" @change="setAddress"></citypicker>
             </el-col>
           </el-form-item>
+          <el-form-item label="详细地址：" prop="address_detail">
+            <el-col :span="20">
+              <el-input type="textarea" v-model="formData.address_detail" size="txtarea"></el-input>
+            </el-col>
+          </el-form-item>
           <el-form-item label="手机号码：" required>
             <el-col :span="7">
               <el-input prefix-icon="el-icon-mobile-phone" v-model="formData.phone" placeholder="请输入手机号码"></el-input>
@@ -85,29 +90,56 @@ export default {
         sex: '',
         date: '',
         address: [],
+        address_detail: '',
         phone: '',
         email: '',
         qq: '',
-        wechat: ''
+        wechat: '',
+        province: '',
+        city: '',
+        county: ''
       },
       rules: rule,
       filePath: {path: 'avatar'}
     }
   },
   mounted () {
-    getAdminInfo()
+    this.getAdminInfo_init()
+    console.log(this.formData)
   },
   methods: {
-    getAdminInfo () {
-      this.$http.get(getAdminInfo)
+    getAdminInfo_init () {
+      getAdminInfo()
         .then(response => {
           console.log(response)
+          let data = response.data
+          if (data.code === 1) {
+            this.formData.name = data.info.nickname
+            this.formData.avatar = 'http://localhost:8080/static/img/user.e333137.jpg'
+            this.formData.desc = data.info.introduce
+            this.formData.sex = String(data.info.sex)
+            this.formData.date = data.info.brith_day
+            this.formData.province = data.info.province
+            this.formData.city = data.info.city
+            this.formData.county = data.info.county
+            this.formData.address_detail = data.info.address
+            this.formData.address = [data.info.province, data.info.city, data.info.county]
+            this.formData.phone = data.info.phone
+            this.formData.email = data.info.email
+            this.formData.qq = data.info.qq
+            this.formData.wechat = data.info.wechat
+          } else {
+            this.$message(data.msg)
+          }
+        })
+        .catch(error => {
+          console.log(error)
         })
     },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$http.post(setAdminInfo, {
+          let param = {
             nickname: this.formData.name,
             avatar: this.formData.avatar,
             sex: this.formData.sex,
@@ -115,23 +147,26 @@ export default {
             qq: this.formData.qq,
             wechat: this.formData.wechat,
             email: this.formData.email,
-            introduct: this.formData.desc,
+            introduce: this.formData.desc,
             province: this.formData.province,
             city: this.formData.city,
             county: this.formData.county,
-            address: this.formData.address.join(' '),
-            brith_day: this.formData.date,
-            uid: '6'
-          })
+            address: this.formData.address_detail,
+            brith_day: this.formData.date
+          }
+          setAdminInfo(param)
             .then(response => {
-              console.log(response)
+              let data = response.data
+              if (data.code === 1) {
+                this.$message.success(data.msg)
+              } else {
+                this.$message.error(data.msg)
+              }
             })
             .catch(error => {
               console.log(error)
             })
-          console.log('submit!')
         } else {
-          console.log('error submit!!')
           return false
         }
       })

@@ -1,6 +1,6 @@
 <template>
   <div class="upload">
-    <el-upload class="avatar-uploader" drag action="/api/img/upload" :data="filePath" name="avatar" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+    <el-upload class="avatar-uploader" drag action="/api/img/upload" :auto-upload="true" :data="filePath" name="avatar" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
       <img v-if="imgUrl" :src="imgUrl" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
@@ -20,21 +20,22 @@ export default {
   mounted () {},
   methods: {
     handleAvatarSuccess (res, file) {
-      this.imgUrl = res.data.info
+      console.log(res)
+      this.imgUrl = res.info.path
       // this.formData.avatar = URL.createObjectURL(file.raw)
     },
     beforeAvatarUpload (file) {
       let isJPG = file.type === 'image/jpeg'
       let isPNG = file.type === 'image/png'
       let isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG || !isPNG) {
+      console.log(file)
+      if (!isJPG && !isPNG) {
         this.$message.error('上传图片只能是 JPG 或 PNG 格式!')
       }
       if (!isLt2M) {
         this.$message.error('上传图片大小不能超过 2MB!')
       }
-      return isJPG && isPNG && isLt2M
+      return !(isJPG && isPNG && isLt2M)
     }
   },
   watch: {
@@ -50,6 +51,9 @@ export default {
 .upload {
   .avatar-uploader {
     overflow: hidden;
+    .avatar{
+      width: 100%;
+    }
   }
   .avatar-uploader-icon {
     font-size: 28px;

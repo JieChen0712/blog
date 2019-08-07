@@ -43,7 +43,10 @@ router.post('/api/blog/admin/save_article', requireLogin, Article.add);
 router.post('/api/blog/getAccount', User.user_list);
 
 // 获取管理员列表
-router.post('/api/blog/admin/getAdminInfo', requireLogin, User.admin_user_list);
+router.get('/api/blog/admin/getAdminInfo', requireLogin, User.admin_user_info);
+
+//
+router.post('/api/blog/admin/set_user_detail',requireLogin , User.admin_set_detail);
 //router.post('/api/img/upload', function(req, res, next) {
 //console.log(req.files)
 //upload.uploadFolder = '../uploads/avatar'; // 自定义路径
@@ -94,27 +97,27 @@ router.post('/api/blog/admin/getAdminInfo', requireLogin, User.admin_user_list);
 //});
 
 // 查询管理员信息接口
-router.get('/api/blog/admin/getAdminInfo', requireLogin, (req, res, fields) => {
-  // 通过模型去查找数据库
-  models.getConnection((err, conn) => {
-    let uid = req.session.user.id;
-    console.log(uid);
-    conn.query(sql.admin.getInfo, [uid], (err, result) => {
-      if(err) {
-        res.send(err);
-      } else {
-        let result_info = {
-          code: 1,
-          info: result[0],
-          msg: "获取成功"
-        }
-        responseJSON(res, result_info);
-        //              res.send(result);
-      }
-      conn.release();
-    });
-  });
-});
+//router.get('/api/blog/admin/getAdminInfo', requireLogin, (req, res, fields) => {
+//// 通过模型去查找数据库
+//models.getConnection((err, conn) => {
+//  let uid = req.session.user.id;
+//  console.log(uid);
+//  conn.query(sql.admin.getInfo, [uid], (err, result) => {
+//    if(err) {
+//      res.send(err);
+//    } else {
+//      let result_info = {
+//        code: 1,
+//        info: result[0],
+//        msg: "获取成功"
+//      }
+//      responseJSON(res, result_info);
+//      //              res.send(result);
+//    }
+//    conn.release();
+//  });
+//});
+//});
 
 // 用户信息修改接口
 router.post('/api/user/set_user_detail', requireLogin, (req, res, fields) => {

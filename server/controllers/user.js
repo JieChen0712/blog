@@ -110,7 +110,97 @@ exports.user_list = (req, res, fields) => {
 exports.admin_user_list = (req, res, fields) => {
 	
 }
+// 获取管理员用户详情
+exports.admin_user_info = (req, res, fields) => {
+	let table = 'admin_detail';
+	let where = [{
+	  name: 'uid',
+	  value: req.session.user.id,
+	  symbols: 'eq'
+	}];
+	let sqlstr = sql.find(table, null, where);
+	common.getLink(sqlstr, [], (err, result) => {
+    if(err) {
+      res.send(err);
+    } else {
+      let result_info = {
+        code: 1,
+        msg: '获取成功！',
+        info: result[0]
+      };
+      common.responseJSON(res, result_info);
+    }
+  });
+}
 // 用户注册接口
 exports.user_register = (req, res, fields) => {
-	
+	console.log(req.session)
+}
+
+exports.admin_set_detail = (req, res, fields) => {
+  console.log(req.session)
+  let table = 'admin_detail';
+  let where = [{
+      name: 'uid',
+      value: req.session.user.id,
+      symbols: 'eq'
+  }];
+  let data = [{
+    name: 'name',
+    value: req.body.name
+  },{
+    name:'phone',
+    value: req.body.phone
+  },{
+    name: 'headimg',
+    value:req.body.headimg
+  },{
+    name: 'email',
+    value:req.body.email
+  },{
+    name: 'wechat',
+    value: req.body.wechat
+  },{
+    name: 'qq',
+    value: req.body.qq
+  },{
+    name: 'nickname',
+    value: req.body.nickname
+  },{
+    name: 'introduce',
+    value: req.body.introduce
+  },{
+    name: 'province',
+    value: req.body.province
+  },{
+    name: 'city',
+    value: req.body.city
+  },{
+    name: 'county',
+    value: req.body.county
+  },{
+    name: 'sex',
+    value: req.body.sex
+  },{
+    name: 'birth_day',
+    value: req.body.birth_day
+  },{
+    name: 'province',
+    value: req.body.province
+  }];
+  let sqlstr = sql.save(table, data, where);
+  console.log(sqlstr)
+  common.getLink(sqlstr, [], (err, result) => {
+    if(err) {
+      res.send(err);
+    } else {
+      let result_info = {
+        code: 1,
+        msg: '修改成功！',
+        info: result[0]
+      };
+      common.responseJSON(res, result_info);
+    }
+  });
+  
 }

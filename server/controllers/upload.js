@@ -22,7 +22,13 @@ exports.upload_img = (req, res, next) => {
       return;
     } else {
       if(req.file) {
-        res.send(req.file);
+        let result_info = {
+          code: 1,
+          msg: '获取成功！',
+          info: req.file
+        };
+        common.responseJSON(res, result_info);
+//      res.send(req.file);
 //      console.log(req.file);
 //      console.log(req.body);
       }

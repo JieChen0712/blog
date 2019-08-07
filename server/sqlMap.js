@@ -107,12 +107,18 @@ const sqlMap = {
               value = "'"+value+"'";
             }
             if(model == 1){
+              if(value == undefined){
+                continue;
+              }
               if(countData >= data.length){
                 sqlstr += ` ${name} = ${value} `;
               }else{
                 sqlstr += ` ${name} = ${value} , `;
               }
             }else if(model == 2){
+              if(value == undefined){
+                continue;
+              }
               if(countData >= data.length){
                 tempKey += ` ${name} `;
                 tempValue += ` ${value} `;
