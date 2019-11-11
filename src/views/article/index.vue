@@ -138,13 +138,13 @@ export default {
     // this.tableHeight = winHeight - 170
   },
   mounted () {
-    let taht = this
+    let that = this
     this.$nextTick(() => {
       this.countMaxHeight()
     })
     window.onresize = () => {
       return (() => {
-        taht.countMaxHeight()
+        that.countMaxHeight()
       })()
     }
   },

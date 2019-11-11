@@ -7,14 +7,15 @@ axios.defaults.withCredentials = true
 axios.defaults.transformRequest = (data, headers) => { return headers['Content-Type'] === 'application/json' ? data : querystring.stringify(data) }
 // 登录接口
 export const login = params => { return axios.post(`/api/blog/admin/login`, params) }
-// 获取所有用户信息
-export const getUsers = params => { return axios.get(`/api/blog/getAccount?pageNum=${params.pageNum}`) }
+// 获取所有管理员用户信息
+export const getAdminUsers = params => { return axios.get(`/api/blog/admin/get_user_list?pageNum=${params.pageNum}`) }
+// 保存编辑的管理员信息
+export const setAdminInfo = params => { return axios.post(`/api/blog/admin/set_user_detail`, params) }
 // 注册账号
 export const register = params => { return axios.post(`/api/blog/user/register`, params) }
 // 获取管理员信息
 export const getAdminInfo = () => { return axios.get(`/api/blog/admin/getAdminInfo`) }
-// 保存编辑的管理员信息
-export const setAdminInfo = params => { return axios.post(`/api/blog/admin/set_user_detail`, params) }
+
 // 获取网站区域的浏览信息
 export const getPageViewDate = params => { return axios.post(`/api/blog/admin/getPageViewDate`, params) }
 // 保存文章

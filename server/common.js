@@ -1,3 +1,4 @@
+'use strict';
 const pool = require('./db'); // 引用mysql的配置连接数据库
 // const express = require('express'); // 使用express框架
 const sql = require('./sqlMap'); // sql语句集

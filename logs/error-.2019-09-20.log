@@ -1,0 +1,42 @@
+[2019-09-20T17:20:21.959][ERROR  12060  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:100:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at next (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:735:16)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:724:14)
+    at FSReqWrap.oncomplete (fs.js:153:21)
+[2019-09-20T17:26:48.239][ERROR  12060  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:100:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at next (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:735:16)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:724:14)
+    at FSReqWrap.oncomplete (fs.js:153:21)
+[2019-09-20T17:29:28.938][ERROR  12060  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:100:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.0@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at next (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:735:16)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:724:14)
+    at FSReqWrap.oncomplete (fs.js:153:21)

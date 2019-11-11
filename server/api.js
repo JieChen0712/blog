@@ -9,9 +9,15 @@ const fs = require('fs');
 const common = require('./common');
 
 //controllers
+// 测试接口
 const Test = require('./controllers/test');
+// 普通用户接口
 const User = require('./controllers/user');
+// 管理员接口
+const Admin = require('./controllers/admin');
+// 上传接口
 const Upload = require('./controllers/upload');
+// 文章接口
 const Article = require('./controllers/article');
 
 // 响应请求的json数据模板
@@ -31,7 +37,7 @@ router.get('/api/blog/test/test_sql',Test.test_sql_count);
 // 用户登录接口
 //router.post('/api/login/check_login', User.check_login);
 // 用户登录接口
-router.post('/api/blog/admin/login',User.admin_login);
+router.post('/api/blog/admin/login',Admin.admin_login);
 
 // 上传文件接口
 router.post('/api/img/upload',Upload.upload_img);
@@ -40,13 +46,16 @@ router.post('/api/img/upload',Upload.upload_img);
 router.post('/api/blog/admin/save_article', requireLogin, Article.add);
 
 // 获取用户列表
-router.post('/api/blog/getAccount', User.user_list);
+router.post('/api/blog/getAccount', Admin.admin_user_list);
 
 // 获取管理员列表
-router.get('/api/blog/admin/getAdminInfo', requireLogin, User.admin_user_info);
+router.get('/api/blog/admin/getAdminInfo', requireLogin, Admin.admin_user_info);
 
-//
-router.post('/api/blog/admin/set_user_detail',requireLogin , User.admin_set_detail);
+// 管理员信息修改
+router.post('/api/blog/admin/set_user_detail', requireLogin, Admin.admin_set_detail);
+
+// 获取管理员列表
+router.post('/api/blog/admin/get_user_list', requireLogin, Admin.admin_user_list);
 //router.post('/api/img/upload', function(req, res, next) {
 //console.log(req.files)
 //upload.uploadFolder = '../uploads/avatar'; // 自定义路径

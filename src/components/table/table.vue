@@ -22,7 +22,7 @@
 </template>
 
 <script type="text/ecmascript">
-import { getUsers } from '../../api/api'
+import { getAdminUsers } from '../../api/api'
 export default {
   data () {
     return {
@@ -50,7 +50,7 @@ export default {
         name: this.filters.name
       }
       this.listLoading = true
-      getUsers(params)
+      getAdminUsers(params)
         .then(res => {
           if (res.data.code === 1) {
             this.total = res.data.count
