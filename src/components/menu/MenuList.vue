@@ -55,7 +55,7 @@ export default {
           },
           {
             'menuid': '1-2',
-            'name': '用户列表',
+            'name': '管理员列表',
             'link': '/blog/home/accountList',
             'icon': '',
             'status': '1'

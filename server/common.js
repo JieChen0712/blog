@@ -46,7 +46,6 @@ const common = {
     } else {
       flag = Object.prototype.toString.call(value) === "[object Array]";
     }
-    
     if(flag){
     	if(value.length <= 0){
     		flag = true;
@@ -54,6 +53,7 @@ const common = {
     		flag = false;
     	}
     }
+    
     return flag;
   },
   empty(value){
@@ -63,15 +63,32 @@ const common = {
       return true;
     }
   },
+//emptyArray(value){
+//  if(value != "" && value != null && value != undefined){
+//    return false;
+//  }else if(value.length == 0){
+//    return true;
+//  }else{
+//    return true;
+//  }
+//},
   emptyArray(value){
-    if(value != "" && value != null && value != undefined){
+    if(value[0] != "" && value[0] != null && value[0] != undefined){
       return false;
-    }else if(value.length == 0){
-      return false;
+    }else if(value.length <= 0){
+      return true;
     }else{
       return true;
     }
+  },
+  strToTime(value){
+    if(common.empty(value)){
+      return value;
+    }else{
+      return Math.round(new Date(value) / 1000);
+    }
   }
+  
 }
 
 module.exports = common;

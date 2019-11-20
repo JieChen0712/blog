@@ -52,53 +52,49 @@ exports.admin_login = (req, res, fields) => {
 // 获取管理员用户列表
 exports.admin_user_list = (req, res, fields) => {
 	let name = req.body.name;
-	let phone = req.body.phone;
-	let account = req.body.ac;
+	let time_around = req.body.time_around;
+	let page = req.body.page;
 	let where = [];
 	
-	let sqlstr = sql.join('user_detail','user_account',[],['power','type','account','status'],'uid','id');
-	if(!common.empty(name) && (!common.empty(phone) || !common.empty(account))){
+	let sqlstr = sql.join('admin_detail','admin',[],['power','type','account','status','name'],'uid','id');
+	if(!common.empty(name)){
 		where.push({
 			name: 'A.name',
 			value: name,
 			symbols: 'like',
 			link: 'or'
-		})
-	}else if(!common.empty(name)){
-		where.push({
-			name: 'A.name',
-			value: name,
-			symbols: 'like',
-		})
+		},{
+      name: 'A.phone',
+      value: name,
+      symbols: 'like',
+      link: 'or'
+    },{
+      name: 'B.account',
+      value: name,
+      symbols: 'like',
+      link: 'or'
+    })
 	}
-	
-	if(!common.empty(phone) && !common.empty(account)){
+	if(common.isArrayFn(time_around) && !common.emptyArray(time_around)){
+	  time_around[0] = common.strToTime(time_around[0]);
+	  time_around[1] = Number(common.strToTime(time_around[1])) + 86400;
 		where.push({
-			name: 'A.phone',
-			value: phone,
-			symbols: 'like',
-			link: 'or'
-		});
-	}else if(!common.empty(phone)){
-		where.push({
-			name: 'A.phone',
-			value: phone,
-			symbols: 'like',
+			name: 'A.register_time',
+			value: time_around,
+			symbols: 'between',
 		});
 	}
 	
-	if(!common.empty(account)){
-		where.push({
-		    name: 'B.account',
-		    value: account,
-		    symbols: 'like'
-	   });
-	}
 	sqlstr = sql.mapWhere(sqlstr,where);
 	common.getLink(sqlstr, [], (err, result) => {
 		if(err) {
 			res.send(err);
 		} else {
+		  if(!common.emptyArray(result)){
+		    for(let i in result){
+		      result[i]['register_time'] = com
+		    }
+		  }
 			let result_info = {
 				code: 1,
 				msg: '获取成功！',

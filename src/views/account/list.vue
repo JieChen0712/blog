@@ -9,11 +9,12 @@
         <el-form-item label="注册时间">
           <el-date-picker
             v-model="filterArticle.time_around"
-            type="datetimerange"
+            type="daterange"
             :picker-options="pickerOptions"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
             align="right">
           </el-date-picker>
         </el-form-item>
@@ -51,7 +52,7 @@
         </el-table-column>
         <el-table-column
           label="用户 ID"
-          prop="id">
+          prop="uid">
         </el-table-column>
         <el-table-column
           label="用户名"
@@ -61,7 +62,7 @@
           label="手机号"
           prop="phone">
         </el-table-column>
-        <el-table-column label="注册日期" prop="date" sortable column-key="date"
+        <el-table-column label="注册日期" prop="register_time" sortable column-key="register_time"
         :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"
         :filter-method="filterHandler" width="180">
           <template slot-scope="scope">
@@ -77,7 +78,7 @@
         </el-table-column>
       </el-table>
       <div class="page-wrap">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="20" background layout="total, prev, pager, next, jumper" :total="1000"></el-pagination>
+        <el-pagination  @current-change="handleCurrentChange" :current-page="currentPage" :page-size="20" background layout="total, prev, pager, next, jumper" :total="1000"></el-pagination>
       </div>
     </div>
   </div>
@@ -85,6 +86,7 @@
 
 <script type="text/ecmascript">
 import breadcrumb from '../../components/breadcrumb/breadcrumb'
+import {getAdminUsers} from '@/api/api'
 export default {
   data () {
     return {
@@ -199,6 +201,7 @@ export default {
         that.countMaxHeight()
       })()
     }
+    this.getUserList()
   },
   methods: {
     countMaxHeight () {
@@ -221,13 +224,32 @@ export default {
       return row[property] === value
     },
     filterSubmit (e) {
-      console.log('submit')
-    },
-    handleSizeChange (val) {
-      console.log(`每页 ${val} 条`)
+      this.currentPage = 1
+      this.getUserList()
     },
     handleCurrentChange (val) {
-      console.log(`当前页: ${val}`)
+      this.currentPage = val
+      this.getUserList()
+    },
+    getUserList () {
+      let param = {
+        page: this.currentPage,
+        name: this.filterArticle.name,
+        time_around: this.filterArticle.time_around
+      }
+      let o = this
+      getAdminUsers(param)
+        .then(response => {
+          let data = response.data
+          if (data.code === 1) {
+            o.tableData = data.info
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   watch: {
@@ -250,4 +272,16 @@ export default {
 </script>
 
 <style lang="scss" scoped="" type="text/css">
+.demo-table-expand {
+  font-size: 0;
+  label{
+    width: 90px;
+    color: #99a9bf;
+  }
+  .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+}
 </style>

@@ -8,7 +8,7 @@ axios.defaults.transformRequest = (data, headers) => { return headers['Content-T
 // 登录接口
 export const login = params => { return axios.post(`/api/blog/admin/login`, params) }
 // 获取所有管理员用户信息
-export const getAdminUsers = params => { return axios.get(`/api/blog/admin/get_user_list?pageNum=${params.pageNum}`) }
+export const getAdminUsers = params => { return axios.post(`/api/blog/admin/get_user_list`, params) }
 // 保存编辑的管理员信息
 export const setAdminInfo = params => { return axios.post(`/api/blog/admin/set_user_detail`, params) }
 // 注册账号
