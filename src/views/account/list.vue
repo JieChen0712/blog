@@ -26,26 +26,38 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="商品名称">
-                <span>{{ props.row.name }}</span>
+              <el-form-item label="邮箱：">
+                <span>{{ props.row.email }}</span>
               </el-form-item>
-              <el-form-item label="所属店铺">
-                <span>{{ props.row.shop }}</span>
+              <el-form-item label="微信：">
+                <span>{{ props.row.wechat }}</span>
               </el-form-item>
-              <el-form-item label="商品 ID">
-                <span>{{ props.row.id }}</span>
+              <el-form-item label="QQ：">
+                <span>{{ props.row.qq }}</span>
               </el-form-item>
-              <el-form-item label="店铺 ID">
-                <span>{{ props.row.shopId }}</span>
+              <el-form-item label="省：">
+                <span>{{ props.row.province }}</span>
               </el-form-item>
-              <el-form-item label="商品分类">
-                <span>{{ props.row.category }}</span>
+              <el-form-item label="市：">
+                <span>{{ props.row.city }}</span>
               </el-form-item>
-              <el-form-item label="店铺地址">
+              <el-form-item label="区：">
+                <span>{{ props.row.county }}</span>
+              </el-form-item>
+              <el-form-item label="详细地址：">
                 <span>{{ props.row.address }}</span>
               </el-form-item>
-              <el-form-item label="商品描述">
-                <span>{{ props.row.desc }}</span>
+              <el-form-item label="性别：">
+                <span>{{ props.row.sex }}</span>
+              </el-form-item>
+              <el-form-item label="出生日期：">
+                <span>{{ props.row.brith_day }}</span>
+              </el-form-item>
+              <el-form-item label="注册时间：">
+                <span>{{ props.row.register_time }}</span>
+              </el-form-item>
+              <el-form-item label="注册IP：">
+                <span>{{ props.row.register_ip }}</span>
               </el-form-item>
             </el-form>
           </template>
@@ -78,7 +90,7 @@
         </el-table-column>
       </el-table>
       <div class="page-wrap">
-        <el-pagination  @current-change="handleCurrentChange" :current-page="currentPage" :page-size="20" background layout="total, prev, pager, next, jumper" :total="1000"></el-pagination>
+        <el-pagination  @current-change="handleCurrentChange" :current-page="currentPage" :page-size="20" background layout="total, prev, pager, next, jumper" :total="total"></el-pagination>
       </div>
     </div>
   </div>
@@ -93,67 +105,8 @@ export default {
       resize: false,
       tableHeight: 0,
       currentPage: 1,
-      tableData: [{
-        id: '12987122',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333',
-        date: '2019-05-02',
-        phone: '18362652542'
-      }, {
-        id: '12987123',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333',
-        date: '2019-05-02',
-        phone: '18362652542'
-      }, {
-        id: '12987123',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333',
-        date: '2019-05-02',
-        phone: '18362652542'
-      }, {
-        id: '12987123',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333',
-        date: '2019-05-02',
-        phone: '18362652542'
-      }, {
-        id: '12987123',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333',
-        date: '2019-05-02',
-        phone: '18362652542'
-      }, {
-        id: '12987123',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333',
-        date: '2019-05-02',
-        phone: '18362652542'
-      }],
+      total: 0,
+      tableData: [],
       filterArticle: {
         name: '',
         time_around: ''
@@ -243,6 +196,7 @@ export default {
           let data = response.data
           if (data.code === 1) {
             o.tableData = data.info
+            o.total = data.total
           } else {
             this.$message.error(data.msg)
           }

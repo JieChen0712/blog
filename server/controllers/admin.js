@@ -52,11 +52,18 @@ exports.admin_login = (req, res, fields) => {
 // 获取管理员用户列表
 exports.admin_user_list = (req, res, fields) => {
 	let name = req.body.name;
+	let page_list_num = req.body.page_list_num;
 	let time_around = req.body.time_around;
 	let page = req.body.page;
 	let where = [];
 	
 	let sqlstr = sql.join('admin_detail','admin',[],['power','type','account','status','name'],'uid','id');
+	if(common.empty(page)){
+	  page = 1;
+	}
+	if(common.empty(page_list_num)){
+    page_list_num = 20;
+  }
 	if(!common.empty(name)){
 		where.push({
 			name: 'A.name',
@@ -72,7 +79,6 @@ exports.admin_user_list = (req, res, fields) => {
       name: 'B.account',
       value: name,
       symbols: 'like',
-      link: 'or'
     })
 	}
 	if(common.isArrayFn(time_around) && !common.emptyArray(time_around)){
@@ -84,21 +90,34 @@ exports.admin_user_list = (req, res, fields) => {
 			symbols: 'between',
 		});
 	}
-	
 	sqlstr = sql.mapWhere(sqlstr,where);
+	
+	let count_sqlstr = sql.join('admin_detail','admin',[],['power','type','account','status','name'],'uid','id',2);
+	let count = 0;
+	common.getLink(count_sqlstr, [], (err, result) => {
+	  if(err) {
+      res.send(err);
+    } else {
+      count = result[0]['count'];
+    }
+	})
+	
+	sqlstr += " LIMIT " + ((page - 1) * page_list_num) + ','+ (page * page_list_num);
 	common.getLink(sqlstr, [], (err, result) => {
 		if(err) {
 			res.send(err);
 		} else {
 		  if(!common.emptyArray(result)){
 		    for(let i in result){
-		      result[i]['register_time'] = com
+		      result[i]['register_time'] = common.formatDate(result[i]['register_time'],"YYYY-MM-dd");
+		      result[i]['brith_day'] = common.formatDate(result[i]['brith_day'],"YYYY-MM-dd");
 		    }
 		  }
 			let result_info = {
 				code: 1,
 				msg: '获取成功！',
-				info: result
+				info: result,
+				total: count
 			};
 			common.responseJSON(res, result_info);
 		}

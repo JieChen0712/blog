@@ -235,7 +235,6 @@ const sqlMap = {
     	sqlstr = `SELECT COUNT(*) as count FROM \`${table}\` `;
     	sqlstr = sqlMap.mapWhere(sqlstr, where);
     	return sqlstr + ' LIMIT 1;';
-    	
     },
     sum: (table, name) => {
     	let result = {};
@@ -255,7 +254,7 @@ const sqlMap = {
     	return sqlstr;
     	
     },
-    join: (table_a, table_b, fields_a, fields_b, bind_key_a, bind_key_b) => {
+    join: (table_a, table_b, fields_a, fields_b, bind_key_a, bind_key_b, type = 1) => {
     	let result = {};
     	let temp_fa = '';
     	let temp_fb = '';
@@ -284,8 +283,13 @@ const sqlMap = {
     			}
     		}
     	}
-    	
-    	let sqlstr = 'SELECT ' + temp_fa + temp_fb + ' FROM ' + table_a + ' AS A LEFT JOIN ' + table_b + ' AS B ON A.' + bind_key_a + ' = B.' + bind_key_b;
+    	let sqlstr = '';
+    	if(type == 1){
+    	  sqlstr = 'SELECT ' + temp_fa + temp_fb + ' FROM ' + table_a + ' AS A LEFT JOIN ' + table_b + ' AS B ON A.' + bind_key_a + ' = B.' + bind_key_b;
+    	}else if(type == 2){
+    	  sqlstr = 'SELECT COUNT(*) as count FROM ' + table_a + ' AS A LEFT JOIN ' + table_b + ' AS B ON A.' + bind_key_a + ' = B.' + bind_key_b + ' LIMIT 1';
+    	}
+
     	return sqlstr;
     },
     common: {
