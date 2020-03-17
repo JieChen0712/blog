@@ -132,9 +132,6 @@ export default {
             this.$message(data.msg)
           }
         })
-        .catch(error => {
-          console.log(error)
-        })
     },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -162,9 +159,6 @@ export default {
               } else {
                 this.$message.error(data.msg)
               }
-            })
-            .catch(error => {
-              console.log(error)
             })
         } else {
           return false

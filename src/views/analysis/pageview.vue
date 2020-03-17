@@ -188,9 +188,6 @@ export default {
             this.$message.error(res.data.msg)
           }
         })
-        .catch(error => {
-          console.log(error)
-        })
       return [{'name': '广东', 'value': '5'}]
     },
     // 公用的加载地图方法
@@ -232,9 +229,6 @@ export default {
               data: that.getMaps(type, area)
             }]
           })
-        })
-        .catch(error => {
-          console.log(error)
         })
     },
     loadArea (mapDetail, param, echarts) { // 将后台加载到的数据传到地图,并显示出来

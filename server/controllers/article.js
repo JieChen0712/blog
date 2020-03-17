@@ -3,6 +3,7 @@
 const common = require('../common');
 const sql = require('../sqlMap'); // sql语句集
 const table = 'article';
+const tableKind = 'article_kind';
 
 // 添加文章
 
@@ -308,5 +309,185 @@ exports.delete_kind = (req, res, fields) => {
       }
     }
     common.responseJSON(res, result_info);
+  })
+}
+
+exports.article_kind = ( req, res, fields) => {
+  let name = req.body.name;
+  let page_list_num = req.body.page_list_num;
+  let page = req.body.page;
+  let pid = req.body.pid;
+  let where = [];
+  
+  if(common.empty(page)){
+    page = 1;
+  }
+  if(common.empty(page_list_num)){
+    page_list_num = 20;
+  }
+  
+  if(!common.empty(name)){
+    where.push({
+      name: 'name',
+      value: name,
+      symbols: 'like',
+    })
+  }
+  
+  if(common.empty(pid)){
+    pid = '0';
+  }
+  where.push({
+    name: 'pid',
+    value: pid,
+    symbols: 'eq',
+  })
+  
+  let sqlstr = sql.select(tableKind , null, where);
+  let count_sqlstr = sql.count(tableKind, where);
+  let count = 0;
+  common.getLink(count_sqlstr, [], (err, result) => {
+    if(err) {
+      res.send(err);
+    } else {
+      count = result[0]['count'];
+    }
+  })
+  
+  sqlstr += " LIMIT " + ((page - 1) * page_list_num) + ','+ (page * page_list_num) + ';';
+  common.getLink(sqlstr, [], (err, result) => {
+    if(err) {
+      res.send(err);
+    } else {
+      if(!common.emptyArray(result)){
+        for(let i in result){
+          result[i]['time'] = common.formatDate(result[i]['time'],"YYYY-MM-dd");
+          result[i]['hasChildren'] = true;
+        }
+      }
+      let result_info = {
+        code: 1,
+        msg: '获取成功！',
+        info: result,
+        total: count
+      };
+      common.responseJSON(res, result_info);
+    }
+  });
+}
+
+exports.kind_status_change = ( req, res, fields) => {
+  let kindId = req.body.id;
+  let where = [];
+  let data = [];
+  
+  if(!common.empty(kindId)){
+    where.push({
+      name: 'id',
+      value: kindId,
+      symbols: 'eq',
+    })
+  }
+  let findsqlstr = sql.find(tableKind, null, where);
+  common.getLink(findsqlstr, [], (err, result) => {
+    if(err) {
+      res.send(err);
+    } else {
+      if(!common.emptyArray(result)){
+        if(result[0]['status'] === 1){
+          data.push({
+            name: 'status',
+            value: 2
+          });
+        }else{
+          data.push({
+            name: 'status',
+            value: 1
+          });
+        }
+        let sqlstr = sql.save(tableKind, data, where);
+        common.getLink(sqlstr, [], (err, result1) => {
+          if(err) {
+            res.send(err);
+          } else {
+            let result_info = {
+              code: 1,
+              msg: '修改成功！',
+              info: result1,
+            };
+            common.responseJSON(res, result_info);
+          }
+        })
+      }else{
+        let result_info = {
+          code: -1,
+          msg: '参数错误！',
+          info: result,
+        };
+        common.responseJSON(res, result_info);
+      }
+    }
+  })
+}
+
+
+exports.kind_del = ( req, res, fields) => {
+  let kindId = req.body.id;
+  let where = [];
+  let childWhere = [];
+  let childData = []
+  let data = [];
+  
+  if(!common.empty(kindId)){
+    where.push({
+      name: 'id',
+      value: kindId,
+      symbols: 'eq',
+    })
+  }
+  let findsqlstr = sql.find(tableKind, null, where);
+  common.getLink(findsqlstr, [], (err, result) => {
+    if(err) {
+      res.send(err);
+    } else {
+      if(!common.emptyArray(result)){
+        childWhere.push({
+          name: 'pid',
+          value: kindId,
+          symbols: 'eq',
+        });
+        childData.push({
+          name: 'pid',
+          value: result[0]['pid']
+        })
+        let childsqlstr = sql.save(tableKind, childData, childWhere);
+        common.getLink(childsqlstr, [], (err, result1) => {
+          if(err) {
+            res.send(err);
+          } else {
+            let sqlstr = sql.delete(tableKind, where);
+            common.getLink(sqlstr, [], (err, result) => {
+              if(err) {
+                res.send(err);
+              } else {
+                let result_info = {
+                  code: 1,
+                  msg: '删除成功！',
+                  info: result,
+                };
+                common.responseJSON(res, result_info);
+              }
+            })
+          }
+        });
+      }else{
+        let result_info = {
+          code: -1,
+          msg: '删除失败！',
+          info: result,
+        };
+        common.responseJSON(res, result_info);
+      }
+    }
   })
 }

@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from 'axios'
+// import axios from 'axios'
 // import element-ui
 import elementui from 'element-ui'
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
@@ -23,8 +23,8 @@ Vue.use(router)
 
 promise.polyfill(App)
 
-axios.defaults.withCredentials = true
-Vue.prototype.$http = axios
+// axios.defaults.withCredentials = true
+// Vue.prototype.$http = axios
 
 router.beforeEach((to, from, next) => {
   if (to.path === '/blog/login') {

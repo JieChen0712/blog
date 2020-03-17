@@ -79,7 +79,7 @@
         :filter-method="filterHandler" width="180">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span style="margin-left: 10px">{{ scope.row.register_time }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -193,6 +193,7 @@ export default {
       let o = this
       getAdminUsers(param)
         .then(response => {
+          console.log(response)
           let data = response.data
           if (data.code === 1) {
             o.tableData = data.info
@@ -200,9 +201,6 @@ export default {
           } else {
             this.$message.error(data.msg)
           }
-        })
-        .catch(error => {
-          console.log(error)
         })
     }
   },

@@ -42,9 +42,6 @@ router.post('/api/blog/admin/login',Admin.admin_login);
 // 上传文件接口
 router.post('/api/img/upload',Upload.upload_img);
 
-// 文章添加
-router.post('/api/blog/admin/save_article', requireLogin, Article.add);
-
 // 获取用户列表
 router.post('/api/blog/getAccount', Admin.admin_user_list);
 
@@ -56,6 +53,19 @@ router.post('/api/blog/admin/set_user_detail', requireLogin, Admin.admin_set_det
 
 // 获取管理员列表
 router.post('/api/blog/admin/get_user_list', requireLogin, Admin.admin_user_list);
+
+/****************************** 文章 ************************************/
+// 文章添加
+router.post('/api/blog/admin/save_article', requireLogin, Article.add);
+
+// 文章分类列表
+router.post('/api/blog/admin/article_kind', Article.article_kind);
+
+// 文章分类更改显示状态
+router.post('/api/blog/admin/article_kind_status_change', Article.kind_status_change);
+
+// 文章分类更改显示状态
+router.post('/api/blog/admin/article_del_kind', Article.kind_del);
 //router.post('/api/img/upload', function(req, res, next) {
 //console.log(req.files)
 //upload.uploadFolder = '../uploads/avatar'; // 自定义路径

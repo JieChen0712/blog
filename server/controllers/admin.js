@@ -84,10 +84,12 @@ exports.admin_user_list = (req, res, fields) => {
 	if(common.isArrayFn(time_around) && !common.emptyArray(time_around)){
 	  time_around[0] = common.strToTime(time_around[0]);
 	  time_around[1] = Number(common.strToTime(time_around[1])) + 86400;
-		where.push({
+	  where = [where];
+		where.unshift({
 			name: 'A.register_time',
 			value: time_around,
 			symbols: 'between',
+			link: 'and'
 		});
 	}
 	sqlstr = sql.mapWhere(sqlstr,where);

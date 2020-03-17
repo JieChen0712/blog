@@ -53,6 +53,8 @@ const sqlMap = {
                 }
                 if(!comm.empty(link)){
                   sqlstr += ` ${name} ${symbols} ${value} ${link} `;
+                }else if (where[key].length > 1 && comm.empty(link)){
+                  sqlstr += ` ${name} ${symbols} ${value} AND `;
                 }else{
                   sqlstr += ` ${name} ${symbols} ${value} `;
                 }
@@ -175,7 +177,7 @@ const sqlMap = {
       }
       sqlstr = `SELECT ${field} FROM \`${table}\` `;
       sqlstr = sqlMap.mapWhere(sqlstr, where);
-      return sqlstr + ';';
+      return sqlstr;
     },
     save : (table, data, where) => {
       let result = {};

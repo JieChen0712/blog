@@ -92,14 +92,6 @@ export default {
                 })
               }
             })
-            .catch(error => {
-              this.$notify.error({
-                title: '错误',
-                message: error,
-                position: 'bottom-right',
-                showClose: false
-              })
-            })
         }
       })
     }
