@@ -66,6 +66,9 @@ router.post('/api/blog/admin/article_kind_status_change', Article.kind_status_ch
 
 // 文章分类更改显示状态
 router.post('/api/blog/admin/article_del_kind', Article.kind_del);
+
+// 文章分类添加
+router.post('/api/blog/admin/article_add_kind', Article.add_kind);
 //router.post('/api/img/upload', function(req, res, next) {
 //console.log(req.files)
 //upload.uploadFolder = '../uploads/avatar'; // 自定义路径

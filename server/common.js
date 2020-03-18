@@ -11,13 +11,73 @@ const common = {
     pool.getConnection((err, conn) => {
       if(err) throw err; // not connected!
       conn.query(strsql, param, (errs, result, fields) => {
+        conn.release();
         // Handle error after the release.
         if(errs) throw errs;
-
-        conn.release();
         callback(errs, result);
       })
     })
+  },
+  excSql(strsql, ...param) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection((err, conn) => {
+        if(err){
+          reject(err);
+          return;
+        }else{
+          conn.query(strsql, param, (errs, result, fields) => {
+            conn.release();
+            if(errs){
+              reject(errs)
+              return;
+            }
+            resolve(result);
+          })
+        }
+      })
+    });
+  },
+  findSql(strsql, ...param) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection((err, conn) => {
+        if(err){
+          reject(err);
+          return;
+        }else{
+          conn.query(strsql, param, (errs, result, fields) => {
+            conn.release();
+            if(errs){
+              reject(errs)
+              return;
+            }
+            resolve(result[0] || null);
+          })
+        }
+      })
+    });
+  },
+  fieldSql(strsql, ...param) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection((err, conn) => {
+        if(err){
+          reject(err);
+          return;
+        }else{
+          conn.query(strsql, param, (errs, result, fields) => {
+            conn.release();
+            if(errs){
+              reject(errs)
+              return
+            }
+            for( let i in result[0] ){
+              resolve( result[0][i] || null );
+              return;
+            }
+            resolve(null);
+          })
+        }
+      })
+    });
   },
   responseJSON(res, ret) {
     if(typeof ret === 'undefined') {
@@ -87,6 +147,9 @@ const common = {
     }else{
       return Math.round(new Date(value) / 1000);
     }
+  },
+  getTime(){
+    return Math.round(new Date() / 1000);
   },
   addChar (str, len, repeat_str, type) {
     if(typeof str !== "string" || str.length >= len){

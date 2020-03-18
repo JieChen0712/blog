@@ -113,19 +113,19 @@ const sqlMap = {
                 continue;
               }
               if(countData >= data.length){
-                sqlstr += ` ${name} = ${value} `;
+                sqlstr += ` \`${name}\` = ${value} `;
               }else{
-                sqlstr += ` ${name} = ${value} , `;
+                sqlstr += ` \`${name}\` = ${value} , `;
               }
             }else if(model == 2){
               if(value == undefined){
                 continue;
               }
               if(countData >= data.length){
-                tempKey += ` ${name} `;
+                tempKey += ` \`${name}\` `;
                 tempValue += ` ${value} `;
               }else{
-                tempKey += ` ${name}, `;
+                tempKey += ` \`${name}\`, `;
                 tempValue += ` ${value}, `;
               }
             }
