@@ -92,6 +92,7 @@ app.use(history());
 app.use(express.static(path.resolve(__dirname,'../dist')));
 // 访问静态资源文件
 app.use('/static', express.static('./static'));
+app.use('/uploads', express.static('./uploads'));
 //app.use(express.static(path.resolve(__dirname,'../dist')));
 
 

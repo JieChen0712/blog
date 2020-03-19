@@ -227,11 +227,11 @@ exports.add_kind = async (req, res, fields) => {
   let order = req.body.order;
   let name = req.body.name;
   let status = req.body.status;
-  let uid = req.body.uid;
+  let uid = req.session.user.id;
   let pid = req.body.pid;
   let img = req.body.img;
   
-  if(common.empty(name)||common.empty(img)){
+  if(common.empty(name)||common.empty(uid)){
     result_info = {
       code: -1,
       msg: '填写信息不完整',
@@ -258,18 +258,15 @@ exports.add_kind = async (req, res, fields) => {
     value: common.empty(pid)?0:pid
   },{
     name: 'img',
-    value: img
+    value: common.empty(img)?'':img
   },{
     name: 'time',
     value: timestamp
   }];
   
   let sqlstr = sql.add(tableKind, save);
-  let result = await common.excSql(sqlstr);
-  
-//let result = await common.excSql(`INSERT INTO \`article_kind\`  ( \`order\`,  \`name\`,  \`status\`,  \`uid\`,  \`pid\`,  \`img\` ) VALUES ( 0,  '18319579275',  null,  0,  0,  '/upload/img/123.jpg' ) ;`);
-//console.log(result == false);
-  if(!common.empty(result.insertId)){
+  let result = await common.excSql(sqlstr).catch(err => {res.json(err)});
+  if(!common.empty(result)){
     result_info = {
       code: 1,
       msg: '添加成功！',
@@ -283,61 +280,70 @@ exports.add_kind = async (req, res, fields) => {
     };
   }
   common.responseJSON(res, result_info);
-//console.log(result);
-//return false;
-//
-//common.getLink(sql.article.add_kind, params, (err, result) => {
-//  if(err) {
-//    res.send(err);
-//  } else {
-//    if(result.affectedRows){
-//      result_info = {
-//        code: 1,
-//        msg: '添加成功！',
-//        info: null
-//      };
-//    }else{
-//      result_info = {
-//        code: -1,
-//        msg: '添加失败！',
-//        info: null
-//      };
-//    }
-//  }
-//  common.responseJSON(res, result_info);
-//})
 }
 // 编辑分类
-exports.edit_kind = (req, res, fields) => {
+exports.edit_kind = async (req, res, fields) => {
   let result_info = {};
-  let timestamp = (new Date()).getTime();
-  let params = [
-    req.session.user.id,
-    req.body.kind_id,
-    req.body.name,
-    req.body.status,
-    timestamp
-  ];
-  common.getLink(sql.article.edit_kind, params, (err, result) => {
-    if(err) {
-      res.send(err);
-    } else {
-      if(result.affectedRows){
-        result_info = {
-          code: 1,
-          msg: '修改成功！',
-          info: null
-        };
-      }else{
-        result_info = {
-          code: -1,
-          msg: '修改失败！',
-          info: null
-        };
-      }
+  let timestamp = common.getTime();
+  let uid = req.session.user.id;
+  let kind_id = req.body.id;
+  let name = req.body.name;
+  let img = req.body.img;
+  let status = req.body.status;
+  let order = req.body.order;
+  let pid = req.body.pid;
+  if(common.empty(kind_id)){
+    result_info = {
+      code: -1,
+      msg: "分类id不能为空",
+      info: null
     }
     common.responseJSON(res, result_info);
-  })
+    return;
+  }
+  let where = [{
+    name: 'id',
+    value: kind_id,
+    symbols: 'eq',
+  }]
+  
+  let save = [{
+    name: 'uid',
+    value: uid
+  },{
+    name: 'time',
+    value: timestamp
+  },{
+    name: 'name',
+    value: name
+  },{
+    name: 'status',
+    value: status
+  },{
+    name: 'order',
+    value: order
+  },{
+    name: 'img',
+    value: img
+  }];
+  
+  let sqlstr = sql.save(tableKind, save, where);
+  let res_save = common.excSql(sqlstr).catch(err => {res.json(err)})
+  
+  if(res_save){
+    result_info = {
+      code: 1,
+      msg: '修改成功！',
+      info: res_save
+    };
+  }else{
+    result_info = {
+      code: 1,
+      msg: '修改失败！',
+      info: res_save
+    };
+  }
+  common.responseJSON(res, result_info);
 }
 // 文章分类列表接口
 exports.article_kind = async ( req, res, fields) => {
@@ -373,12 +379,13 @@ exports.article_kind = async ( req, res, fields) => {
   
   let sqlstr = sql.select(tableKind , null, where);
   let count_sqlstr = sql.count(tableKind, where);
-  let count = await common.fieldSql(count_sqlstr);
+  let count = await common.fieldSql(count_sqlstr).catch(err => {res.json(err)});
   count = common.empty(count)?0:count;
   
   sqlstr += " LIMIT " + ((page - 1) * page_list_num) + ','+ (page * page_list_num) + ';';
   
-  let list = await common.excSql(sqlstr);
+  let list = await common.excSql(sqlstr).catch(err => {res.json(err)});
+  
   for(let i in list){
     list[i]['time'] = common.formatDate(list[i]['time'],"YYYY-MM-dd");
     list[i]['hasChildren'] = true;
@@ -388,6 +395,56 @@ exports.article_kind = async ( req, res, fields) => {
     msg: '获取成功！',
     info: list,
     total: count
+  };
+  common.responseJSON(res, result_info);
+  
+}
+
+// 获取单个文章分类接口
+exports.article_kind_get = async ( req, res, fields) => {
+  let name = req.body.name;
+  let kind_id = req.body.id;
+  let where = [];
+  let result_info;
+  
+  if(common.empty(kind_id) || common.empty(kind_id)){
+    result_info = {
+      code: -1,
+      msg: '获取成功！',
+      info: list,
+      total: count
+    }
+    common.responseJSON(res, result_info);
+    return false;
+  }
+  
+  if(!common.empty(name)){
+    where = [{
+      name: 'name',
+      value: name,
+      symbols: 'like',
+    }];
+  }
+  
+  if(!common.empty(kind_id)){
+    where = [{
+      name: 'id',
+      value: kind_id,
+      symbols: 'eq',
+    }];
+  }
+  
+  let sqlstr = sql.find(tableKind , null, where);
+  let kindInfo = await common.findSql(sqlstr).catch(err => {res.json(err)});
+  
+  if(kindInfo){
+    kindInfo['time'] = common.formatDate( kindInfo['time'],"YYYY-MM-dd");
+    kindInfo['hasChildren'] = true;
+  }
+  result_info = {
+    code: 1,
+    msg: '获取成功！',
+    info: kindInfo,
   };
   common.responseJSON(res, result_info);
   
@@ -409,7 +466,7 @@ exports.kind_status_change = async ( req, res, fields) => {
   }
   let findsqlstr = sql.find(tableKind, null, where);
   
-  let kindInfo = await common.findSql(findsqlstr);
+  let kindInfo = await common.findSql(findsqlstr).catch(err => {res.json(err)});
   
   if(kindInfo){
     let oStatus = 1;
@@ -422,7 +479,7 @@ exports.kind_status_change = async ( req, res, fields) => {
     });
     
     let sqlstr = sql.save(tableKind, data, where);
-    let resSave = await common.excSql(sqlstr);
+    let resSave = await common.excSql(sqlstr).catch(err => {res.json(err)});
     
     result_info = {
       code: 1,
@@ -456,7 +513,7 @@ exports.kind_del = async ( req, res, fields) => {
     })
   }
   let findsqlstr = sql.find(tableKind, null, where);
-  let kindInfo = await common.findSql(findsqlstr);
+  let kindInfo = await common.findSql(findsqlstr).catch(err => {res.json(err)});
   
   if(kindInfo){
     childWhere.push({
@@ -473,7 +530,7 @@ exports.kind_del = async ( req, res, fields) => {
     common.excSql(childsqlstr);
     
     let sqlstr = sql.delete(tableKind, where);
-    let res_delete = await common.excSql(sqlstr);
+    let res_delete = await common.excSql(sqlstr).catch(err => {res.json(err)});
     
     result_info = {
       code: 1,

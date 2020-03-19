@@ -10,6 +10,7 @@ import ArticleDetail from '../views/article/detail'
 import Article from '../views/article/index'
 import PageView from '../views/analysis/pageview'
 import ArticleKind from '../views/article/kind'
+import ArticleKindDetail from '../views/article/kind_detail'
 
 export default[
 // {path: '/hello', component: HelloWorld, name: 'hello'},
@@ -27,6 +28,7 @@ export default[
       { path: '/blog/home/article/detail', component: ArticleDetail, name: '文章编辑或添加' },
       { path: '/blog/home/article/index', component: Article, name: '文章列表' },
       { path: '/blog/home/article/kind', component: ArticleKind, name: '文章分类' },
+      { path: '/blog/home/article/kindDeatil', component: ArticleKindDetail, name: '分类编辑' },
       { path: '/blog/home/analysis/pageview', component: PageView, name: '浏览量统计' }
     ]
   },

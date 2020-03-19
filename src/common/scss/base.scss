@@ -68,12 +68,18 @@ html {
   overflow: hidden;
 }
 
-.tb-wrap .scroll-hide{
-  width: calc(100% + 22px);
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
+.tb-wrap{
+    .scroll-hide{
+      width: calc(100% + 22px);
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+    .filter-form{
+        border-bottom: solid 1px #DCDFE6;
+    }
+    
+} 
 
 // 表单基本样式
 .fm-wrap {
@@ -120,4 +126,13 @@ html {
             transform: scaleY(.5);
         }
     }
+}
+
+// 公用的css
+.fl{
+    float: left;
+}
+
+.fr{
+    float: right;
 }

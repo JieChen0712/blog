@@ -45,6 +45,12 @@ export const getPageViewDate = params => { return axios.post(`/api/blog/admin/ge
 export const saveArticle = params => { return axios.post(`/api/blog/admin/article_save`, params) }
 // 文章分类
 export const kindArticle = params => { return axios.post(`/api/blog/admin/article_kind`, params) }
+// 获取单个文章分类
+export const kindArticleGet = params => { return axios.post(`/api/blog/admin/article_kind_get`, params) }
+// 添加文章分类
+export const kindArticleAdd = params => { return axios.post(`/api/blog/admin/article_add_kind`, params) }
+// 编辑文章分类
+export const kindArticleEdit = params => { return axios.post(`/api/blog/admin/article_edit_kind`, params) }
 // 改变文字分类状态
 export const changeArticleStatus = params => { return axios.post(`/api/blog/admin/article_kind_status_change`, params) }
 // 删除分类

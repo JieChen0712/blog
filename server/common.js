@@ -22,13 +22,13 @@ const common = {
     return new Promise((resolve, reject) => {
       pool.getConnection((err, conn) => {
         if(err){
-          reject(err);
+          reject({code: -1, msg: 'error',info: err});
           return;
         }else{
           conn.query(strsql, param, (errs, result, fields) => {
             conn.release();
             if(errs){
-              reject(errs)
+              reject({code: -1, msg: 'error',info: errs});
               return;
             }
             resolve(result);
@@ -41,13 +41,13 @@ const common = {
     return new Promise((resolve, reject) => {
       pool.getConnection((err, conn) => {
         if(err){
-          reject(err);
+          reject({code: -1, msg: 'error',info: err});
           return;
         }else{
           conn.query(strsql, param, (errs, result, fields) => {
             conn.release();
             if(errs){
-              reject(errs)
+              reject({code: -1, msg: 'error',info: errs});
               return;
             }
             resolve(result[0] || null);
@@ -60,13 +60,13 @@ const common = {
     return new Promise((resolve, reject) => {
       pool.getConnection((err, conn) => {
         if(err){
-          reject(err);
+          reject({code: -1, msg: 'error',info: err});
           return;
         }else{
           conn.query(strsql, param, (errs, result, fields) => {
             conn.release();
             if(errs){
-              reject(errs)
+              reject({code: -1, msg: 'error',info: errs});
               return
             }
             for( let i in result[0] ){
