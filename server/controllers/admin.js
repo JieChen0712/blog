@@ -8,7 +8,8 @@ const tb_admin_detail = 'admin_detail';
 
 /********************************   管理员接口     ***************************/
 // 用户登录接口
-exports.admin_login = (req, res, fields) => {
+exports.admin_login = async (req, res, fields) => {
+  let result_info = {};
 	let where = [
 		[{
 			name: 'account',
@@ -16,37 +17,34 @@ exports.admin_login = (req, res, fields) => {
 		}]
 	];
 	let sqlstr = sql.find(tb_admin, null, where);
-	common.getLink(sqlstr, [], (err, result) => {
-		if(err) {
-			res.send(err);
-		} else {
-			let result_info = {};
-			if(common.md5(req.body.pd) === result[0]['password']) {
-				let user = result[0];
-				req.session.user = user;
-				req.session.save();
-				res.cookie('NODESESSIONID', req.sessionID, {
-					maxAge: 1000 * 10000
-				});
-				console.log(req.session.user);
-				console.log('success login');
-				result_info = {
-					code: 1,
-					info: result[0]['name'],
-					msg: "登录成功！"
-				}
-			} else {
-				result_info = {
-					code: 2,
-					info: null,
-					a: [],
-					msg: "登录失败！"
-				}
-				console.log('error login');
-			}
-			common.responseJSON(res, result_info);
-		}
-	});
+	console.log(sqlstr);
+	
+	let userInfo = await common.findSql(sqlstr).catch(err => {res.json(err)});
+	
+	if(userInfo && common.md5(req.body.pd) === userInfo['password']){
+    req.session.user = userInfo;
+    req.session.save();
+    res.cookie('NODESESSIONID', req.sessionID, {
+      maxAge: 1000 * 10000
+    });
+    console.log(req.session.user);
+    console.log('success login');
+    result_info = {
+      code: 1,
+      info: userInfo['name'],
+      msg: "登录成功！"
+    }
+	}else{
+	  result_info = {
+      code: 2,
+      info: null,
+      a: [],
+      msg: "登录失败！"
+    }
+    console.log('error login');
+	}
+	common.responseJSON(res, result_info);
+	
 };
 
 // 获取管理员用户列表
@@ -148,8 +146,7 @@ exports.admin_user_info = (req, res, fields) => {
   });
 }
 
-exports.admin_set_detail = (req, res, fields) => {
-  console.log(req.session)
+exports.admin_set_detail = async (req, res, fields) => {
   let where = [{
       name: 'uid',
       value: req.session.user.id,
@@ -197,20 +194,31 @@ exports.admin_set_detail = (req, res, fields) => {
   },{
     name: 'province',
     value: req.body.province
+  },{
+    name: 'address',
+    value: req.body.address
+  },{
+    name: 'headimg',
+    value: req.body.avatar
   }];
   let sqlstr = sql.save(tb_admin_detail, data, where);
-  console.log(sqlstr)
-  common.getLink(sqlstr, [], (err, result) => {
-    if(err) {
-      res.send(err);
-    } else {
-      let result_info = {
-        code: 1,
-        msg: '修改成功！',
-        info: result[0]
-      };
-      common.responseJSON(res, result_info);
-    }
-  });
+  console.log(sqlstr);
+//return false;
+  let res_save = await common.excSql(sqlstr).catch(err => {res.json(err)});
+  let result_info;
+  if(res_save){
+    result_info = {
+      code: 1,
+      msg: '修改成功！',
+      info: res_save
+    };
+  }else{
+    result_info = {
+      code: -1,
+      msg: '修改失败！',
+      info: res_save
+    };
+  }
+  common.responseJSON(res, result_info);
   
 }

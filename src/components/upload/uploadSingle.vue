@@ -1,6 +1,6 @@
 <template>
   <div class="upload">
-    <el-upload class="avatar-uploader" drag action="/api/img/upload" :auto-upload="true" :data="filePath" name="avatar" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+    <el-upload class="avatar-uploader" drag action="/api/img/upload" :data="filePath" name="avatar" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
       <img v-if="imgUrl" :src="imgUrl" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
@@ -35,7 +35,7 @@ export default {
       if (!isLt2M) {
         this.$message.error('上传图片大小不能超过 2MB!')
       }
-      return !(isJPG && isPNG && isLt2M)
+      return (isJPG || isPNG) && isLt2M
     }
   },
   watch: {
