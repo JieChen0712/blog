@@ -4,6 +4,7 @@ const common = require('../common');
 const sql = require('../sqlMap'); // sql语句集
 const table = 'article';
 const tableKind = 'article_kind';
+const statusName = ["公开","私密","不显示"];
 
 // 获取文章列表
 exports.article_list_get = async (req, res, fields) => {
@@ -60,13 +61,12 @@ exports.article_list_get = async (req, res, fields) => {
     list = await common.excSql(sqlstr).catch(err => {res.json(err)});
     for(let i in list){
       list[i]['time'] = common.formatDate(list[i]['time'],"YYYY-MM-dd");
-      let user_sqlstr = sql.find(table,null,[{name: id,value:list[i]['uid'],symbols: 'eq'}]);
-      list[i]['user_info'] = await common.findSql(user_sqlstr).catch(err => {});
-//    if(common.empty(list[i]['user_info'])){
-//      list[i]['user_info'] = {
-//        
-//      }
-//    }
+      let user_sqlstr = sql.find('admin_detail',null,[{name: 'id',value:list[i]['uid'],symbols: 'eq'}]);
+      list[i]['user_info'] = await common.findSql(user_sqlstr).catch(err => {res.json(err)});
+      let kind_sqlstr = sql.find(tableKind,'name',[{name: 'id',value:list[i]['kind'],symbols: 'eq'}]);
+      let kindName = await common.fieldSql(kind_sqlstr).catch(err => {res.json(err)});
+      list[i]['kindName'] = kindName;
+      list[i]['statusName'] = statusName[(list[i]['status'] - 1)];
     }
     
     result_info = {
@@ -79,12 +79,41 @@ exports.article_list_get = async (req, res, fields) => {
   }
 }
 
+exports.article_detail_get = async (req, res, fields) => {
+  let result_info,where,sqlstr,detail,
+  article_id = req.body.id;
+  if(!common.empty(article_id)){
+    where = [{
+      name: 'id',
+      value: article_id,
+      symbols: 'eq'
+    }];
+    
+    sqlstr = sql.find(table,null,where);
+    detail = await common.findSql(sqlstr).catch(err => {res.json(err)});
+    detail['content'] = common.specialEscape(detail['content']);
+  }else{
+    detail = [];
+  }
+  result_info = {
+    code: 1,
+    msg: "获取成功",
+    info: detail
+  }
+  
+  common.responseJSON(res, result_info);
+  
+}
+
 // 添加文章
 exports.article_addOrSave =  async (req, res, fields) => {
 	let result_info = {};
 	let data = [{
 		name: 'uid',
 		value: req.session.user.id
+	},{
+	  name: 'author',
+	  value: req.session.user.name
 	},{
 		name: 'title',
 		value: req.body.title,
@@ -95,11 +124,11 @@ exports.article_addOrSave =  async (req, res, fields) => {
 		name: 'status',
 		value: req.body.status
 	},{
-		name: 'ueContent',
-		value: common.specialEscape(req.body.ueContent)
+		name: 'content',
+		value: common.specialToEscape(req.body.content)
 	},{
-		name: 'disc',
-		value: req.body.disc
+		name: 'desc',
+		value: req.body.desc
 	},{
 		name: 'image',
 		value: req.body.imgurl
@@ -108,28 +137,25 @@ exports.article_addOrSave =  async (req, res, fields) => {
 		value: common.getTime()
 	}];
 	let sqlstr = sql.add(table, data);
-	console.log(sqlstr);
-	return false;
-	common.getLink(sqlstr, [], (err, result) => {
-		if(err) {
-	      res.send(err);
-	    } else {
-	      if(result.affectedRows){
-	        result_info = {
-	          code: 1,
-	          msg: '添加成功！',
-	          info: null
-	        };
-	      }else{
-	        result_info = {
-	          code: -1,
-	          msg: '添加失败！',
-	          info: null
-	        };
-	      }
-	    }
-    	common.responseJSON(res, result_info);
-	})
+	
+	let resSave = common.excSql(sqlstr).catch(err => {res.json(err)})
+	
+	if(resSave){
+	  result_info = {
+	    code: 1,
+	    msg: "提交成功",
+	    info: resSave
+	  }
+	}else{
+	  result_info = {
+      code: -1,
+      msg: "提交失败",
+      info: resSave
+    }
+	}
+	
+	common.responseJSON(res, result_info);
+	
 }
 
 // 编辑文章

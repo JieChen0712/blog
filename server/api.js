@@ -56,6 +56,8 @@ router.post('/api/blog/admin/get_user_list', requireLogin, Admin.admin_user_list
 /****************************** 文章 ************************************/
 // 文章列表
 router.post('/api/blog/admin/article_list_get', Article.article_list_get);
+// 文章内容
+router.post('/api/blog/admin/article_detail_get', Article.article_detail_get);
 
 // 文章添加和修改
 router.post('/api/blog/admin/article_save', Article.article_addOrSave);

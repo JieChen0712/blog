@@ -1,0 +1,26 @@
+[2020-03-26T15:05:34.906][ERROR  12568  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:143:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:726:26)
+    at FSReqWrap.oncomplete (fs.js:153:21)
+[2020-03-26T16:32:11.923][ERROR  11324  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:135:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:726:26)
+    at FSReqWrap.oncomplete (fs.js:153:21)

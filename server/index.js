@@ -45,7 +45,7 @@ app.use(session({
 app.all('*', function(req, res, next) {
     let html = fs.readFileSync(path.resolve(__dirname,'../dist/index.html'),"utf-8");
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, x_requested_with, yourHeaderFeild');
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 //  console.log(req.originalUrl.indexOf('/api'))
     if (req.method == 'OPTIONS' && req.originalUrl.indexOf('/api')!=0) {
@@ -86,7 +86,7 @@ app.all('*', function(req, res, next) {
 //  }
 //});
 // ueditor使用模块
-app.use("/ueditor/ue", ueditor(path.resolve(__dirname, '../uploads'), function (req, res, next) {
+app.use("/UE", ueditor(path.resolve(__dirname, '../uploads'), function (req, res, next) {
     let ActionType = req.query.action
     let result = ''
     let upload_arr = {
@@ -113,16 +113,7 @@ app.use("/ueditor/ue", ueditor(path.resolve(__dirname, '../uploads'), function (
       var foo = req.ueditor;
       var imgname = req.ueditor.filename;
       res.setHeader('Content-Type', 'text/html');
-//    res.ue_up(upload_arr[ActionType]); //你只要输入要保存的地址 。保存操作交给ueditor来做
-      result = {
-        state: "SUCCESS",
-        url: "/ueditor/image/1242744639975460864.png",
-        title: "1565854686(1).png",
-        original: "1565854686(1).png",
-        
-      }
-      
-      res.send(result)
+      res.ue_up(upload_arr[ActionType]); //你只要输入要保存的地址 。保存操作交给ueditor来做
     } else if (ActionType == "listimage") {
       res.ue_list(upload_arr[ActionType]);
     }
@@ -136,6 +127,7 @@ app.use(express.static(path.resolve(__dirname,'../dist')));
 // 访问静态资源文件
 app.use('/static', express.static('/static'));
 app.use('/uploads', express.static(path.resolve(__dirname,'../uploads')));
+app.use('/ueditor', express.static(path.resolve(__dirname,'../uploads/ueditor')));
 //app.use(express.static(path.resolve(__dirname,'../dist')));
 
 // catch 404 and forward to error handler

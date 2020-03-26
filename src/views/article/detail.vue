@@ -25,20 +25,20 @@
           </el-form-item>
           <el-form-item label="封面：">
             <div class="uploadImg">
-              <uploadsingle :filePath="filePath" :imgUrl="formData.imgurl" @change="setAvatar"></uploadsingle>
+              <uploadsingle :filePath="filePath" :imgUrl="formData.image" @change="setAvatar"></uploadsingle>
             </div>
           </el-form-item>
-          <el-form-item label="摘要：" prop="disc">
+          <el-form-item label="摘要：" prop="desc">
             <el-col :span="20">
-              <el-input type="textarea" v-model="formData.disc" size="txtarea"></el-input>
+              <el-input type="textarea" v-model="formData.desc" size="txtarea"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="文章内容：" prop="ueContent">
-            <ueditor :id=ueId :config=ueConfig :content=formData.ueContent class="ueditor" ref="ue"></ueditor>
+          <el-form-item label="文章内容：" prop="content">
+            <ueditor :id="ueId" :config="ueConfig" :content="formData.content" class="ueditor" ref="ue" @change="setContent"></ueditor>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click.native.prevent="submitForm('formData')" v-if="type === 'add'">添加</el-button>
-            <el-button type="primary" @click.native.prevent="submitForm('formData')" v-if="type === 'edit'">修改</el-button>
+            <el-button type="success" @click.native.prevent="submitArticle('formData')" v-if="type === 'add'">添加</el-button>
+            <el-button type="primary" @click.native.prevent="submitArticle('formData')" v-if="type === 'edit'">修改</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -50,15 +50,16 @@
 import ueditor from '../../components/ueditor/ueditor'
 import breadcrumb from '../../components/breadcrumb/breadcrumb'
 import uploadsingle from '../../components/upload/uploadSingle'
-import { saveArticle } from '@/api/api.js'
+import { saveArticle, getArticleDetail } from '@/api/api.js'
 
 export default {
   data () {
     return {
       type: String,
-      article_id: Number,
+      articleId: Number,
       ueId: 'article_edit',
       ueConfig: {
+        autoHeightEnabled: false,
         initialFrameWidth: null,
         initialFrameHeight: 350
       },
@@ -66,9 +67,9 @@ export default {
         title: '',
         kind: '',
         status: '',
-        ueContent: '',
-        disc: '',
-        imgurl: ''
+        content: '',
+        desc: '',
+        image: ''
       },
       rules: {
         title: [
@@ -78,10 +79,10 @@ export default {
         kind: [
           { required: true, message: '请选择文章分类', trigger: 'change' }
         ],
-        ueContent: [
+        content: [
           { required: true, message: '请填写文章内容', trigger: 'blur' }
         ],
-        disc: [
+        desc: [
           { required: true, message: '请填写文章描述', trigger: 'blur' }
         ]
       },
@@ -121,25 +122,52 @@ export default {
   },
   created () {
     this.type = this.$route.query.type
-    this.article_id = this.$route.query.id
+    this.articleId = this.$route.query.id
   },
   mounted () {
-    this.formData.ueContent = '<span style="color:#bfbfbf">请添加文章内容</span>'
+    this.formData.content = '<span style="color:#bfbfbf">请添加文章内容</span>'
+    if (this.type === 'edit') {
+      this.getArticleInfo(this.articleId)
+    }
   },
   methods: {
     setAvatar (value) {
-      this.formData.imgurl = value
+      this.formData.image = value
     },
-    submitForm (value) {
+    setContent (value) {
+      this.formData.content = value
+    },
+    getArticleInfo (articleId) {
+      if (articleId !== null && articleId !== '' && articleId !== undefined) {
+        let param = {
+          id: articleId
+        }
+        getArticleDetail(param)
+          .then(response => {
+            if (response.data.code === 1) {
+              this.formData = response.data.info
+              console.log(this.formData)
+            } else {
+              this.$message.error(response.data.msg)
+            }
+          })
+      }
+    },
+    submitArticle (value) {
       this.$refs.formData.validate((valid) => {
         if (valid) {
-          saveArticle(this.formData)
+          let param = this.formData
+          param.id = this.articleId
+          param.type = this.type
+          console.log(param.content)
+          saveArticle(param)
             .then(response => {
               if (response.data.code === 1) {
                 this.$message({
                   message: response.data.msg,
                   type: 'success'
                 })
+                setTimeout(() => { this.$router.back(-1) }, 2000)
               } else {
                 this.$message({
                   message: response.data.msg,

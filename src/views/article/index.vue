@@ -16,7 +16,7 @@
           <el-button type="primary" @click="filterSubmit">查询</el-button>
         </el-form-item>
         <el-form-item class="fr">
-          <el-button type="success"  @click="linkTo('add')">添加</el-button>
+          <el-button type="success" @click="linkTo('add')">添加</el-button>
         </el-form-item>
       </el-form>
       <el-table :data="tableData" size="mini" ref="filterTable" border :max-height="tableHeight" style="width: 100%">
@@ -28,20 +28,27 @@
             <span style="margin-left: 10px">{{ scope.row.time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="姓名" width="180">
+        <el-table-column label="作者">
           <template slot-scope="scope">
             <el-popover trigger="hover" placement="top">
-              <p>电话: {{ scope.row.user_info.phone }}</p>
-              <p>头像: {{ scope.row.user_info.avatar }}</p>
+              <p><el-image class="avatar" :src="scope.row.user_info.avatar" fit="fit"></el-image>电话: {{ scope.row.user_info.phone }}</p>
               <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                <el-tag size="medium">{{ scope.row.author }}</el-tag>
               </div>
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="分类" prop="kindName"></el-table-column>
+        <el-table-column label="标题" prop="title"></el-table-column>
+        <el-table-column label="摘要" prop="desc"></el-table-column>
+        <el-table-column label="状态">
           <template slot-scope="scope">
-            <el-button size="mini" @click="linkto(scope.$index, scope.row)">编辑</el-button>
+            <el-tag type="{success:(scope.row.status === 1),warning:(scope.row.status === 2),danger:(scope.row.status === 3)}">{{ scope.row.statusName }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" >
+          <template slot-scope="scope">
+            <el-button size="mini" @click="linkTo('edit', scope.row.id)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -158,5 +165,14 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped="" type="text/css">
+<style lang="scss" type="text/css">
+  .avatar{
+    width: 45px;
+    height: 45px;
+    border: 1px solid orange;
+    border-radius: 50%;
+    overflow: hidden;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
 </style>

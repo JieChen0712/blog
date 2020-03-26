@@ -34,7 +34,7 @@
 //      , serverUrl: URL + "jsp/controller.jsp"
 //      , serverUrl: "http://localhost:8085/api/ueditor/img/upload"
 //      , serverUrl: URL + "ue"
-        , serverUrl: "http://localhost:8085/ueditor/ue"
+        , serverUrl: "http://localhost:8085/UE"
 //      , serverUrl: "/ueditor/ue"  // 线上
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义

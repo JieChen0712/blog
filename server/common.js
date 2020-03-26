@@ -214,13 +214,22 @@ const common = {
     }
     return str;
   },
-  specialEscape (str) {
+  specialToEscape (str) {
     str = str.trim();
     str = str.replace(/&/g,"&amp;");
     str = str.replace(/</g,"&lt;");
     str = str.replace(/>/g,"&gt;");
     str = str.replace(/ /g,"&nbsp;");
     str = str.replace(/"/g,'&quot;');
+    return str;
+  },
+  specialEscape (str) {
+    str = str.trim();
+    str = str.replace(/&amp;/g,"&");
+    str = str.replace(/&lt;/g,"<");
+    str = str.replace(/&gt;/g,">");
+    str = str.replace(/&nbsp;/g," ");
+    str = str.replace(/&quot;/g,'"');
     return str;
   }
   

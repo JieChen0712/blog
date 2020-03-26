@@ -30,7 +30,6 @@ export default {
       let isJPG = file.type === 'image/jpeg'
       let isPNG = file.type === 'image/png'
       let isLt2M = file.size / 1024 / 1024 < 2
-      console.log(file)
       if (!isJPG && !isPNG) {
         this.$message.error('上传图片只能是 JPG 或 PNG 格式!')
       }

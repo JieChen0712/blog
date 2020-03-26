@@ -13,9 +13,7 @@ export default {
     }
   },
   props: {
-    content: {
-      type: String
-    },
+    content: String,
     config: {
       type: Object
     },
@@ -28,6 +26,9 @@ export default {
     this.editor = window.UE.getEditor(this.id, this.config)// 初始化UE
     this.editor.addListener('ready', function () {
       _this.editor.setContent(_this.content)// 确保UE加载完成后，放入内容。
+    })
+    this.editor.addListener('contentChange', function () {
+      _this.$emit('change', _this.getUEContent())
     })
   },
   methods: {
