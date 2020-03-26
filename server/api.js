@@ -32,7 +32,6 @@ const responseJSON = (res, ret) => {
   }
 };
 
-
 router.get('/api/blog/test/test_sql',Test.test_sql_count);
 // 用户登录接口
 //router.post('/api/login/check_login', User.check_login);
@@ -55,8 +54,11 @@ router.post('/api/blog/admin/set_user_detail', requireLogin, Admin.admin_set_det
 router.post('/api/blog/admin/get_user_list', requireLogin, Admin.admin_user_list);
 
 /****************************** 文章 ************************************/
-// 文章添加
-router.post('/api/blog/admin/save_article', requireLogin, Article.add);
+// 文章列表
+router.post('/api/blog/admin/article_list_get', Article.article_list_get);
+
+// 文章添加和修改
+router.post('/api/blog/admin/article_save', Article.article_addOrSave);
 
 // 文章分类列表
 router.post('/api/blog/admin/article_kind', Article.article_kind);

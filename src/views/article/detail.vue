@@ -34,12 +34,11 @@
             </el-col>
           </el-form-item>
           <el-form-item label="文章内容：" prop="ueContent">
-            <el-col :span="22">
-              <ueditor :id=ueId :config=ueConfig :content=formData.ueContent class="ueditor" ref="ue"></ueditor>
-            </el-col>
+            <ueditor :id=ueId :config=ueConfig :content=formData.ueContent class="ueditor" ref="ue"></ueditor>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click.native.prevent="submitForm('formData')">发布</el-button>
+            <el-button type="success" @click.native.prevent="submitForm('formData')" v-if="type === 'add'">添加</el-button>
+            <el-button type="primary" @click.native.prevent="submitForm('formData')" v-if="type === 'edit'">修改</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -111,9 +110,6 @@ export default {
       }, {
         value: '3',
         label: '不显示'
-      }, {
-        value: '4',
-        label: '管理员'
       }],
       filePath: {path: 'avatar'}
     }
@@ -128,7 +124,7 @@ export default {
     this.article_id = this.$route.query.id
   },
   mounted () {
-    this.formData.ueContent = '<span style="color:red">123</span>'
+    this.formData.ueContent = '<span style="color:#bfbfbf">请添加文章内容</span>'
   },
   methods: {
     setAvatar (value) {
@@ -168,6 +164,9 @@ export default {
         width:180px;
         height:180px;
       }
+    }
+    .el-form-item{
+      margin-right: 100px;
     }
   }
 }

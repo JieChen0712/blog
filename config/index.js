@@ -20,9 +20,23 @@ module.exports = {
         },
         '/static': {
             target: 'http://127.0.0.1:8080/',
-            changeOrigin: false,
+            changeOrigin: true,
             pathRewrite: {
                 '^static': ''
+            }
+        },
+        '/ueditor': {
+            target: 'http://127.0.0.1:8085/',
+            changeOrigin: true,
+            pathRewrite: {
+                '^ueditor/': ''
+            }
+        },
+        '/uploads': {
+            target: 'http://127.0.0.1:8085/',
+            changeOrigin: true,
+            pathRewrite: {
+                '^uploads/': ''
             }
         }
     },

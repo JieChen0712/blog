@@ -5,9 +5,82 @@ const sql = require('../sqlMap'); // sql语句集
 const table = 'article';
 const tableKind = 'article_kind';
 
-// 添加文章
+// 获取文章列表
+exports.article_list_get = async (req, res, fields) => {
+  let page = req.body.page,
+  name = req.body.name,
+  status = req.body.status,
+  page_list_num = req.body.page_list_num,
+  uid = req.session.user.id,
+  where = [],
+  sqlstr,count_sqlstr,count,list,result_info;
+  
+  if(common.empty(page_list_num)){
+    page_list_num = 20;
+  }
+  
+  if(common.empty(page)){
+    page = 1;
+  }
+  
+  if(!common.empty(name)){
+    where.push({
+      name: "title",
+      value: name,
+      symbols: 'like',
+    });
+  }
+  
+  if(!common.empty(status)){
+    where.push({
+      name: "status",
+      value: status,
+      symbols: 'eq',
+    });
+  }
+  
+  where.push({
+    name: 'uid',
+    value: uid,
+    symbols: 'eq',
+  })
+  count_sqlstr = sql.count(table, where);
+  count = await common.fieldSql(count_sqlstr).catch(err => {res.json(err)});
+  
+  if(common.empty(count)){
+    result_info = {
+      code: 1,
+      msg: "获取成功",
+      info: [],
+      total: 0
+    };
+    common.responseJSON(res, result_info);
+  }else{
+    sqlstr = sql.select(table, [], where);
+    list = await common.excSql(sqlstr).catch(err => {res.json(err)});
+    for(let i in list){
+      list[i]['time'] = common.formatDate(list[i]['time'],"YYYY-MM-dd");
+      let user_sqlstr = sql.find(table,null,[{name: id,value:list[i]['uid'],symbols: 'eq'}]);
+      list[i]['user_info'] = await common.findSql(user_sqlstr).catch(err => {});
+//    if(common.empty(list[i]['user_info'])){
+//      list[i]['user_info'] = {
+//        
+//      }
+//    }
+    }
+    
+    result_info = {
+      code: 1,
+      msg: "获取成功",
+      info: list,
+      total: count
+    };
+    common.responseJSON(res, result_info);
+  }
+}
 
-exports.add = (req, res, fields) => {
+// 添加文章
+exports.article_addOrSave =  async (req, res, fields) => {
 	let result_info = {};
 	let data = [{
 		name: 'uid',
@@ -23,18 +96,20 @@ exports.add = (req, res, fields) => {
 		value: req.body.status
 	},{
 		name: 'ueContent',
-		value: req.body.ueContent
+		value: common.specialEscape(req.body.ueContent)
 	},{
 		name: 'disc',
 		value: req.body.disc
 	},{
-		name: 'imgurl',
+		name: 'image',
 		value: req.body.imgurl
 	},{
 		name: 'time',
-		value: (new Date()).getTime()
+		value: common.getTime()
 	}];
 	let sqlstr = sql.add(table, data);
+	console.log(sqlstr);
+	return false;
 	common.getLink(sqlstr, [], (err, result) => {
 		if(err) {
 	      res.send(err);
@@ -505,13 +580,21 @@ exports.kind_del = async ( req, res, fields) => {
   let childData = []
   let result_info;
   
-  if(!common.empty(kindId)){
-    where.push({
-      name: 'id',
-      value: kindId,
-      symbols: 'eq',
-    })
+  if(common.empty(kindId)){
+    result_info = {
+      code: -1,
+      msg: "id不能为空",
+      info: null
+    };
+    common.responseJSON(result_info);
   }
+  
+  where.push({
+    name: 'id',
+    value: kindId,
+    symbols: 'eq',
+  })
+  
   let findsqlstr = sql.find(tableKind, null, where);
   let kindInfo = await common.findSql(findsqlstr).catch(err => {res.json(err)});
   

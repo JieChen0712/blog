@@ -82,7 +82,7 @@
 <script type="text/ecmascript">
 import breadcrumb from '../../components/breadcrumb/breadcrumb'
 import uploadsingle from '../../components/upload/uploadSingle'
-import {kindArticle, changeArticleStatus, delArticleKind, kindArticleGet, kindArticleAdd, kindArticleEdit} from '@/api/api'
+import {getArticleKindList, changeArticleStatus, delArticleKind, getArticleKind, addArticleKind, editArticleKind} from '@/api/api'
 export default {
   data () {
     return {
@@ -135,7 +135,7 @@ export default {
         name: this.filterArticle.name
       }
       let o = this
-      kindArticle(param)
+      getArticleKindList(param)
         .then(response => {
           let data = response.data
           if (data.code === 1) {
@@ -167,7 +167,7 @@ export default {
         let param = {
           id: row.id
         }
-        kindArticleGet(param)
+        getArticleKind(param)
           .then(response => {
             if (response.data.code === 1) {
               o.KindInfo = response.data.info
@@ -266,7 +266,7 @@ export default {
         name: this.filterArticle.name,
         pid: tree.id
       }
-      kindArticle(param)
+      getArticleKindList(param)
         .then(response => {
           let data = response.data
           if (data.code === 1) {
@@ -300,7 +300,7 @@ export default {
     submitKind () {
       let o = this
       if (o.type === 'add') {
-        kindArticleAdd(this.KindInfo)
+        addArticleKind(this.KindInfo)
           .then(response => {
             if (response.data.code === 1) {
               o.$message.success(response.data.msg)
@@ -316,7 +316,7 @@ export default {
             }
           })
       } else if (o.type === 'edit') {
-        kindArticleEdit(this.KindInfo)
+        editArticleKind(this.KindInfo)
           .then(response => {
             if (response.data.code === 1) {
               o.$message.success(response.data.msg)

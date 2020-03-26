@@ -105,17 +105,15 @@ export default {
   },
   mounted () {
     this.getAdminInfo_init()
-    console.log(this.formData)
   },
   methods: {
     getAdminInfo_init () {
       getAdminInfo()
         .then(response => {
-          console.log(response)
           let data = response.data
           if (data.code === 1) {
             this.formData.name = data.info.nickname
-            this.formData.avatar = 'http://localhost:8080/static/img/user.e333137.jpg'
+            this.formData.avatar = data.info.avatar
             this.formData.desc = data.info.introduce
             this.formData.sex = String(data.info.sex)
             this.formData.date = data.info.brith_day

@@ -23,6 +23,9 @@ html {
     .el-form-item{
       text-align: left;
     }
+    .el-form-item:last-of-type{
+      text-align: right;
+    }
     .nick-name-not {
         color: #aaa;
     }

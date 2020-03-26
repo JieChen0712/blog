@@ -1,7 +1,8 @@
 <template>
   <div class="upload">
     <el-upload class="avatar-uploader" drag action="/api/img/upload" :data="filePath" name="avatar" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-      <img v-if="imgUrl" :src="imgUrl" class="avatar">
+      <!--<img v-if="imgPath" :src="imgPath" class="avatar">-->
+      <el-image v-if="imgPath" style="height: 180px;" :src="imgPath" fit="contain"></el-image>
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
   </div>
@@ -14,15 +15,16 @@ export default {
     imgUrl: String
   },
   data () {
-    return {}
+    return {
+      imgPath: this.imgUrl
+    }
   },
   created () {},
-  mounted () {},
+  mounted () {
+  },
   methods: {
     handleAvatarSuccess (res, file) {
-      console.log(res)
-      this.imgUrl = res.info.path
-      // this.formData.avatar = URL.createObjectURL(file.raw)
+      this.imgPath = res.info.path
     },
     beforeAvatarUpload (file) {
       let isJPG = file.type === 'image/jpeg'
@@ -39,8 +41,11 @@ export default {
     }
   },
   watch: {
-    imgUrl (val) {
+    imgPath (val) {
       this.$emit('change', val)
+    },
+    imgUrl (val) {
+      this.imgPath = val
     }
   }
 }
@@ -53,6 +58,7 @@ export default {
     overflow: hidden;
     .avatar{
       width: 100%;
+      height: 100%;
     }
   }
   .avatar-uploader-icon {

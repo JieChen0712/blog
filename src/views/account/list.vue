@@ -66,10 +66,16 @@
           label="用户 ID"
           prop="uid">
         </el-table-column>
-        <el-table-column
-          label="用户名"
-          prop="name">
+        <el-table-column label="头像">
+          <template slot-scope="scope">
+            <el-image :src="scope.row.avatar" class="avatar">
+              <div slot="error" class="image-slot">
+                <i class="el-icon-picture-outline"></i>
+              </div>
+            </el-image>
+          </template>
         </el-table-column>
+        <el-table-column label="用户名" prop="name"></el-table-column>
         <el-table-column
           label="手机号"
           prop="phone">
@@ -223,17 +229,29 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped="" type="text/css">
-.demo-table-expand {
-  font-size: 0;
-  label{
-    width: 90px;
-    color: #99a9bf;
+<style lang="scss" type="text/css">
+.account_list{
+  .demo-table-expand {
+    font-size: 0;
+    label{
+      width: 90px;
+      color: #99a9bf;
+    }
+    .el-form-item {
+      margin-right: 0;
+      margin-bottom: 0;
+      width: 50%;
+    }
   }
-  .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
+  .avatar {
+    img{
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      overflow: hidden;
+    }
   }
 }
+
 </style>

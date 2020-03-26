@@ -10,7 +10,6 @@ const upload_type = {
 }
 
 exports.upload_img = (req, res, next) => {
-//	console.log(req);
   upload.uploadFolder = upload_type[req.query.type]; // 自定义路径
   upload.uploadFolder = 'avatar'; // 自定义路径
   upload.createFolder(upload.uploadFolder); // 创建自定义路径文件

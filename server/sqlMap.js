@@ -78,6 +78,8 @@ const sqlMap = {
                 }
                 if(!comm.empty(link)){
                   sqlstr += ` ${name} ${symbols} ${value} ${link} `;
+                }else if (where.length > 1 && comm.empty(link) && key < where.length - 1){
+                  sqlstr += ` ${name} ${symbols} ${value} AND `;
                 }else{
                   sqlstr += ` ${name} ${symbols} ${value} `;
                 }

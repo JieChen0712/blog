@@ -13,7 +13,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css'
 import {getCookie, delCookie} from './common/js/base.js'
 // ueditor
 import '../static/ueditor/ueditor.config.js'
-import '../static/ueditor/ueditor.all.min.js'
+import '../static/ueditor/ueditor.all.js'
 import '../static/ueditor/lang/zh-cn/zh-cn.js'
 import '../static/ueditor/ueditor.parse.min.js'
 

@@ -1,0 +1,257 @@
+[2020-03-25T11:23:40.334][ERROR  7752  app] Something went wrong: TypeError: callback is not a function
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:46:7
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:36:5
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at Function.handle (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:174:3)
+    at router (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:127:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+[2020-03-25T11:24:50.617][ERROR  9604  app] Something went wrong: TypeError: callback is not a function
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:46:7
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:36:5
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at Function.handle (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:174:3)
+    at router (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:127:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+[2020-03-25T11:26:29.063][ERROR  8352  app] Something went wrong: TypeError: callback is not a function
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:46:7
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:36:5
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at Function.handle (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:174:3)
+    at router (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:127:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+[2020-03-25T11:46:09.277][ERROR  8992  app] Something went wrong: TypeError: callback is not a function
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:46:7
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:36:5
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:127:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+[2020-03-25T11:47:50.394][ERROR  9376  app] Something went wrong: TypeError: callback is not a function
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:46:7
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:36:5
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:127:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+[2020-03-25T11:49:12.578][ERROR  8752  app] Something went wrong: TypeError: callback is not a function
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:46:7
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:36:5
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:127:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+[2020-03-25T11:53:13.696][ERROR  9680  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:132:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:726:26)
+    at FSReqWrap.oncomplete (fs.js:153:21)
+[2020-03-25T12:01:16.136][ERROR  9344  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:133:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:726:26)
+    at FSReqWrap.oncomplete (fs.js:153:21)
+[2020-03-25T12:02:57.506][ERROR  7864  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:133:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:726:26)
+    at FSReqWrap.oncomplete (fs.js:153:21)
+[2020-03-25T12:05:35.451][ERROR  10204  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:162:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:726:26)
+    at FSReqWrap.oncomplete (fs.js:153:21)
+[2020-03-25T12:16:14.657][ERROR  10228  app] Something went wrong: Error: Cannot find module '/static/ueditor/jsp/config.json'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:582:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:508:25)
+    at Module.require (internal/modules/cjs/loader.js:637:17)
+    at require (internal/modules/cjs/helpers.js:22:18)
+    at E:\Jie\blog\server\index.js:101:19
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:46:7
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:36:5
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:127:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+[2020-03-25T12:18:42.080][ERROR  7932  app] Something went wrong: Error: Cannot find module '/static/ueditor/jsp/config.json'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:582:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:508:25)
+    at Module.require (internal/modules/cjs/loader.js:637:17)
+    at require (internal/modules/cjs/helpers.js:22:18)
+    at E:\Jie\blog\server\index.js:101:19
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:46:7
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:36:5
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:127:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+[2020-03-25T12:22:55.483][ERROR  4128  app] Something went wrong: TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be one of type string, Buffer, or URL. Received type function
+    at Object.readFile (fs.js:296:3)
+    at E:\Jie\blog\server\index.js:105:10
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:46:7
+    at E:\Jie\blog\server\node_modules\ueditor\lib\index.js:36:5
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:127:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\route.js:131:14)
+[2020-03-25T14:26:56.279][ERROR  2344  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:174:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:726:26)
+    at FSReqWrap.oncomplete (fs.js:153:21)
+[2020-03-25T14:28:22.224][ERROR  11192  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:174:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:726:26)
+    at FSReqWrap.oncomplete (fs.js:153:21)
+[2020-03-25T14:28:55.213][ERROR  9768  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:174:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:726:26)
+    at FSReqWrap.oncomplete (fs.js:153:21)
+[2020-03-25T16:00:44.202][ERROR  11836  app] Something went wrong: Error: Not Found
+    at E:\Jie\blog\server\index.js:175:15
+    at Layer.handle [as handle_request] (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:317:13)
+    at E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:284:7
+    at Function.process_params (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:335:12)
+    at next (E:\Jie\blog\node_modules\_express@4.17.1@express\lib\router\index.js:275:10)
+    at SendStream.error (E:\Jie\blog\node_modules\_serve-static@1.14.1@serve-static\index.js:121:7)
+    at SendStream.emit (events.js:189:13)
+    at SendStream.error (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:270:17)
+    at SendStream.onStatError (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:421:12)
+    at onstat (E:\Jie\blog\node_modules\_send@0.17.1@send\index.js:726:26)
+    at FSReqWrap.oncomplete (fs.js:153:21)
