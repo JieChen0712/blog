@@ -117,10 +117,10 @@ const common = {
     return flag;
   },
   empty(value){ // 是否为空值
-    if(value != "" && value != null && value != undefined){
-      return false;
-    }else{
+    if(value == "" || value == null || value == undefined || !value){
       return true;
+    }else{
+      return false;
     }
   },
 //emptyArray(value){

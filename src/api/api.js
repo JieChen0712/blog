@@ -59,6 +59,8 @@ export const delArticleKind = params => { return axios.post(`/api/blog/admin/art
 export const getArticleList = params => { return axios.post(`/api/blog/admin/article_list_get`, params) }
 // 获取文章内容
 export const getArticleDetail = params => { return axios.post(`/api/blog/admin/article_detail_get`, params) }
+// 删除文章
+export const delArticle = params => { return axios.post(`/api/blog/admin/article_del`, params) }
 
 export const removeUser = params => { return axios.get(`/user/remove`, { params: params }) }
 

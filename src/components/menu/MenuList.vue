@@ -44,7 +44,7 @@ export default {
         'name': '用户管理',
         'link': 'baidu',
         'status': '1',
-        'icon': 'el-icon-menu',
+        'icon': 'el-icon-user-solid',
         'sub_menu': [
           {
             'menuid': '1-1',
@@ -64,29 +64,22 @@ export default {
       },
       {
         'menuid': '2',
-        'name': '日志管理',
+        'name': '文章管理',
         'link': 'baidu',
         'status': '1',
-        'icon': 'el-icon-menu',
+        'icon': 'el-icon-notebook-1',
         'sub_menu': [
           {
             'menuid': '2-1',
-            'name': '日志分类',
+            'name': '文章分类',
             'link': '/blog/home/article/kind',
             'icon': '',
             'status': '1'
           },
           {
             'menuid': '2-2',
-            'name': '日志列表',
+            'name': '文章列表',
             'link': '/blog/home/article/index',
-            'icon': '',
-            'status': '1'
-          },
-          {
-            'menuid': '2-3',
-            'name': '添加日志',
-            'link': '/blog/home/article/detail?type=add',
             'icon': '',
             'status': '1'
           }
@@ -97,7 +90,7 @@ export default {
         'name': '用户数据统计',
         'link': 'baidu',
         'status': '1',
-        'icon': 'el-icon-menu',
+        'icon': 'el-icon-s-data',
         'sub_menu': [
           {
             'menuid': '3-1',
@@ -120,7 +113,7 @@ export default {
         'name': '管理员日志',
         'link': '/blog/home/article/detail',
         'status': '1',
-        'icon': 'el-icon-menu'
+        'icon': 'el-icon-date'
       }
     ]
   },
@@ -144,9 +137,17 @@ export default {
     /*min-height: 400px;*/
   }
   .el-menu{
+    text-align: left;
     @include menu-border-right();
     .el-menu-item,.el-submenu{
-      @include menu-text-color()
+      @include menu-text-color();
+      .fa{
+        vertical-align: middle;
+        margin-right: 5px;
+        width: 24px;
+        text-align: center;
+        font-size: 18px;
+      }
     }
   }
 </style>

@@ -79,6 +79,9 @@ router.post('/api/blog/admin/article_add_kind', Article.add_kind);
 
 // 文章分类添加
 router.post('/api/blog/admin/article_edit_kind', Article.edit_kind);
+
+// 文章删除
+router.post('/api/blog/admin/article_del', Article.article_del)
 //router.post('/api/img/upload', function(req, res, next) {
 //console.log(req.files)
 //upload.uploadFolder = '../uploads/avatar'; // 自定义路径

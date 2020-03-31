@@ -38,7 +38,7 @@
       </div>
     </div>
     <!--自定义对话框-->
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible" :append-to-body="indexTop" :close-on-click-modal="clickClose" :close-on-press-escape="clickClose">
+    <el-dialog title="分类" :visible.sync="dialogFormVisible" :append-to-body="indexTop" :close-on-click-modal="clickClose" :close-on-press-escape="clickClose">
       <el-form :model="KindInfo">
         <el-form-item label="分类名称" :label-width="formLabelWidth">
           <el-col :span="6">
@@ -47,9 +47,8 @@
         </el-form-item>
         <el-form-item label="归属分类" :label-width="formLabelWidth">
           <el-col :span="6">
-            <el-select v-model="KindInfo.pid" placeholder="请选择活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+            <el-select v-model="KindInfo.pid" placeholder="请选择归属分类">
+              <el-option v-for="item in allKind" :key="item.id" :label="item.name" :value="item.id" :disabled="item.disabled"></el-option>
             </el-select>
           </el-col>
         </el-form-item>
@@ -94,6 +93,7 @@ export default {
       filterArticle: {
         name: ''
       },
+      allKind: [],
       dialogFormVisible: false,
       indexTop: true,
       clickClose: false,
@@ -126,10 +126,10 @@ export default {
         that.countMaxHeight()
       })()
     }
-    this.getArticleKindList()
+    this.getArticleKinds()
   },
   methods: {
-    getArticleKindList () {
+    getArticleKinds () {
       let param = {
         page: this.currentPage,
         name: this.filterArticle.name
@@ -146,9 +146,27 @@ export default {
           }
         })
     },
+    getAllKind (_id) {
+      let param = {}
+      getArticleKindList(param)
+        .then(response => {
+          let data = response.data
+          if (data.code === 1) {
+            for (let i in data.info) {
+              if (data.info[i].id === _id) {
+                data.info[i]['disabled'] = true
+              }
+            }
+            this.allKind = data.info
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+    },
     showForm (type, row) {
       let o = this
       if (type === 'add') {
+        o.getAllKind()
         o.KindInfo = {
           status: 1,
           order: 0,
@@ -163,6 +181,7 @@ export default {
           o.$message.error('分类数据有误！')
           return
         }
+        o.getAllKind(row.id)
         o.row = row
         let param = {
           id: row.id
@@ -211,7 +230,7 @@ export default {
               type = 'success'
               o.node_had.childNodes = []
               if (row.pid === 0) {
-                o.getArticleKindList()
+                o.getArticleKinds()
               } else {
                 let newRow = {id: row.pid}
                 o.load(newRow, o.node_had, o.resolve_had)
@@ -309,7 +328,7 @@ export default {
                 let newRow = {id: o.row.pid}
                 o.load(newRow, o.node_had, o.resolve_had)
               } else {
-                o.getArticleKindList()
+                o.getArticleKinds()
               }
             } else {
               o.$message.error(response.data.msg)
@@ -325,7 +344,7 @@ export default {
                 let newRow = {id: o.row.pid}
                 o.load(newRow, o.node_had, o.resolve_had)
               } else {
-                o.getArticleKindList()
+                o.getArticleKinds()
               }
             } else {
               o.$message.error(response.data.msg)

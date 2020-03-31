@@ -65,6 +65,10 @@ const sqlMap = {
               let link = transf_str[where[key]['link']];
               let value = where[key].value;
               let name = where[key].name;
+              //默认symbols为等于
+              if(comm.empty(symbols)){
+                symbols = '=';
+              }
               if(typeof value === 'string' && special_transf.indexOf(where[key]['symbols']) == -1){
                 value = "'"+value+"'";
               }else if(where[key]['symbols'] === 'like' || where[key]['symbols'] === 'notlike'){

@@ -107,13 +107,19 @@ exports.article_detail_get = async (req, res, fields) => {
 
 // 添加文章
 exports.article_addOrSave =  async (req, res, fields) => {
-	let result_info = {};
-	let data = [{
+	let result_info,sqlstr,where;
+	let artId = req.body.id,
+	type = req.body.type,
+//	uid = req.session.user.id,
+//	author = req.session.user.name,
+	uid = 1,
+  author = 'jie',
+	data = [{
 		name: 'uid',
-		value: req.session.user.id
+		value: uid
 	},{
 	  name: 'author',
-	  value: req.session.user.name
+	  value: author
 	},{
 		name: 'title',
 		value: req.body.title,
@@ -131,12 +137,21 @@ exports.article_addOrSave =  async (req, res, fields) => {
 		value: req.body.desc
 	},{
 		name: 'image',
-		value: req.body.imgurl
+		value: req.body.image
 	},{
 		name: 'time',
 		value: common.getTime()
 	}];
-	let sqlstr = sql.add(table, data);
+	
+	if(type === "add"){
+	  sqlstr = sql.add(table, data);
+	} else {
+	  where = [{
+	    name: 'id',
+	    value: artId
+	  }]
+	  sqlstr = sql.save(table, data, where);
+	}
 	
 	let resSave = common.excSql(sqlstr).catch(err => {res.json(err)})
 	
@@ -286,34 +301,45 @@ exports.edit = (req, res, fields) => {
 }
 
 // 删除文章
-exports.delete = (req, res, fields) => {
-  let result_info = {};
-  let timestamp = (new Date()).getTime();
-  let params = [
-    req.session.user.id,
-    req.body.art_id,
-    timestamp
-  ];
-  common.getLink(sql.article.delete, params, (err, result) => {
-    if(err) {
-      res.send(err);
-    } else {
-      if(result.affectedRows){
-        result_info = {
-          code: 1,
-          msg: '删除成功！',
-          info: null
-        };
-      }else{
-        result_info = {
-          code: -1,
-          msg: '删除失败！',
-          info: null
-        };
-      }
+exports.article_del = async (req, res, fields) => {
+  let userId = req.session.user.id;
+  let artId = req.body.id;
+  let where,result_info,sqlstr,resDel;
+  
+  if(common.empty(artId)){
+    result_info = {
+      code: -1,
+      msg: "文章id不能为空",
+      info: []
     }
-    common.responseJSON(res, result_info);
-  })
+    return common.responseJSON(res, result_info);
+  }
+  
+  where = [{
+    name: "uid",
+    value: userId,
+  },{
+    name: "id",
+    value: artId
+  }]
+  
+  sqlstr = sql.delete(table, where)
+  resDel = await common.excSql(sqlstr).catch(err => {res.json(err)})
+  if(resDel.affectedRows > 0){
+    result_info = {
+      code: 1,
+      msg: "删除成功",
+      info: resDel
+    }
+  }else{
+    result_info = {
+      code: -2,
+      msg: "无该文章或非作者",
+      info: []
+    }
+  }
+  common.responseJSON(res, result_info);
+  
 }
 
 exports.get_article = (req, res, fields) => {
@@ -454,11 +480,18 @@ exports.article_kind = async ( req, res, fields) => {
   let pid = req.body.pid;
   let where = [];
   
-  if(common.empty(page)){
-    page = 1;
-  }
-  if(common.empty(page_list_num)){
-    page_list_num = 20;
+  if(!common.empty(page)){
+    if(common.empty(page)){
+      page = 1;
+    }
+    
+    if(common.empty(page_list_num)){
+      page_list_num = 20;
+    }
+    
+    if(common.empty(pid)){
+      pid = '0';
+    }
   }
   
   if(!common.empty(name)){
@@ -469,21 +502,22 @@ exports.article_kind = async ( req, res, fields) => {
     })
   }
   
-  if(common.empty(pid)){
-    pid = '0';
+  if(!common.empty(pid)){
+    where.push({
+      name: 'pid',
+      value: pid,
+      symbols: 'eq',
+    })
   }
-  where.push({
-    name: 'pid',
-    value: pid,
-    symbols: 'eq',
-  })
   
   let sqlstr = sql.select(tableKind , null, where);
   let count_sqlstr = sql.count(tableKind, where);
   let count = await common.fieldSql(count_sqlstr).catch(err => {res.json(err)});
   count = common.empty(count)?0:count;
   
-  sqlstr += " LIMIT " + ((page - 1) * page_list_num) + ','+ (page * page_list_num) + ';';
+  if(!common.empty(page)){
+    sqlstr += " LIMIT " + ((page - 1) * page_list_num) + ','+ (page * page_list_num) + ';';
+  }
   
   let list = await common.excSql(sqlstr).catch(err => {res.json(err)});
   
@@ -511,9 +545,8 @@ exports.article_kind_get = async ( req, res, fields) => {
   if(common.empty(kind_id) || common.empty(kind_id)){
     result_info = {
       code: -1,
-      msg: '获取成功！',
-      info: list,
-      total: count
+      msg: '获取失败！',
+      info: [],
     }
     common.responseJSON(res, result_info);
     return false;

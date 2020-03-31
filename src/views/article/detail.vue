@@ -37,8 +37,8 @@
             <ueditor :id="ueId" :config="ueConfig" :content="formData.content" class="ueditor" ref="ue" @change="setContent"></ueditor>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click.native.prevent="submitArticle('formData')" v-if="type === 'add'">添加</el-button>
-            <el-button type="primary" @click.native.prevent="submitArticle('formData')" v-if="type === 'edit'">修改</el-button>
+            <el-button type="success" class="btn-submit" @click.native.prevent="submitArticle('formData')" v-if="type === 'add'">添加</el-button>
+            <el-button type="primary" class="btn-submit" @click.native.prevent="submitArticle('formData')" v-if="type === 'edit'">修改</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -50,14 +50,14 @@
 import ueditor from '../../components/ueditor/ueditor'
 import breadcrumb from '../../components/breadcrumb/breadcrumb'
 import uploadsingle from '../../components/upload/uploadSingle'
-import { saveArticle, getArticleDetail } from '@/api/api.js'
+import { saveArticle, getArticleDetail, getArticleKindList } from '@/api/api.js'
 
 export default {
   data () {
     return {
       type: String,
       articleId: Number,
-      ueId: 'article_edit',
+      ueId: 'article_detail',
       ueConfig: {
         autoHeightEnabled: false,
         initialFrameWidth: null,
@@ -86,30 +86,15 @@ export default {
           { required: true, message: '请填写文章描述', trigger: 'blur' }
         ]
       },
-      opt_kind: [{
-        value: '1',
-        label: '日常'
-      }, {
-        value: '2',
-        label: '技术'
-      }, {
-        value: '3',
-        label: '音乐'
-      }, {
-        value: '4',
-        label: '日记'
-      }, {
-        value: '5',
-        label: '游戏'
-      }],
+      opt_kind: [],
       opt_status: [{
-        value: '1',
+        value: 1,
         label: '公开'
       }, {
-        value: '2',
+        value: 2,
         label: '私密'
       }, {
-        value: '3',
+        value: 3,
         label: '不显示'
       }],
       filePath: {path: 'avatar'}
@@ -124,12 +109,21 @@ export default {
     this.type = this.$route.query.type
     this.articleId = this.$route.query.id
   },
-  mounted () {
-    this.formData.content = '<span style="color:#bfbfbf">请添加文章内容</span>'
+  activated () {
+    this.ueId = 'article_detail' + Math.round(new Date() / 1000)
+    this.getArticleKind()
+    this.type = this.$route.query.type
+    this.articleId = this.$route.query.id
     if (this.type === 'edit') {
       this.getArticleInfo(this.articleId)
+    } else {
+      for (let i in this.formData) {
+        this.formData[i] = ''
+      }
+      this.formData.content = '<span style="color:#bfbfbf">请添加文章内容</span>'
     }
   },
+  mounted () {},
   methods: {
     setAvatar (value) {
       this.formData.image = value
@@ -146,12 +140,28 @@ export default {
           .then(response => {
             if (response.data.code === 1) {
               this.formData = response.data.info
-              console.log(this.formData)
             } else {
               this.$message.error(response.data.msg)
             }
           })
       }
+    },
+    getArticleKind () {
+      getArticleKindList()
+        .then(response => {
+          let data = response.data
+          if (data.code === 1) {
+            this.opt_kind = []
+            for (let i in data.info) {
+              this.opt_kind.push({
+                label: data.info[i].name,
+                value: data.info[i].id
+              })
+            }
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
     },
     submitArticle (value) {
       this.$refs.formData.validate((valid) => {
@@ -159,7 +169,6 @@ export default {
           let param = this.formData
           param.id = this.articleId
           param.type = this.type
-          console.log(param.content)
           saveArticle(param)
             .then(response => {
               if (response.data.code === 1) {
@@ -191,6 +200,9 @@ export default {
       .uploadImg{
         width:180px;
         height:180px;
+      }
+      .btn-submit{
+        float: right;
       }
     }
     .el-form-item{

@@ -4,10 +4,10 @@
     <div class="tb-wrap" ref="tbWrap">
       <el-form :inline="true" :model="filterArticle" class="filter-form" ref="filterWrap">
         <el-form-item label="文章标题">
-          <el-input v-model="filterArticle.name" placeholder="审批人"></el-input>
+          <el-input v-model="filterArticle.name" placeholder="请输入标题"></el-input>
         </el-form-item>
         <el-form-item label="发布状态">
-          <el-select v-model="filterArticle.status" placeholder="活动区域">
+          <el-select v-model="filterArticle.status" placeholder="请选择状态">
             <el-option label="显示" value="1"></el-option>
             <el-option label="不显示" value="2"></el-option>
           </el-select>
@@ -62,7 +62,7 @@
 
 <script type="text/ecmascript">
 import breadcrumb from '../../components/breadcrumb/breadcrumb'
-import {getArticleList} from '@/api/api'
+import {getArticleList, delArticle} from '@/api/api'
 export default {
   data () {
     return {
@@ -106,14 +106,36 @@ export default {
       console.log(index, row)
     },
     handleDelete (index, row) {
-      console.log(index, row)
+      this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let param = {
+          id: row.id
+        }
+        delArticle(param)
+          .then(response => {
+            let data = response.data
+            if (data.code === 1) {
+              this.tableData.forEach((value, index, array) => {
+                if (value.id === row.id) {
+                  array.splice(value, 1)
+                }
+              })
+              this.$message.success(data.msg)
+            } else {
+              this.$message.error(data.msg)
+            }
+          })
+      })
     },
     filterHandler (value, row, column) {
       const property = column['property']
       return row[property] === value
     },
     filterSubmit () {
-      console.log('submit')
+      this.getArticleList()
     },
     handleSizeChange (val) {
       console.log(`每页 ${val} 条`)
