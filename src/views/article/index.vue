@@ -102,9 +102,6 @@ export default {
       console.log(wrapHeight + '  ' + filterHeight)
       this.tableHeight = tableHeight
     },
-    handleEdit (index, row) {
-      console.log(index, row)
-    },
     handleDelete (index, row) {
       this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -141,7 +138,8 @@ export default {
       console.log(`每页 ${val} 条`)
     },
     handleCurrentChange (val) {
-      console.log(`当前页: ${val}`)
+      this.currentPage = val
+      this.getArticleList()
     },
     getArticleList () {
       let param = {

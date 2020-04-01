@@ -49,14 +49,14 @@ export default {
           {
             'menuid': '1-1',
             'name': '个人中心',
-            'link': '/blog/home/setting',
+            'link': '/blog/home/account/setting',
             'icon': '',
             'status': '1'
           },
           {
             'menuid': '1-2',
             'name': '管理员列表',
-            'link': '/blog/home/accountList',
+            'link': '/blog/home/account/index',
             'icon': '',
             'status': '1'
           }

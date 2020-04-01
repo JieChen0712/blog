@@ -27,13 +27,13 @@ promise.polyfill(App)
 // Vue.prototype.$http = axios
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/blog/login') {
+  if (to.path === '/blog/home/login') {
     delCookie('NODESESSIONID')
   }
   let user = getCookie('NODESESSIONID')
-  if (!user && to.path !== '/blog/login' && to.path !== '/blog/register') {
+  if (!user && to.path !== '/blog/home/login' && to.path !== '/blog/home/register') {
     next({
-      path: '/blog/login'
+      path: '/blog/home/login'
     })
   } else {
     next()

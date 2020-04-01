@@ -162,3 +162,9 @@ exports.test_sql_count = (req, res, fields) => {
   }
   comm.responseJSON(res, result_info);
 }
+
+exports.test_delFile = (req, res, fields) => {
+  let path = '/uploads/avatar/15852064242383En6Z.jpg';
+  comm.deleteFile(path);
+  
+}

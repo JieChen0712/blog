@@ -58,6 +58,9 @@ exports.article_list_get = async (req, res, fields) => {
     common.responseJSON(res, result_info);
   }else{
     sqlstr = sql.select(table, [], where);
+    if(!common.empty(page)){
+      sqlstr += " LIMIT " + ((page - 1) * page_list_num) + ','+ (page * page_list_num) + ';';
+    }
     list = await common.excSql(sqlstr).catch(err => {res.json(err)});
     for(let i in list){
       list[i]['time'] = common.formatDate(list[i]['time'],"YYYY-MM-dd");
@@ -107,7 +110,7 @@ exports.article_detail_get = async (req, res, fields) => {
 
 // 添加文章
 exports.article_addOrSave =  async (req, res, fields) => {
-	let result_info,sqlstr,where;
+	let result_info,sqlstr,where,findstr;
 	let artId = req.body.id,
 	type = req.body.type,
 //	uid = req.session.user.id,
@@ -151,7 +154,15 @@ exports.article_addOrSave =  async (req, res, fields) => {
 	    value: artId
 	  }]
 	  sqlstr = sql.save(table, data, where);
-	}
+	  findstr = sql.find(table, '', where);
+	  common.excSql(findstr).then(response => {
+	    if(req.body.image !== response[0]['image']) {
+	      common.deleteFile(response[0]['image']);
+	    }
+	  }).catch(err => {
+	    res.json(err)
+	  })
+  }
 	
 	let resSave = common.excSql(sqlstr).catch(err => {res.json(err)})
 	
@@ -171,133 +182,6 @@ exports.article_addOrSave =  async (req, res, fields) => {
 	
 	common.responseJSON(res, result_info);
 	
-}
-
-// 编辑文章
-exports.edit = (req, res, fields) => {
-	let where = [{
-		name: 'id',
-		value: req.body.art_id,
-		link: 'and'
-	},{
-		name: 'uid',
-		value: req.session.user.id,
-	}];
-	let data = [{
-		name: 'title',
-		value: req.body.title
-	},{
-		name: 'kind',
-		value: req.body.kind
-	},{
-		name: 'status',
-		value: req.body.status
-	},{
-		name: 'ueContent',
-		value: req.body.ueContent
-	},{
-		name: 'disc',
-		value: req.body.disc
-	},{
-		name: 'imgurl',
-		value: req.body.imgurl
-	},{
-		name: 'time',
-		value: req.body.time
-	}];
-	
-	let sqlstr = sql.save(table, where, data);
-	common.getLink(sqlstr, [], (err, result) => {
-    if(err) {
-      res.send(err);
-    } else {
-      if(result.affectedRows){
-        result_info = {
-          code: 1,
-          msg: '修改成功！',
-          info: null
-        };
-      }else{
-        result_info = {
-          code: -1,
-          msg: '修改失败！',
-          info: null
-        };
-      }
-    }
-    common.responseJSON(res, result_info);
-  });
-}
-//exports.add = (req, res, fields) => {
-//let result_info = {};
-//let timestamp = (new Date()).getTime();
-//let params = [
-//  req.session.user.id,
-//  req.body.title,
-//  req.body.kind,
-//  req.body.status,
-//  req.body.ueContent,
-//  req.body.disc,
-//  req.body.imgurl,
-//  timestamp
-//];
-//common.getLink(sql.article.add, params, (err, result) => {
-//  if(err) {
-//    res.send(err);
-//  } else {
-//    if(result.affectedRows){
-//      result_info = {
-//        code: 1,
-//        msg: '添加成功！',
-//        info: null
-//      };
-//    }else{
-//      result_info = {
-//        code: -1,
-//        msg: '添加失败！',
-//        info: null
-//      };
-//    }
-//  }
-//  common.responseJSON(res, result_info);
-//})
-//}
-
-// 编辑文章
-exports.edit = (req, res, fields) => {
-  let result_info = {};
-  let timestamp = (new Date()).getTime();
-  let params = [
-    req.body.art_id,
-    req.session.user.id,
-    req.body.title,
-    req.body.kind,
-    req.body.status,
-    req.body.ueContent,
-    req.body.disc,
-    req.body.imgurl,
-    timestamp
-  ];
-  common.getLink(sql.article.edit, params, (err, result) => {
-    if(err) {
-      res.send(err);
-    } else {
-      if(result.affectedRows){
-        result_info = {
-          code: 1,
-          msg: '修改成功！',
-          info: null
-        };
-      }else{
-        result_info = {
-          code: -1,
-          msg: '修改失败！',
-          info: null
-        };
-      }
-    }
-    common.responseJSON(res, result_info);
-  })
 }
 
 // 删除文章
@@ -323,6 +207,13 @@ exports.article_del = async (req, res, fields) => {
     value: artId
   }]
   
+  let findstr = sql.find(table, '', where);
+  common.excSql(findstr).then(response => {
+    common.deleteFile(response[0]['img']);
+  }).catch(err => {
+    res.json(err)
+  })
+  
   sqlstr = sql.delete(table, where)
   resDel = await common.excSql(sqlstr).catch(err => {res.json(err)})
   if(resDel.affectedRows > 0){
@@ -339,11 +230,6 @@ exports.article_del = async (req, res, fields) => {
     }
   }
   common.responseJSON(res, result_info);
-  
-}
-
-exports.get_article = (req, res, fields) => {
-  
 }
 
 // 添加分类
@@ -453,6 +339,15 @@ exports.edit_kind = async (req, res, fields) => {
     name: 'img',
     value: img
   }];
+  
+  let findstr = sql.find(tableKind, '', where);
+  common.excSql(findstr).then(response => {
+    if(img !== response[0]['img']) {
+      common.deleteFile(response[0]['img']);
+    }
+  }).catch(err => {
+    res.json(err)
+  })
   
   let sqlstr = sql.save(tableKind, save, where);
   let res_save = common.excSql(sqlstr).catch(err => {res.json(err)})
@@ -658,6 +553,7 @@ exports.kind_del = async ( req, res, fields) => {
   let kindInfo = await common.findSql(findsqlstr).catch(err => {res.json(err)});
   
   if(kindInfo){
+    common.deleteFile(kindInfo['img']);
     childWhere.push({
       name: 'pid',
       value: kindId,

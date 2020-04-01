@@ -10,16 +10,23 @@ const tb_admin_detail = 'admin_detail';
 // 用户登录接口
 exports.admin_login = async (req, res, fields) => {
   let result_info = {};
-	let where = [
-		[{
-			name: 'account',
-			value: req.body.ac,
-		}]
-	];
+	let where = [{
+		name: 'account',
+		value: req.body.ac,
+	}];
 	let sqlstr = sql.find(tb_admin, null, where);
-	console.log(sqlstr);
+//	console.log(sqlstr);
 	
 	let userInfo = await common.findSql(sqlstr).catch(err => {res.json(err)});
+	
+	if(userInfo.status !== 1){
+	  result_info = {
+	    code: -1,
+	    msg: "该账号已被禁用",
+	    info: []
+	  }
+	  return common.responseJSON(res, result_info);
+	}
 	
 	if(userInfo && common.md5(req.body.pd) === userInfo['password']){
     req.session.user = userInfo;
@@ -27,8 +34,8 @@ exports.admin_login = async (req, res, fields) => {
     res.cookie('NODESESSIONID', req.sessionID, {
       maxAge: 1000 * 10000
     });
-    console.log(req.session.user);
-    console.log('success login');
+//  console.log(req.session.user);
+//  console.log('success login');
     result_info = {
       code: 1,
       info: userInfo['name'],
@@ -41,11 +48,90 @@ exports.admin_login = async (req, res, fields) => {
       a: [],
       msg: "登录失败！"
     }
-    console.log('error login');
+//  console.log('error login');
 	}
 	common.responseJSON(res, result_info);
 	
 };
+
+// 管理员登录接口
+exports.register = async (req, res, fields) => {
+  let sqlstr,findstr,result_info,where,data;
+  let account = req.body.ac,
+  status = common.empty(req.body.status)?3:req.body.status,
+  type = common.empty(req.body.type)?2:req.body.type;
+  
+  if(type == 1 || status == 1){
+    if(common.empty(req.session.user) || req.session.user.type != 1 || req.session.user.status != 1){
+      result_info = {
+        code: -3,
+        msg: "注册该管理员权限不足",
+        info: []
+      }
+      return common.responseJSON(res, result_info);
+    }
+  }
+  
+  if(common.empty(account)){
+    result_info = {
+      code: -1,
+      msg: "账号不能为空",
+      info: []
+    }
+    return common.responseJSON(res, result_info);
+  }
+  
+  where = [{
+    name: 'account',
+    value: account
+  }];
+  
+  findstr = sql.find(tb_admin, '', where);
+  
+  let is_exsit = await common.findSql(findstr).catch(err => {res.json(err)});
+  
+  if(is_exsit){
+    result_info = {
+      code: -2,
+      msg: "该账号已存在",
+      info: []
+    }
+    return common.responseJSON(res, result_info);
+  }
+  
+  data = [
+    {name: 'account',value: account},
+    {name: 'password',value: common.md5(req.body.pd)},
+    {name: 'name',value: req.body.name},
+    {name: 'type',value: type},
+    {name: 'status',value: status}
+  ];
+  
+  sqlstr = sql.add(tb_admin, data);
+  
+  let res_add = await common.excSql(sqlstr).catch(err => {res.json(err)});
+  
+  if(res_add){
+    data = [
+      {name: 'qq',value: req.body.qq},
+      {name: 'wechat',value: req.body.wechat},
+      {name: 'phone',value: req.body.phone},
+      {name: 'name',value: req.body.name},
+      {name: 'email', value: req.body.email},
+      {name: 'nickname', value: req.body.name},
+      {name: 'uid', value: res_add['insertId']},
+      {name: 'register_time', value: common.getTime()}
+    ]
+    sqlstr = sql.add(tb_admin_detail, data);
+    let res_add_detail = common.excSql(sqlstr).catch(err => {res.json(err)})
+  }
+  result_info = {
+    code: 1,
+    msg: "注册成功",
+    info: res_add
+  }
+  common.responseJSON(res, result_info);
+}
 
 // 获取管理员用户列表
 exports.admin_user_list = async (req, res, fields) => {
@@ -123,25 +209,21 @@ exports.admin_user_list = async (req, res, fields) => {
 }
 
 // 获取管理员用户详情
-exports.admin_user_info = (req, res, fields) => {
+exports.admin_user_info = async (req, res, fields) => {
 	let where = [{
 	  name: 'uid',
 	  value: req.session.user.id,
 	  symbols: 'eq'
 	}];
 	let sqlstr = sql.find(tb_admin_detail, null, where);
-	common.getLink(sqlstr, [], (err, result) => {
-    if(err) {
-      res.send(err);
-    } else {
-      let result_info = {
-        code: 1,
-        msg: '获取成功！',
-        info: result[0]
-      };
-      common.responseJSON(res, result_info);
-    }
-  });
+	let info = await common.findSql(sqlstr).catch(err => {res.json(err)});
+	let result_info = {
+    code: 1,
+    msg: '获取成功！',
+    info: info
+  };
+  common.responseJSON(res, result_info);
+	
 }
 
 exports.admin_set_detail = async (req, res, fields) => {

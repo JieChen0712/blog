@@ -4,7 +4,7 @@ const pool = require('./db'); // 引用mysql的配置连接数据库
 const sql = require('./sqlMap'); // sql语句集
 const md5 = require('js-md5'); // md5加密验证
 // const upload = require('./upload');
-// const fs = require('fs');
+const fs = require('fs');
 
 const common = {
   getLink(strsql, param, callback) {
@@ -231,6 +231,25 @@ const common = {
     str = str.replace(/&nbsp;/g," ");
     str = str.replace(/&quot;/g,'"');
     return str;
+  },
+  deleteFile (filePath) {
+    filePath = '..' + filePath;
+    let files = [];
+    if (fs.existsSync(filePath)) {
+      if (fs.statSync(filePath).isDirectory()) {
+        files = fs.readdirSync(filePath);
+        files.forEach((file, index) => {
+          let curPath = filePath + "/" + file;
+          if (fs.statSync(curPath).isDirectory()) {
+            common.deleteFile(curPath);
+          } else {
+            fs.unlinkSync(curPath);
+          }
+        });
+      }else{
+        fs.unlinkSync(filePath);
+      }
+    }
   }
   
 }

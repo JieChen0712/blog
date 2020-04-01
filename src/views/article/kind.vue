@@ -203,14 +203,11 @@ export default {
     },
     filterSubmit (e) {
       this.currentPage = 1
-      this.getUserList()
+      this.getArticleKinds()
     },
     handleCurrentChange (val) {
       this.currentPage = val
-      this.getUserList()
-    },
-    handleEdit (index, row) {
-      console.log(index, row)
+      this.getArticleKinds()
     },
     handleDelete (index, row, scope) {
       let o = this

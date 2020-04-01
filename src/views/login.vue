@@ -11,8 +11,8 @@
         </el-form-item>
         <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
         <el-form-item style="width:100%;">
-          <el-button type="primary" @click.native.prevent="handleSubmit2" :loading="logining" class="login">登录</el-button>
-          <el-button type="success" @click="handleRegister" class="register">注册</el-button>
+          <el-button type="primary" @click.native.prevent="handleSubmit2" :loading="logining" class="btn-login">登录</el-button>
+          <el-button type="success" @click="handleRegister" class="btn-register">注册</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -90,7 +90,7 @@ export default {
     },
     handleRegister () {
       this.register = true
-      // this.$router.push({path: '/blog/register'})
+      this.$router.push({path: '/blog/home/register'})
     }
   },
   components: {
@@ -122,7 +122,7 @@ export default {
     .remember {
       margin: 0px 0px 35px 0px;
     }
-    .register,.login{
+    .btn-register,.btn-login{
       width: 47%;
     }
   }

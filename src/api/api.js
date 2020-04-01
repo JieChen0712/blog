@@ -34,7 +34,7 @@ export const getAdminUsers = params => { return axios.post(`/api/blog/admin/get_
 // 保存编辑的管理员信息
 export const setAdminInfo = params => { return axios.post(`/api/blog/admin/set_user_detail`, params) }
 // 注册账号
-export const register = params => { return axios.post(`/api/blog/user/register`, params) }
+export const register = params => { return axios.post(`/api/blog/admin/register`, params) }
 // 获取管理员信息
 export const getAdminInfo = () => { return axios.get(`/api/blog/admin/getAdminInfo`) }
 

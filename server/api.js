@@ -32,9 +32,13 @@ const responseJSON = (res, ret) => {
   }
 };
 
-router.get('/api/blog/test/test_sql',Test.test_sql_count);
-// 用户登录接口
-//router.post('/api/login/check_login', User.check_login);
+/******************************* 测试类接口 ******************************************/
+// 测试接口
+router.get('/api/blog/test/test_sql',Test.test_delFile);
+
+/********************************* 管理员类 ******************************************/
+// 用户注册接口
+router.post('/api/blog/admin/register', Admin.register);
 // 用户登录接口
 router.post('/api/blog/admin/login',Admin.admin_login);
 
@@ -250,7 +254,7 @@ router.post('/api/user/set_user_detail', requireLogin, (req, res, fields) => {
 //});
 //});
 
-router.post('/api/blog/user/register', (req, res, fields) => {
+router.post('/api/blog/admin/register', (req, res, fields) => {
   let power = 1;
   let type = 1;
   let name = req.body.name;
