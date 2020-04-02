@@ -15,10 +15,10 @@ exports.admin_login = async (req, res, fields) => {
 		value: req.body.ac,
 	}];
 	let sqlstr = sql.find(tb_admin, null, where);
-//	console.log(sqlstr);
 	
 	let userInfo = await common.findSql(sqlstr).catch(err => {res.json(err)});
 	
+//	console.log(userInfo);
 	if(userInfo.status !== 1){
 	  result_info = {
 	    code: -1,
@@ -38,7 +38,11 @@ exports.admin_login = async (req, res, fields) => {
 //  console.log('success login');
     result_info = {
       code: 1,
-      info: userInfo['name'],
+      info: {
+        name: userInfo.name,
+        type: userInfo.type,
+        power: userInfo.power,
+      },
       msg: "登录成功！"
     }
 	}else{
@@ -141,6 +145,7 @@ exports.admin_user_list = async (req, res, fields) => {
 	let page = req.body.page;
 	let where = [];
 	let result_info;
+	let sex_name = ['保密','男','女'];
 	
 	let sqlstr = sql.join('admin_detail','admin',[],['power','type','account','status','name'],'uid','id');
 	if(common.empty(page)){
@@ -189,6 +194,7 @@ exports.admin_user_list = async (req, res, fields) => {
 	  for(let i in list){
       list[i]['register_time'] = common.formatDate(list[i]['register_time'],"YYYY-MM-dd");
       list[i]['brith_day'] = common.formatDate(list[i]['brith_day'],"YYYY-MM-dd");
+      list[i]['sex'] = sex_name[list[i]['sex']];
     }
 	  result_info = {
       code: 1,

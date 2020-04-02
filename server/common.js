@@ -167,6 +167,9 @@ const common = {
     return ('00' + str).substr(str.length)
   },
   formatDate (time, fmt) {  // 时间戳转日期
+    if(common.empty(time)){
+      return time;
+    }
     if(typeof time === "number" && /^[0-9]+.?[0-9]*$/.test(time)){
       time = time.toString();
     }
