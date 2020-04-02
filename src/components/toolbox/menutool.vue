@@ -12,7 +12,7 @@
       <li>
         <i class="fa fa-gear icons"></i>
       </li>
-      <li>
+      <li @click="loginout">
         <i class="fa fa-power-off icons"></i>
       </li>
     </ul>
@@ -29,7 +29,12 @@ export default {
   },
   created () {},
   mounted () {},
-  methods: {}
+  methods: {
+    loginout () {
+      this.$store.commit('resetState')
+      this.$router.push({ path: '/blog/home/login' })
+    }
+  }
 }
 </script>
 

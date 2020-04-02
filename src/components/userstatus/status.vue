@@ -4,7 +4,7 @@
     <div slot="content">{{userName}}<br/>{{userRole}}<br/>{{userStatus}}</div>
     <div class="user-info" :class="{close:isCollapse}">
       <div class="avatar-wrapper">
-        <img class="avatar" src="./image/user.jpg" alt="用户头像"/>
+        <el-image :src="avatar" fit="cover" class="avatar" alt="用户头像"></el-image>
       </div>
       <transition name="fade">
           <div class="info-wrapper" v-show="!isCollapse">
@@ -19,24 +19,42 @@
 </template>
 
 <script type="text/ecmascript">
+import { mapState } from 'vuex'
+import { getAdminInfo } from '@/api/api'
 export default {
   props: {
     isCollapse: Boolean
   },
   data () {
     return {
-      userName: '',
       userRole: '',
       userStatus: ''
     }
   },
   created () {
-    this.userName = 'Jie Chen'
     this.userRole = 'Administrator'
     this.userStatus = 'Online'
   },
-  mounted () {},
-  methods: {}
+  mounted () {
+    this.getUserInfo()
+  },
+  methods: {
+    getUserInfo () {
+      getAdminInfo()
+        .then(response => {
+          let data = response.data
+          if (data.code === 1) {
+            this.$store.commit('setAvatar', data.info.avatar)
+          } else {
+            this.$message(data.msg)
+          }
+        })
+    }
+  },
+  computed: mapState({
+    userName: 'userName',
+    avatar: 'avatar'
+  })
 }
 </script>
 
@@ -45,6 +63,8 @@ export default {
 @import '../../common/scss/animation.scss';
 .status{
     .user-info{
+        display: flex;
+        align-items: center;
         height: 100px;
         padding: 20px;
         overflow: hidden;
@@ -54,10 +74,13 @@ export default {
           height: 65px;
           padding: 10px 10px;
           .avatar-wrapper{
-            width: 40px;
             border-radius: 80px;
+            width: 40px;
+            height: 40px;
             .avatar{
-                border-radius:80px;
+              width: 40px;
+              height: 40px;
+              border-radius:80px;
             }
           }
         }
@@ -65,14 +88,15 @@ export default {
         .avatar-wrapper{
             float:left;
             width: 60px;
+            height: 60px;
             padding: 2px;
             border: 1px solid #585858;
             border-radius: 8px;
             margin-right: 15px;
             transition: all .5s ease;
             .avatar{
-                width: 100%;
-                height: auto;
+                width: 60px;
+                height: 60px;
                 border-radius:6px;
                 vertical-align: middle;
                 transition: all .5s ease;

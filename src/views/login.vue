@@ -79,6 +79,9 @@ export default {
               this.logining = false
               // NProgress.done()
               if (response.data.code === 1) {
+                this.$store.commit('setType', response.data.info.type)
+                this.$store.commit('setUserName', response.data.info.name)
+                this.$store.commit('setPower', response.data.info.power)
                 this.$notify({
                   title: '成功',
                   message: response.data.msg,

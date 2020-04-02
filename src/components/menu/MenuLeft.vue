@@ -5,7 +5,7 @@
       <div class="menu-wrapper" :class="{close:isCollapse}">
         <div class="logo-wrapper">
           <transition name="fade">
-          <p class="logo-text" v-show="!isCollapse">Jie Chen</p>
+          <p class="logo-text" v-show="!isCollapse">{{userName}}</p>
           </transition>
         </div>
         <div class="menulist">
@@ -51,6 +51,11 @@ export default {
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath)
+    }
+  },
+  computed: {
+    userName () {
+      return this.$store.getUserName
     }
   },
   components: {
