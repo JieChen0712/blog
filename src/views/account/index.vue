@@ -22,7 +22,7 @@
           <el-button type="primary" @click="filterSubmit">查询</el-button>
         </el-form-item>
         <el-form-item class="fr">
-          <el-button type="success"  @click="linkTo('add')">新增管理员</el-button>
+          <el-button type="success" v-if='type === "1"' @click="linkTo('add')">新增管理员</el-button>
         </el-form-item>
       </el-form>
       <el-table :data="tableData" size="mini" ref="filterTable" :max-height="tableHeight" style="width: 100%">
@@ -229,6 +229,11 @@ export default {
           that.resize = false
         }, 400)
       }
+    }
+  },
+  computed: {
+    type () {
+      return this.$store.getters.getType
     }
   },
   components: {

@@ -1,8 +1,8 @@
 export const getType = state => {
-  return state.type
+  return atob(state.type)
 }
 export const getPower = state => {
-  return state.power
+  return atob(state.power)
 }
 export const getUserName = state => {
   return state.userName

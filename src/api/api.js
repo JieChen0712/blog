@@ -70,4 +70,4 @@ export const editUser = params => { return axios.get(`/user/edit`, { params: par
 
 export const addUser = params => { return axios.get(`/user/add`, { params: params }) }
 
-export const getcitydata = () => { return axios.get('../../static/data/area.json') }
+export const getcitydata = () => { return axios.get('/static/data/area.json') }

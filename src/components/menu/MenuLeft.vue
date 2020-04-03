@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     userName () {
-      return this.$store.getUserName
+      return this.$store.getters.getUserName
     }
   },
   components: {

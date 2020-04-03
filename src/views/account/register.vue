@@ -4,59 +4,48 @@
     <div class="tb-wrap">
       <div class="scroll-hide">
         <el-form :model="formData" :rules="rules" ref="formData" label-width="100px" class="article-form">
-          <el-form-item label="账号：" prop="title">
+          <el-form-item label="账号：" prop="account">
             <el-col :span="7">
-              <el-input v-model="formData.title" placeholder="登录账号"></el-input>
+              <el-input v-model="formData.account" placeholder="登录账号"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="密码：" prop="title">
+          <el-form-item label="密码：" prop="password">
             <el-col :span="7">
-              <el-input v-model="formData.title" placeholder="登录密码"></el-input>
+              <el-input v-model="formData.password" placeholder="登录密码"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="再次确认密码：" prop="title">
+          <el-form-item label="确认密码：" prop="password">
             <el-col :span="7">
-              <el-input v-model="formData.title" placeholder="再次确认密码"></el-input>
+              <el-input v-model="formData.checkPass" placeholder="再次确认密码"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="用户名：" prop="title">
+          <el-form-item label="用户名：" prop="name">
             <el-col :span="7">
-              <el-input v-model="formData.title" placeholder="用户名"></el-input>
+              <el-input v-model="formData.name" placeholder="用户名"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="禁用状态">
-            <el-switch v-model="form.delivery"></el-switch>
-          </el-form-item>
-          <el-form-item label="分类：" prop="kind">
+          <el-form-item label="用户类型：" prop="type">
             <el-col :span="7">
-              <el-select v-model="formData.kind" filterable placeholder="文章分类">
-                <el-option v-for="item in opt_kind" :key="item.value" :label="item.label" :value="item.value"></el-option>
+              <el-select v-model="formData.type" filterable placeholder="用户类型">
+                <el-option v-for="item in optUserType" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-col>
           </el-form-item>
-          <el-form-item label="状态：" prop="status">
+          <el-form-item label="权限：" prop="power">
             <el-col :span="7">
-              <el-select v-model="formData.status" filterable placeholder="文章状态">
-                <el-option v-for="item in opt_status" :key="item.value" :label="item.label" :value="item.value"></el-option>
-              </el-select>
+              <el-checkbox-group v-for="pitem in powerList" :key="pitem.val" v-model="checkedPower" @change="handlePowerChange">
+                <el-checkbox @change="handleCheckAllChange" :label="pitem.val" class="head-check" :checked="pitem.check">{{pitem.name}}</el-checkbox>
+                <el-checkbox v-for="item in pitem.child" :label="item.val" :key="item.val" class="child-check" @change="childChange" :checked="pitem.check">{{item.name}}</el-checkbox>
+              </el-checkbox-group>
             </el-col>
           </el-form-item>
-          <el-form-item label="封面：">
+          <el-form-item label="头像：">
             <div class="uploadImg">
               <uploadsingle :filePath="filePath" :imgUrl="formData.image" @change="setAvatar"></uploadsingle>
             </div>
           </el-form-item>
-          <el-form-item label="摘要：" prop="desc">
-            <el-col :span="20">
-              <el-input type="textarea" v-model="formData.desc" size="txtarea"></el-input>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="文章内容：" prop="content">
-            <ueditor :id="ueId" :config="ueConfig" :content="formData.content" class="ueditor" ref="ue" @change="setContent"></ueditor>
-          </el-form-item>
           <el-form-item>
-            <el-button type="success" class="btn-submit" @click.native.prevent="submitArticle('formData')" v-if="type === 'add'">添加</el-button>
-            <el-button type="primary" class="btn-submit" @click.native.prevent="submitArticle('formData')" v-if="type === 'edit'">修改</el-button>
+            <el-button type="success" class="btn-submit" @click.native.prevent="submitRegister">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -65,36 +54,28 @@
 </template>
 
 <script type="text/ecmascript">
-import ueditor from '../../components/ueditor/ueditor'
 import breadcrumb from '../../components/breadcrumb/breadcrumb'
 import uploadsingle from '../../components/upload/uploadSingle'
-import { saveArticle, getArticleDetail, getArticleKindList } from '@/api/api.js'
 
 export default {
   data () {
     return {
-      type: String,
-      articleId: Number,
-      ueId: 'article_detail',
-      ueConfig: {
-        autoHeightEnabled: false,
-        initialFrameWidth: null,
-        initialFrameHeight: 350
-      },
       formData: {
-        title: '',
-        kind: '',
+        name: '',
+        account: '',
+        password: '',
+        type: '',
+        power: '',
         status: '',
-        content: '',
-        desc: '',
-        image: ''
+        image: '',
+        checkPass: ''
       },
       rules: {
         title: [
           { required: true, message: '请输入文章标题', trigger: 'blur' },
           { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
         ],
-        kind: [
+        type: [
           { required: true, message: '请选择文章分类', trigger: 'change' }
         ],
         content: [
@@ -104,22 +85,24 @@ export default {
           { required: true, message: '请填写文章描述', trigger: 'blur' }
         ]
       },
-      opt_kind: [],
-      opt_status: [{
-        value: 1,
-        label: '公开'
-      }, {
-        value: 2,
-        label: '私密'
-      }, {
-        value: 3,
-        label: '不显示'
-      }],
+      opt_status: [
+        {value: 1, label: '公开'},
+        {value: 2, label: '私密'},
+        {value: 3, label: '不显示'}
+      ],
+      powerList: [
+        {name: '管理员', val: 1, check: true, child: [{name: '个人信息', val: 1.1, check: true}, {name: '管理员列表', val: 1.2, check: true}]},
+        {name: '文章', val: 2, check: false, child: [{name: '文章分类', val: 2.1, check: false}, {name: '文章列表', val: 2.2, check: false}]}
+      ],
+      checkedPower: [],
+      optUserType: [
+        {value: 1, label: '超级管理员'},
+        {value: 2, label: '普通管理员'}
+      ],
       filePath: {path: 'avatar'}
     }
   },
   components: {
-    ueditor,
     breadcrumb,
     uploadsingle
   },
@@ -127,85 +110,24 @@ export default {
     this.type = this.$route.query.type
     this.articleId = this.$route.query.id
   },
-  activated () {
-    this.ueId = 'article_detail' + Math.round(new Date() / 1000)
-    this.getArticleKind()
-    this.type = this.$route.query.type
-    this.articleId = this.$route.query.id
-    if (this.type === 'edit') {
-      this.getArticleInfo(this.articleId)
-    } else {
-      for (let i in this.formData) {
-        this.formData[i] = ''
-      }
-      this.formData.content = '<span style="color:#bfbfbf">请添加文章内容</span>'
-    }
-  },
+  activated () {},
   mounted () {},
   methods: {
     setAvatar (value) {
       this.formData.image = value
     },
-    setContent (value) {
-      this.formData.content = value
+    handlePowerChange (value) {
+      console.log(value)
     },
-    getArticleInfo (articleId) {
-      if (articleId !== null && articleId !== '' && articleId !== undefined) {
-        let param = {
-          id: articleId
-        }
-        getArticleDetail(param)
-          .then(response => {
-            if (response.data.code === 1) {
-              this.formData = response.data.info
-            } else {
-              this.$message.error(response.data.msg)
-            }
-          })
-      }
+    handleCheckAllChange (val) {
+      console.log(val)
     },
-    getArticleKind () {
-      getArticleKindList()
-        .then(response => {
-          let data = response.data
-          if (data.code === 1) {
-            this.opt_kind = []
-            for (let i in data.info) {
-              this.opt_kind.push({
-                label: data.info[i].name,
-                value: data.info[i].id
-              })
-            }
-          } else {
-            this.$message.error(data.msg)
-          }
-        })
+    submitRegister () {
+      console.log(1)
     },
-    submitArticle (value) {
-      this.$refs.formData.validate((valid) => {
-        if (valid) {
-          let param = this.formData
-          param.id = this.articleId
-          param.type = this.type
-          saveArticle(param)
-            .then(response => {
-              if (response.data.code === 1) {
-                this.$message({
-                  message: response.data.msg,
-                  type: 'success'
-                })
-                setTimeout(() => { this.$router.back(-1) }, 2000)
-              } else {
-                this.$message({
-                  message: response.data.msg,
-                  type: 'error'
-                })
-              }
-            })
-        } else {
-          console.log(valid)
-        }
-      })
+    childChange (val, event) {
+      console.log(event)
+      console.log(val)
     }
   }
 }
@@ -225,6 +147,18 @@ export default {
     }
     .el-form-item{
       margin-right: 100px;
+      .el-checkbox-group{
+        .head-check{
+          display: block;
+        }
+        .child-check{
+          /*height: 30px;
+          font-size: 0;
+          &.el-checkbox__input{
+            line-height: 30px;
+          }*/
+        }
+      }
     }
   }
 }

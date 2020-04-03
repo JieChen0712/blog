@@ -1,16 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VuexPersistence from 'vuex-persist'
 import * as actions from './actions'
 import * as getters from './getters'
 
 Vue.use(Vuex)
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
+})
 
 const getDefaultState = () => {
   return {
     type: '',
     power: '',
     userName: '',
-    avatar: '/static/img/user.e333137.jpg'
+    avatar: '/static/image/userstatus/user.jpg'
   }
 }
 
@@ -20,10 +25,10 @@ const state = getDefaultState()
 // 定义所需的 mutations
 const mutations = {
   setType (state, val) {
-    state.type = val
+    state.type = btoa(val)
   },
   setPower (state, val) {
-    state.power = val
+    state.power = btoa(val)
   },
   setUserName (state, val) {
     state.userName = val
@@ -45,5 +50,6 @@ export default new Vuex.Store({
   actions,
   getters,
   state,
-  mutations
+  mutations,
+  plugins: [vuexLocal.plugin]
 })

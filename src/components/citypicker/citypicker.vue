@@ -10,7 +10,7 @@
 </template>
 
 <script type="text/ecmascript">
-import {getcitydata} from '../../api/api'
+import {getcitydata} from '@/api/api'
 export default {
   props: {
     address: Array
@@ -45,7 +45,7 @@ export default {
           label: parent['name']
         }
         if (parent['sub'].length > 0) {
-          var temp = []
+          let temp = []
           for (let j in parent['sub']) {
             let citySub = parent['sub'][j]
             let city = {
