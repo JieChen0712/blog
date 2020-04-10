@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const history = require('connect-history-api-fallback');
 const ueditor = require('ueditor');
+const redisClient = require('./redisClient');
 //var morgan = require('morgan');
 //const passport = require('passport');
 //const LocalStrategy = require('passport-local').Strategy;
@@ -119,6 +120,36 @@ app.use("/UE", ueditor(path.resolve(__dirname, '../uploads'), function (req, res
     }
 }));
 
+//let test_redis = async () => {
+//redisClient.get('abc').then(data => {
+//console.log(data)
+//}).catch(err => {console.log(err)});
+//redisClient.get('abc').then(data => {
+//console.log(data)
+//})
+//console.log(redisClient.set('abcd',654))
+//console.log(await redisClient.existsAsync('abcd'))
+//console.log();
+//redisClient.exists('abc').then(data => {
+//  console.log(data);
+//}).catch(err => {
+//  console.log(err);
+//})
+  
+//try{
+//	let isExist = await redisClient.existsAsync('abc');
+//	if(isExist){
+//	  console.log('已经存在！');
+//	}else{
+//	  await redisClient.setAsync('abc',123456);
+//	}
+//	console.log(await redisClient.getAsync('abc'));
+//}catch(e){
+//	console.log('err:'+e)
+//}
+//}
+//
+//console.log(test_redis());
 
 app.use(api);
 app.use(history());
